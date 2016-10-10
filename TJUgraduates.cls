@@ -594,7 +594,7 @@
     {\def\@noitemerr
     	{\@latex@warning{Empty `publications' environment}}%
     	\endlist
-    	{\backsection{\hspace{-2em}已发表论文}}
+    	{\backsection{\hspace{-2em}个人简历}}
     	\hspace{-2em}\tju@value@resume}
     
     

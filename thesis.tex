@@ -3,7 +3,7 @@
 %%==================================================
 
 % 双面打印
-\documentclass[master, macfonts, openright, cs4size]{TJUgraduates} 
+\documentclass[doctor, adobefonts, openright, cs4size]{TJUgraduates} 
 % \documentclass[bachelor, adobefonts, openright, cs4size]{TJUgraduates} 
 % \documentclass[master]{TJUgraduates} 
 % \documentclass[%
@@ -17,6 +17,7 @@
 \usepackage{booktabs}
 \usepackage{textcomp}
 \usepackage{paralist}
+\usepackage{zhfontcfg}
 
 \begin{document}
 \include{frontmatter/id}
@@ -24,6 +25,7 @@
 \include{frontmatter/abstract} %% 摘要
 \include{frontmatter/table}
 \include{frontmatter/symbol} % 主要符号、缩略词对照表
+
 
 
 \mainmatter	% 使用阿拉伯数字对正文编号
@@ -45,8 +47,6 @@
 %% 参考资料
 
 \bibliography{bib/preference}
-
-
 
 
 %% 致谢、发表论文、参与项目、简历

@@ -1,0 +1,26 @@
+\ProvidesPackage{zhfontcfg} 
+%\usepackage[cm-default]{fontspec} %[cm-default]选项主要用来解决使用数学环境时数学符号不能正常显示的问题 
+\usepackage[BoldFont]{xeCJK} 
+\usepackage{xunicode,xltxtra} 
+\defaultfontfeatures{Mapping=tex-text} %如果没有它，会有一些 tex 特殊字符无法正常使用，比如连字符。 
+% 中文断行 
+\XeTeXlinebreaklocale "zh" 
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+
+\setCJKmainfont[BoldFont={SimHei},ItalicFont={KaiTi}]{Adobe Song Std} 
+\setCJKsansfont{SimHei} 
+\setCJKmonofont{FangSong} 
+
+\setCJKfamilyfont{zhsong}{Adobe Song Std} 
+\setCJKfamilyfont{zhhei}{SimHei} 
+\setCJKfamilyfont{zhkai}{KaiTi} 
+\setCJKfamilyfont{zhfs}{FangSong} 
+\setCJKfamilyfont{zhli}{LiSu} 
+\setCJKfamilyfont{zhyou}{YouYuan}
+
+\newcommand*{\song}{\CJKfamily{zhsong}} % 宋体 
+\newcommand*{\hei}{\CJKfamily{zhhei}} % 黑体 
+\newcommand*{\kai}{\CJKfamily{zhkai}} % 楷书 
+\newcommand*{\fsong}{\CJKfamily{zhfs}} % 仿宋 
+\renewcommand*{\lishu}{\CJKfamily{zhli}} % 隶书 
+\renewcommand*{\youyuan}{\CJKfamily{zhyou}} % 幼圆 
