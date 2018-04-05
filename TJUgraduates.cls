@@ -323,7 +323,7 @@
     \\   
       \fangsong\tju@label@advisor&：~&\fangsong \tju@value@advisor
     \\  
-      \fangsong\tju@label@viceadvisor&：~&\fangsong \tju@value@viceadvisor
+ %     \fangsong\tju@label@viceadvisor&：~&\fangsong \tju@value@viceadvisor
     \end{tabular}
 	}
      \vskip \stretch{1} 

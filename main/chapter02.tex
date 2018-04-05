@@ -128,6 +128,7 @@ $M(\omega)J(\omega)=1$，其中$J(\omega)=F[\partial_t\chi]$。
 中，并用Taylor级数展开有：
 \begin{equation}
 	\alpha=\frac{\kappa}{2Q}=\frac{\omega}{2Qv_p}=\frac{\pi f}{Qv_p}.
+	\label{eq:linear_visco}
 \end{equation}
 衰减系数$\alpha$与频率$f$呈线性关系，即所谓的线性衰减。
 
@@ -496,12 +497,176 @@ $Q$呈常数。单驰豫的峰值应均匀分布在$log(\omega)$尺度内，整�
 可以表征衰减等级。$Q>0$等同于$0<\gamma<1/2$。
 
 \vspace{0.5cm}
-\section{粘声波动方程}
+\section{衰减介质地震波传播模拟}
+\vspace{0.5cm}
+地下介质普遍存在粘滞性，地震波对粘滞性的响应表现为振幅的衰减和速度频散。为了得到精确的成像结果以及
+可靠的振幅信息，在进行成像和反演时必须要考虑衰减对地震波传播的影响。波动方程数值模拟是地震成像和反演
+的引擎，所以波动方程的推到和求解至关重要。首先波动方程要能准确描述波在特定介质中的传播规律，其次
+对波动方程的求解要稳定高效，最后推导出的波动方程还要便于施加边界条件。本节主要推导两类常用的描述衰减性模型
+的粘声波动方程，并给出相应的数值解，最后比较这两类粘声波动方程在地震成像中的应用。
+
+\subsection{SLS模型波动方程模拟}
+地震波在粘声介质中的传播方程是基于动量守恒以及描述介质流变力学关系的应力-应变关系推导的。标准线性
+固体模型的流变力学关系是描述驰豫函数响应的出发点。\citeA{fung:1965}，，\citeA{hudson:1980}， 等对标准线性固体模型的
+驰豫响应函数给出了详细的描述，并把其应用到了地球介质流变力学解释。
+
+对于二维固体，其动量守恒方程可描述为：
+\begin{equation}
+	\frac{\partial\sigma_{ji}}{\partial x_j}=\rho\ddot{u}_i+f_i \quad i,j=1,2,
+	\label{eq:dl}
+\end{equation}
+式中$x_j$表示笛卡尔坐标，$u_i(x_k,t)$是位移矢量，$\sigma_{ji}(x_k,t)$是应力张量，$\rho(x_k)$是介质密度
+，$f_i(x_k,t)$表示体力。变量上的点表示对时间求偏导，为了简化公式形式，爱因斯坦求和准则默认使用。
+
+在一般声学介质中，应力张量分量可以表示为：
+\begin{equation}
+	\sigma_{ij}=-p\delta_{ij},
+	\label{eq:dl1}
+\end{equation}
+式中$p(x_k,t)$是介质的压力场。把（\ref{eq:dl}）式带入（\ref{eq:dl1}）式有：
+\begin{equation}
+	-\frac{\partial p}{\partial x_i}=\rho\ddot{u}_i+f_i 
+	\label{eq:dl3}
+\end{equation}
+方程（\ref{eq:dl3}）两边同时除以密度并求散度得:
+\begin{equation}
+	-\frac{\partial }{\partial x_i}(\frac{1}{\rho}\frac{\partial p}{\partial x_i})=\ddot{e}+s, 
+	\label{eq:dl4}
+\end{equation}
+其中
+\begin{equation}
+	e=\frac{\partial u_i}{x_i}=e_{ii},
+\end{equation}
+是应力张量的迹或者体应变，并且有：
+\begin{equation}
+	s=\frac{\partial}{\partial x_i}{\frac{1}{\rho}f_i).
+\end{equation}
+\citeA{christensen:1982},提出了含有多个驰豫力学模型的标准线性固体粘声介质的应力-应变关系：
+\begin{equation}
+	\sum_{k=0}^mc_k\frac{d^kp}{dt^k}=\sum_{k=0}^md_k\frac{d^ke}{dt^k} \quad m\in N,
+	\label{eq:stra1}
+\end{equation}
+式中$d^K/dt^k$表示$k$阶时间偏导数，$c_k$和$d_k$是介质属性的系数，并且满足如下初始条件：
+\begin{equation}
+	\sum_{k=0}^mc_rp^{r-k}(0)=\sum_{r=k}^md_re^{r-k}(0),
+\end{equation}
+其中$p^{r-k}(0)$和$e^{r-k}(0)$分别表示压力和体应变在$t=0$时刻的$(r-k)$阶时间偏导数。通过拉普拉斯
+变换可求解方程（\ref{eq:stra1}）可得到压力场的显示表达式：
+\begin{equation}
+	p(t)=-M_R\int_{-\infty}^{t}\dot{e}(\tau)[1-\sum_{l=1}^L(1-\frac{\tau_{\epsilon l}}{\tau_{\sigma l}})
+	\exp(-\frac{t-\tau}{\tau_{\sigma l}})]d\tau,
+	\label{eq:pressure}
+\end{equation}
+式中$\tau_{\sigma l}(x_k)$和$\tau_{\epsilon l}(x_k)$表示材料第$l$个力学小单元的驰豫时间，$L$是力学机制模型
+的个数，$M_R(x_k)$是介质的驰豫模量。方程（\ref{eq:pressure}）是Boltzman叠加原理的数学表达形式，它表示当前
+压力是先前所有时间压力影响的叠加。
+
+方程（\ref{eq:dl4}）和（\ref{eq:pressure}）描述了粘声介质的形变，并且可以基于此方程来求取数值解。
+然而方程（\ref{eq:pressure}）中的褶积运算需要知道应变在整个时间上的值而使得数值求解变得困难。而且，方程
+（\ref{eq:stra1}）很难直接应用。因此，\citeA{carcione:1988}提出了记忆变量方法来解决方程（\ref{eq:pressure}）
+中褶积运算遇到的问题。通过引入记忆变量，方程（\ref{eq:pressure}）中的褶积计算就可以避免。整合
+方程（\ref{eq:pressure}）得：
+\begin{equation}
+	p(t)=-e(t)M_R[1-\sum_{l=1}^L(1-\frac{\tau_{\epsilon l}}{\tau_{\sigma l}})]-
+	\sum_{l=1}^L\int_{-\infty}^{t}e(\tau)\phi_l(t-\tau)d\tau,
+	\label{eq:memo}
+\end{equation}
+式中$\phi_l$表示为：
+\begin{equation}
+	\phi_l(t)=\frac{M_R}{\tau_{\sigma l}}(1-\frac{\tau_{\epsilon l}}{\tau_{\sigma l}})e^{t/\tau_{\sigma l}}.
+	\label{eq:phi1}
+\end{equation}
+方程（\ref{eq:memo}）是物理过程推导出的，不仅仅限于标准线性固体模型，对于其它模型只是$\phi_l$不同
+而已。核函数$\phi_l$必须满足如下微分方程：
+\begin{equation}
+	\dot{\phi}_l(t)=-\phi_l(t)/\tau_{\sigma l}.
+	\label{eq:phi2}
+\end{equation}
+定义$L$个记忆变量$e_{1l}$为：
+\begin{equation}
+	e_{1l}(t)=\int^t_{-\infty}e(\tau)\phi_l(t-\tau)d\tau \quad l=1,\dots,L.
+\end{equation}
+由（\ref{eq:phi1}）式得
+\begin{equation}
+	\dot{e}_{1l}(t)=\frac{e_{1l}(t)}{\tau_{\sigma l}}+\phi_l(0)e(t).
+	\label{eq:e2}
+\end{equation}
+应力-应变关系（\ref{eq:memo}）可以表示为：
+\begin{equation}
+	p(t)=-[M_Ue(t)+\sum_{l=1}^Le_{1l}],
+	\label{eq:p2}
+\end{equation}
+式中$M_U$为未驰豫变量，
+\begin{equation}
+	M_U=M_R[1-\sum_{l=1}^L(1-\frac{\tau_{\epsilon l}}{\tau_{\sigma l}})].
+\end{equation}
+方程（\ref{eq:dl4}），（\ref{eq:e2}）和（\ref{eq:p2}）完全控制了地震波在粘声介质中的传播规律。
+\citeA{blanch:1995}, 指出，在勘探地震频段内，一个力学驰豫模型即可满足实际应用。因此，对于二维粘声介质，
+描述运动和形变的波动方程为：
+\begin{equation}
+    \begin{aligned}
+    \label{eq:visco}
+    \frac{\partial v_x}{\partial t} - \frac{1}{\rho}\frac{\partial p}{\partial x}=0,\\
+    \frac{\partial v_z}{\partial t} - \frac{1}{\rho}\frac{\partial p}{\partial z}=0,\\
+    \frac{\partial p}{\partial t} -
+    K\frac{\tau_\epsilon}{\tau_\sigma}(\frac{\partial v_x}{\partial x}+\frac{\partial v_z}{\partial z})-r_p=f(\mathbf{x}_s,t),
+    \\
+    \frac{\partial{r_p}}{\partial t} +
+    \frac{1}{\tau_\sigma}\left[r_p+K(\frac{\tau_\epsilon}{\tau_\sigma}-1)
+	(\frac{\partial v_x}{\partial x}+\frac{\partial v_z}{\partial z})]=0.
+    \end{aligned}
+\end{equation}
+式中，$v_x$和$v_z$表示质点在$x$方向和$z$方向的振动速度，$K$是介质的体积模量，驰豫时间$\tau_\sigma$和
+$\tau_\epsilon$与介质的品质因子$Q_p$以及参考频率$f_\omega$有关，
+\begin{eqnarray}
+    \begin{aligned}
+        \tau_\sigma &= \frac{\sqrt{1+\frac{1}{Q_p^2}}-\frac{1}{Q_p}}{f_\omega},\\
+        \tau_\epsilon &= \frac{1}{f_\omega^2\tau_\sigma}.
+    \end{aligned}
+\end{eqnarray}
+方程（\ref{eq:visco}）即为标准线性固体模型所描述的粘声波动方程，此方程可用交错网格有限差分法\citeA{virieux:1984}, ,
+\citeA{carcione:1999}, 进行数值求解。
+
+\begin{figure*}[!htbp]
+	    \centering
+		\includegraphics[width=1.0\linewidth]{figure/wave_sls1}
+		\fcaption{不同$Q$值在$t=0.35s$的波场快照}{Snapshots of different $Q$  
+		models at $t=0.35s$。}[不同$Q$值在$t=0.35s$的波场快照]
+		\label{fig:wave_sls1}
+\end{figure*}
+\begin{figure*}[!htbp]
+	    \centering
+		\includegraphics[width=0.5\linewidth]{figure/wave_sls3}
+		\fcaption{不同$Q$值在$t=0.35s$,$x=1.7km$处的抽线信息}{The extracted lines  
+		of different $Q$ models at $t=0.35s$,$x=1.7km$}[不同$Q$值在$t=0.35s$,$x=1.7km$处的抽线信息]
+		\label{fig:wave_sls3}
+\end{figure*}
+\begin{figure*}[!htbp]
+	    \centering
+		\includegraphics[width=0.5\linewidth]{figure/wave_sls2}
+		\fcaption{不同$Q$值在同一时刻波场快照整合图}{Integrated snapshots of different $Q$ 
+		model}[不同$Q$值在同一时刻波场快照整合图]
+		\label{fig:wave_sls2}
+\end{figure*}
+\begin{figure*}[!htbp]
+	    \centering
+		\includegraphics[width=0.7\linewidth]{figure/wave_sls4}
+		\fcaption{波场快照抽线的振幅谱}{The amplitude spectrum of extracted lines. 
+		}[波场快照抽线的振幅谱]
+		\label{fig:wave_sls4}
+\end{figure*}
+设置一个横向、纵向均为$3.4km$的均匀介质模型，其中纵波速度为$v_p=3km/s$，密度为$\rho=2.0g/cm^3$。
+图（\ref{fig:wave_sls1}）展示了在$t=0.35s$时刻不同$Q$值的波前快照，图（\ref{fig:wave_sls3}）展示
+了在$x=1.7km$处的抽线信息，图（\ref{fig:wave_sls2}）整合了不同$Q$值的波前快照，图（\ref{fig:wave_sls4}）
+展示了$Q=50$和声介质波前快照抽线的振幅普。
+以上四图从不同的角度证明了粘性介质不仅对地震波振幅有衰减效应而且对相位有较强的改造作用。品质因子的值越小
+对地震波的振幅衰减越严重，而且相位有更强的超前效应。从振幅谱可以看出，对高频成分的衰减明显要强于对低频
+成分的衰减，这与线性粘弹理论（公式\ref{eq:linear_visco}）是一致的。
 
 
 
-
-
-
-
+\vspace{0.5cm}
+\subsection{常$Q$模型波动方程模拟}
+\vspace{0.5cm}
+\subsection{衰减模型在地震成像中的应用}
 
