@@ -243,7 +243,8 @@
 % Segment 4. Draw the TJUgraduates
 %==========
 
-\newcommand\tjuspace{\protect\CTEX@spaceChar\protect\CTEX@spaceChar}
+\newcommand\tjuspace{\protect\quad\protect\quad}
+%\newcommand\tjuspace{\protect\CTEX@spaceChar\protect\CTEX@spaceChar}
 \def\tju@getfileinfo#1 #2 #3\relax#4\relax{%
   \def\tjufiledate{#1}%
   \def\tjufileversion{#2}%

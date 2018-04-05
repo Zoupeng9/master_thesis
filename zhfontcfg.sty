@@ -1,7 +1,7 @@
 \ProvidesPackage{zhfontcfg} 
 %\usepackage[cm-default]{fontspec} %[cm-default]选项主要用来解决使用数学环境时数学符号不能正常显示的问题 
-\usepackage[BoldFont]{xeCJK} 
-\usepackage{xunicode,xltxtra} 
+\usepackage{xeCJK} 
+\usepackage{xunicode} 
 \defaultfontfeatures{Mapping=tex-text} %如果没有它，会有一些 tex 特殊字符无法正常使用，比如连字符。 
 % 中文断行 
 \XeTeXlinebreaklocale "zh" 
@@ -22,5 +22,5 @@
 \newcommand*{\hei}{\CJKfamily{zhhei}} % 黑体 
 \newcommand*{\kai}{\CJKfamily{zhkai}} % 楷书 
 \newcommand*{\fsong}{\CJKfamily{zhfs}} % 仿宋 
-\renewcommand*{\lishu}{\CJKfamily{zhli}} % 隶书 
-\renewcommand*{\youyuan}{\CJKfamily{zhyou}} % 幼圆 
+\newcommand*{\lishu}{\CJKfamily{zhli}} % 隶书 
+\newcommand*{\youyuan}{\CJKfamily{zhyou}} % 幼圆 
