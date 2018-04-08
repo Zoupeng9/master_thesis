@@ -91,3 +91,19 @@ $Q$-RTM。
 	\end{aligned}
 	\label{eq:adjoint1}
 \end{equation}
+
+以上方程中的混合域算子$e^{i\phi(\mathbf{x},\mathbf{k},\Delta t)}$统一
+用$W(\mathbf{x},\mathbf{k})$来表示，由于
+其涉及空间-波数域的相互变换，导致数值计算非常昂贵。\citeA{fomel.ying:2013}，用低秩近似来降低
+混合域算子的计算量。其形式可以表示为如下形式：
+\begin{equation}
+	W(\mathbf{x},\mathbf{k})\approx\sum_{m=1}^M\sum_{n=1}^NW(\mathbf{x},\mathbf{k}_m)a_{mn}
+	W(\mathbf{x}_n,\mathbf{k})
+\end{equation}
+因此$p(\mathbf{x},t+\Delta t)$的计算有如下的形式：
+\begin{equation} 
+	p(\mathbf{x},t+\Delta t)\approx\sum_{m=1}^MW(\mathbf{x},\mathbf{k}_m)\(\sum_{n=1}^Na_{mn}\(\int
+	e^{i\mathbf{x}\mathbf{k}}W(\mathbf{x}_n,\mathbf{k})p(\mathbf{k},t)d\mathbf{k}\)\).
+	\label{eq:lowrank}
+\end{equation}
+方程（\ref{eq:lowrank}）的计算量相当于每个时间步做$N$次反Fourier变换，在实际中，$N<10$。
