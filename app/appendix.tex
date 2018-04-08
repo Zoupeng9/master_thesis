@@ -4,4 +4,90 @@
 \renewcommand\thefigure{\Alph{chapter}--\arabic{figure}}
 \renewcommand\thetable{\Alph{chapter}--\arabic{table}}
 
-\chapter{test}
+\chapter{低秩近似求解DCQ方程}
+\citeA{zhu.harris:2014},推导的DCQ方程有如下的频散关系：
+\begin{equation}
+    \frac{\omega^2}{c^2}=-\eta|\mathbf{k}|^{2\gamma+2}-i\omega\tau|\mathbf{k}|^{2\gamma+1},
+	\label{eq:disp}
+\end{equation}
+求解方程（\ref{eq:disp}）的$\omega$有，
+\begin{equation}
+	\omega=\frac{-ip_1+p_2}{2},
+\end{equation}
+其中
+\begin{equation}
+	p_1=\tau c^2|\mathbf{k}|^{2\gamma+1},
+\end{equation}
+\begin{equation}
+	p_2=\sqrt{-\tau^2c^4|\mathbf{k}|^{4\gamma+2}-4\eta c^2|\mathbf{k}|^{2\gamma+2}}.
+\end{equation}
+在时间域决定波传播的相移函数可以定义为：
+\begin{equation}
+	\phi_1(\mathbf{x},\mathbf{k},\Delta t)=\mathbf{k}\cdot\mathbf{x}+\frac{-ip_1+p_2}{2}\Delta t,
+	\label{eq:phase_func}
+\end{equation}
+
+在$Q$-RTM中，通过改变方程（\ref{eq:disp}）右端第二项的符号来补偿振幅衰减，而频散控制项的符号
+必须保持不变。因此，衰减补偿常$Q$方程对应的频散关系为：
+\begin{equation}
+    \frac{\omega^2}{c^2}=-\eta|\mathbf{k}|^{2\gamma+2}+i\omega\tau|\mathbf{k}|^{2\gamma+1},
+	\label{eq:disp1}
+\end{equation}
+其对应的复共轭相位函数为：
+\begin{equation}
+	\phi_2(\mathbf{x},\mathbf{k},\Delta t)=\bar{\phi_1}(\mathbf{x},\mathbf{k},\Delta t)
+    =\mathbf{k}\cdot\mathbf{x}+\frac{ip_1+p_2}{2}\Delta t,
+	\label{eq:phase_func1}
+\end{equation}
+相位函数$\phi_1$和$\phi_2$都包含波数的分数阶指数，同时是空间位置$\mathbf{x}$和波数$\mathbf{k}$
+的函数。\citeA{sun.zhu:2015},用这种相位函数来延拓粘声波场，并允许分数阶指数$\gamma(\mathbf{x})$
+随空间变化。单步混合域算子可以整合成如下的Fourier积分算子：
+\begin{equation}
+	p(\mathbf{x},t+\Delta t)=\int \hat{p}(\mathbf{x},t)e^{i\phi(\mathbf{x},\mathbf{k},\Delta t)}
+	d\mathbf{k},
+	\label{eq:one_step}
+\end{equation}
+其中$\hat{p}$是$p$的空间Fourier变换。方程（\ref{eq:one_step}）的伴随形式为：
+\begin{equation}
+	\hat{p}(\mathbf{x},t)=\int p(\mathbf{x},t+\Delta t)e^{-i\bar{\phi}(\mathbf{x},\mathbf{k},
+	\Delta t)}d\mathbf{k},
+\end{equation}
+式中$\bar{\phi}$是$\phi$的共轭。
+将方程（\ref{eq:phase_func}）带入方程（\ref{eq:one_step}）中可以显示得到粘声方程的正传算子
+\begin{equation}
+	\begin{aligned}
+		p(\mathbf{x},t+\Delta t)&=\int \hat{p}(\mathbf{x},t)e^{i\phi_1(\mathbf{x},
+		\mathbf{k},\Delta t)}d\mathbf{k}, \\
+		&=\int \hat{p}(\mathbf{x},t)e^{i\mathbf{k}\cdot\mathbf{x}+(p_1+ip_2)\Delta t/2}d\mathbf{k}.
+	\end{aligned}
+	\label{eq:forward}
+\end{equation}
+其对应的伴随算子为：
+\begin{equation}
+	\begin{aligned}
+		\hat{p}_{adj}(\mathbf{x},t)&=\int p(\mathbf{x},t+\Delta t)e^{-i\bar{\phi}_1(\mathbf{x},
+		\mathbf{k},\Delta t)}d\mathbf{k}, \\
+		&=\int \hat{p}(\mathbf{x},t+\Delta t)e^{-i\mathbf{k}\cdot\mathbf{x}+(p_1-ip_2)\Delta t/2}d\mathbf{k}.
+	\end{aligned}
+	\label{eq:adjoint}
+\end{equation}
+伴随算子（\ref{eq:adjoint}）作为反传算子补偿了$Q$-RTM中的速度频散，但是会二次衰减波场的能量，所以不适合
+$Q$-RTM。
+在$Q$-RTM中，正传和反传波场都应该补偿能量的衰减，其对应的正传和反传算子如下：
+\begin{equation}
+	\begin{aligned}
+		p_{comp}(\mathbf{x},t+\Delta t)&=\int \hat{p}(\mathbf{x},t)e^{i\phi_2(\mathbf{x},
+		\mathbf{k},\Delta t)}d\mathbf{k}, \\
+		&=\int \hat{p}(\mathbf{x},t)e^{i\mathbf{k}\cdot\mathbf{x}+(-p_1+ip_2)\Delta t/2}d\mathbf{k},
+	\end{aligned}
+	\label{eq:forward1}
+\end{equation}
+和
+\begin{equation}
+	\begin{aligned}
+		\hat{p}_{comp-adj}(\mathbf{x},t)&=\int p(\mathbf{x},t+\Delta t)e^{-i\bar{\phi}_2(\mathbf{x},
+		\mathbf{k},\Delta t)}d\mathbf{k}, \\
+		&=\int \hat{p}(\mathbf{x},t+\Delta t)e^{-i\mathbf{k}\cdot\mathbf{x}+(-p_1-ip_2)\Delta t/2}d\mathbf{k}.
+	\end{aligned}
+	\label{eq:adjoint1}
+\end{equation}
