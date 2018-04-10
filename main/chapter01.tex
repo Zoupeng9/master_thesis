@@ -83,7 +83,24 @@ $Q$值，这种强烈的衰减会吸收深部同相轴的能量，在储层的�
 有效的解决多路径问题。
 
 波形反演（FWI）是一种通过求解波动方程来恢复地下介质参数的反演迭代方法（\citeA{tarantola:1984},）。
-传统的FWI主要是用于反演声波速度。
+尽管FWI是一个高度非线性的反演问题（\citeA{mora:1987}, ,\citeA{sirgue.pratt:2004}），由于需要
+大量的正演计算，全局寻优的解法（\citeA{sen.stoffa:1991}, ,\citeA{mosegaard.tarantola:1995},）
+所需的计算量仍是现在计算机所不能承受的。伴随状态法的引入（\citeA{lailly:1983}, ,
+\citeA{tarantola:1984}, ,\citeA{pratt.worthington:1990},），使得梯度的计算变得非常高效，目前基于
+梯度类的解法已趋于成熟。在勘探地震学中，各种应用实例证明粘声波形反演（$Q$-FWI）对于提供高
+分辨率的P波速度结构有非常重要的作用（\citeA{song:1995}, ,\citeA{ravaut:2004}, 
+,\citeA{gao:2006}, , \citeA{kamei:2012},）。但是衰减的波形反演比速度的波形反演更具挑战性（
+\citeA{song:1995}, ,\citeA{liao.mcmechan:1996}, ,\citeA{smithyman:2009}, ,\citeA{hak.mulder:2011}, 
+,\citeA{malinowski:2011}, ,\citeA{bai:2014}, ,\citeA{kamei.pratt:2013},）。
+
+考虑衰减参数的波形反演第一次出现在\citeA{tarantola:1988},的时间域粘弹波形反演理论中。
+随后，\citeA{song:1995}在频率域提出了一种粘声波形反演方法。在频率域实现波形反演比时间域
+有如下优势，尤其是考虑衰减效应: 首先，衰减参数（例如$Q$值）和频散速度关系很容易用随频率
+变化的复速度来表示，速度和衰减参数的梯度可以同时得到而不需要额外的计算量（\citeA{song:1995},）。
+另外，频率域反演方法可以自然的实现多尺度反演策略以降低波形反演的非线性（\citeA{bunks:1995}, 
+,\citeA{sirgue.pratt:2004},）。从最低的频率成分开始反演，并逐渐逐渐增加高频成分，这样可以
+逐渐恢复地下模型的波数成分。
+
 \vspace{0.5cm}
 \section{本文研究内容}
 
