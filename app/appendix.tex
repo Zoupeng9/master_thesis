@@ -43,29 +43,29 @@
 的函数。\citeA{sun.zhu:2015},用这种相位函数来延拓粘声波场，并允许分数阶指数$\gamma(\mathbf{x})$
 随空间变化。单步混合域算子可以整合成如下的Fourier积分算子：
 \begin{equation}
-	p(\mathbf{x},t+\Delta t)=\int \hat{p}(\mathbf{x},t)e^{i\phi(\mathbf{x},\mathbf{k},\Delta t)}
+	p(\mathbf{x},t+\Delta t)=\int \hat{p}(\mathbf{k},t)e^{i\phi(\mathbf{x},\mathbf{k},\Delta t)}
 	d\mathbf{k},
 	\label{eq:one_step}
 \end{equation}
 其中$\hat{p}$是$p$的空间Fourier变换。方程（\ref{eq:one_step}）的伴随形式为：
 \begin{equation}
-	\hat{p}(\mathbf{x},t)=\int p(\mathbf{x},t+\Delta t)e^{-i\bar{\phi}(\mathbf{x},\mathbf{k},
+	\hat{p}(\mathbf{k},t)=\int p(\mathbf{x},t+\Delta t)e^{-i\bar{\phi}(\mathbf{x},\mathbf{k},
 	\Delta t)}d\mathbf{k},
 \end{equation}
 式中$\bar{\phi}$是$\phi$的共轭。
 将方程（\ref{eq:phase_func}）带入方程（\ref{eq:one_step}）中可以显示得到粘声方程的正传算子
 \begin{equation}
 	\begin{aligned}
-		p(\mathbf{x},t+\Delta t)&=\int \hat{p}(\mathbf{x},t)e^{i\phi_1(\mathbf{x},
+		p(\mathbf{x},t+\Delta t)&=\int \hat{p}(\mathbf{k},t)e^{i\phi_1(\mathbf{x},
 		\mathbf{k},\Delta t)}d\mathbf{k}, \\
-		&=\int \hat{p}(\mathbf{x},t)e^{i\mathbf{k}\cdot\mathbf{x}+(p_1+ip_2)\Delta t/2}d\mathbf{k}.
+		&=\int \hat{p}(\mathbf{k},t)e^{i\mathbf{k}\cdot\mathbf{x}+(p_1+ip_2)\Delta t/2}d\mathbf{k}.
 	\end{aligned}
 	\label{eq:forward}
 \end{equation}
 其对应的伴随算子为：
 \begin{equation}
 	\begin{aligned}
-		\hat{p}_{adj}(\mathbf{x},t)&=\int p(\mathbf{x},t+\Delta t)e^{-i\bar{\phi}_1(\mathbf{x},
+		\hat{p}_{adj}(\mathbf{k},t)&=\int p(\mathbf{x},t+\Delta t)e^{-i\bar{\phi}_1(\mathbf{x},
 		\mathbf{k},\Delta t)}d\mathbf{k}, \\
 		&=\int \hat{p}(\mathbf{x},t+\Delta t)e^{-i\mathbf{k}\cdot\mathbf{x}+(p_1-ip_2)\Delta t/2}d\mathbf{k}.
 	\end{aligned}
@@ -76,16 +76,16 @@ $Q$-RTM。
 在$Q$-RTM中，正传和反传波场都应该补偿能量的衰减，其对应的正传和反传算子如下：
 \begin{equation}
 	\begin{aligned}
-		p_{comp}(\mathbf{x},t+\Delta t)&=\int \hat{p}(\mathbf{x},t)e^{i\phi_2(\mathbf{x},
+		p_{comp}(\mathbf{x},t+\Delta t)&=\int \hat{p}(\mathbf{k},t)e^{i\phi_2(\mathbf{x},
 		\mathbf{k},\Delta t)}d\mathbf{k}, \\
-		&=\int \hat{p}(\mathbf{x},t)e^{i\mathbf{k}\cdot\mathbf{x}+(-p_1+ip_2)\Delta t/2}d\mathbf{k},
+		&=\int \hat{p}(\mathbf{k},t)e^{i\mathbf{k}\cdot\mathbf{x}+(-p_1+ip_2)\Delta t/2}d\mathbf{k},
 	\end{aligned}
 	\label{eq:forward1}
 \end{equation}
 和
 \begin{equation}
 	\begin{aligned}
-		\hat{p}_{comp-adj}(\mathbf{x},t)&=\int p(\mathbf{x},t+\Delta t)e^{-i\bar{\phi}_2(\mathbf{x},
+		\hat{p}_{comp-adj}(\mathbf{k},t)&=\int p(\mathbf{x},t+\Delta t)e^{-i\bar{\phi}_2(\mathbf{x},
 		\mathbf{k},\Delta t)}d\mathbf{k}, \\
 		&=\int \hat{p}(\mathbf{x},t+\Delta t)e^{-i\mathbf{k}\cdot\mathbf{x}+(-p_1-ip_2)\Delta t/2}d\mathbf{k}.
 	\end{aligned}
@@ -107,3 +107,6 @@ $Q$-RTM。
 	\label{eq:lowrank}
 \end{equation}
 方程（\ref{eq:lowrank}）的计算量相当于每个时间步做$N$次反Fourier变换，在实际中，$N<10$。
+
+
+\chapter{DCQ方程反射全波形反演梯度推导}
