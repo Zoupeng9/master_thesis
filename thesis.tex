@@ -30,6 +30,9 @@
 
 \mainmatter	% 使用阿拉伯数字对正文编号
 
+\newcommand{\citeA}[1]{\citeauthor{#1}, \, \citeyear{#1} \cite{#1}}
+\newcommand{\citeB}[1]{\citeauthor{#1} (\citeyear{#1}) \cite{#1}}
+
 %% 正文内容
 \include{main/chapter01}
 \include{main/chapter02}

@@ -5,7 +5,7 @@
 \renewcommand\thetable{\Alph{chapter}--\arabic{table}}
 
 \chapter{低秩近似求解DCQ方程}
-\citeA{zhu.harris:2014},推导的DCQ方程有如下的频散关系：
+\citeB{zhu.harris:2014}推导的DCQ方程有如下的频散关系：
 \begin{equation}
     \frac{\omega^2}{c^2}=-\eta|\mathbf{k}|^{2\gamma+2}-i\omega\tau|\mathbf{k}|^{2\gamma+1},
 	\label{eq:disp}
@@ -40,7 +40,7 @@
 	\label{eq:phase_func1}
 \end{equation}
 相位函数$\phi_1$和$\phi_2$都包含波数的分数阶指数，同时是空间位置$\mathbf{x}$和波数$\mathbf{k}$
-的函数。\citeA{sun.zhu:2015},用这种相位函数来延拓粘声波场，并允许分数阶指数$\gamma(\mathbf{x})$
+的函数。\citeB{sun.zhu:2015}用这种相位函数来延拓粘声波场，并允许分数阶指数$\gamma(\mathbf{x})$
 随空间变化。单步混合域算子可以整合成如下的Fourier积分算子：
 \begin{equation}
 	p(\mathbf{x},t+\Delta t)=\int \hat{p}(\mathbf{k},t)e^{i\phi(\mathbf{x},\mathbf{k},\Delta t)}
@@ -94,7 +94,7 @@ $Q$-RTM。
 
 以上方程中的混合域算子$e^{i\phi(\mathbf{x},\mathbf{k},\Delta t)}$统一
 用$W(\mathbf{x},\mathbf{k})$来表示，由于
-其涉及空间-波数域的相互变换，导致数值计算非常昂贵。\citeA{fomel.ying:2013}，用低秩近似来降低
+其涉及空间-波数域的相互变换，导致数值计算非常昂贵。\citeB{fomel.ying:2013}用低秩近似来降低
 混合域算子的计算量。其形式可以表示为如下形式：
 \begin{equation}
 	W(\mathbf{x},\mathbf{k})\approx\sum_{m=1}^M\sum_{n=1}^NW(\mathbf{x},\mathbf{k}_m)a_{mn}
