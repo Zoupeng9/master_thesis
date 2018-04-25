@@ -437,10 +437,10 @@ Function{upcase}
 { "u" change.case$ }
 if$
 }
-FUNCTION {bib.name.font}
-{ upcase }
-FUNCTION {bib.fname.font}
-{ bib.name.font }
+%FUNCTION {bib.name.font}
+%{ upcase }
+%FUNCTION {bib.fname.font}
+%{ bib.name.font }
 %%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%
@@ -3172,12 +3172,12 @@ FUNCTION {format.lab.names}                                      %wk
 s #1 "{vv~}{ll}" format.name$
 s num.names$ duplicate$
 #2 >
-{ pop$ " et al." * }
+{ pop$ " 等" * }
 { #2 <
 'skip$
 { s #2 "{ff }{vv }{ll}{ jj}" format.name$ "others" =
 { " {\em et~al.}" * }
-{ " and " * s #2 "{vv~}{ll}" format.name$ * }           %wk
+{ " 和 " * s #2 "{vv~}{ll}" format.name$ * }           %wk
 if$
 }
 if$
