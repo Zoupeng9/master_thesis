@@ -124,7 +124,7 @@ RWI主要是通过上下行波分离来提取反射波在反射波路径上的�
 本节将用基于Born正演的方式来重述RWI的推导。
 
 根据\citeB{ma.hale:2013}的推导，将模型参数$\mathbf{m}$分解为光滑的低波数背景模型
-$\mathbf{m}^s$和高波数扰动$\mathbf{m}^r$（图~\ref{schematic_rwi}）：
+$\mathbf{m}^s$和高波数扰动$\mathbf{m}^r$（图~\ref{fig:schematic_rwi}）：
 \begin{equation}
 	\mathbf{m}=\mathbf{m}^s+\mathbf{m}^r.
 \end{equation}
@@ -134,7 +134,7 @@ $\mathbf{m}^s$和高波数扰动$\mathbf{m}^r$（图~\ref{schematic_rwi}）：
 	\left(\mathbf{m}^s\frac{\partial^2}{\partial t^2}-\bigtriangledown^2\right)\mathbf{p}_b
 	=f(t,\mathbf{x}_s),
 \end{equation}
-高波数扰动$\mathbf{m}^r$对应于反射波场$\mathbf{p}_c\equiv p_c\mathbf{x}_s,\mathbf{x}_g,t)$：
+高波数扰动$\mathbf{m}^r$对应于反射波场$\mathbf{p}_c\equiv p_c(\mathbf{x}_s,\mathbf{x}_g,t)$：
 \begin{equation}
 	\left((\mathbf{m}^s+\mathbf{m}^r)\frac{\partial^2}{\partial t^2}-\bigtriangledown^2\right)
 	\mathbf{p}_c=-\mathbf{m}^r\frac{\partial^2}{\partial t^2}\mathbf{p}_b,
@@ -156,9 +156,152 @@ $\mathbf{m}^s$和高波数扰动$\mathbf{m}^r$（图~\ref{schematic_rwi}）：
 	\label{fig:schematic_rwi}
 \end{figure*}
 
-\vspace{0.5cm}
+根据伴随状态法（\citeA{plessix:2006}），低波数背景模型的梯度可以表示为（\citeA{ma.hale:2013}）：
+\begin{equation}
+	\partial_{\mathbf{m}^s}\mathcal{J}=-\int d\mathbf{x}_sdt\mathbf{q}_c\ddot{\mathbf{p}}_b
+	-\int d\mathbf{x}_sdt\mathbf{q}_b\ddot{\mathbf{p}}_c,
+	\label{eq:grad_ms}
+\end{equation}
+高波数的扰动模型的梯度为：
+\begin{equation}
+	\partial_{\mathbf{m}^r}\mathcal{J}=-\int d\mathbf{x}_sdt\mathbf{q}_b\ddot{\mathbf{p}}_b
+\end{equation}
+式中$\mathbf{q}_b\equiv q_b(\mathbf{x}_s,\mathbf{x}_g,t)$和
+$\mathbf{q}_c\equiv q_c(\mathbf{x}_s,\mathbf{x}_g,t)$是伴随场，即伴随方程的解。
+方程~\ref{eq:grad_ms}右端的第一项表示源端的正传波场$\ddot{\mathbf{p}}_b$与反传波场
+$\mathbf{q}_c$的零延迟互相关（图~\ref{fig:grad}c），同样地，第二项是正传波场$\ddot{\mathbf{p}}_c$和检波点端
+反传波场$\mathbf{q}_b$的零延迟互相关（图~\ref{fig:grad}d）。正如图~\ref{fig:schematic_rwi}所示，模型的高波数
+成分$\mathbf{m}^r$散射源端的正传背景场$\mathbf{p}_b$和检波点端的反传背景场$\mathbf{q}_b$，
+换句话说，$\mathbf{m}^r$中的每一点都可以看成是虚拟震源来产生散射波场$\mathbf{p}_c$和
+$\mathbf{q}_c$。背景模型的梯度$\partial_{\mathbf{m}^s}\mathcal{J}$跟预想的一样，是沿反射波的波路径分部的，
+即从震源出发到达地下反射位置然后再返回接收点。这样的梯度携带了地下中深层的参数信息，用以更新中深层的背景
+模型是可靠的。相反，$\partial_{\mathbf{m}^r}\mathcal{J}$类似于RTM成像结果，主要分部在反射
+位置$\mathbf{m}^r$附近，用以产生反射数据。
+
+\newpage
 \subsection{基于粘声方程的反射全波形反演}
 \vspace{0.5cm}
+
+根据第二章第二节的推导，对于给定的速度以及$Q$模型，压力波场可用如下SLS方程进行计算：
+     \begin{eqnarray}
+        \begin{aligned}
+        \frac{\partial P}{\partial t} -
+        K(\tau+1)(\frac{\partial v_x}{\partial x}
+        +\frac{\partial v_z}{\partial z})-r_p &=f(\mathbf{x}_s,t),
+        \\
+        \frac{\partial v_x}{\partial t} - \frac{1}{\rho}\frac{\partial P}{\partial x}
+        &=0,\\
+        \frac{\partial v_z}{\partial t} - \frac{1}{\rho}\frac{\partial P}{\partial z}&=0,\\
+        \frac{\partial{r_p}}{\partial t} +
+        \frac{1}{\tau_\sigma}\left[r_p+K\tau(\frac{\partial
+        v_x}{\partial x}+\frac{\partial v_z}{\partial z})\right]&=0,
+        \end{aligned}
+        \label{eq:viscoacoustic}
+    \end{eqnarray}
+式中$v_x$和$v_z$表示质点的振动速度，$P$表示压力场，$r_p$为记忆变量，$K$表示介质的体积
+模量，为了简化表示我们假定密度是常数。应力以及应变的驰豫参数$\tau_\sigma$，$\tau_\epsilon$
+以及$\tau$与品质因子$Q$和参考频率$f_\omega$有关，在地震勘探应用中，通常选取震源子波
+的中心频率为其参考频率，即有：
+    \begin{eqnarray}
+        \begin{aligned}
+            \tau_\sigma &= \frac{\sqrt{1+\frac{1}{Q^2}}-\frac{1}{Q}}{f_\omega},\\
+            \tau_\epsilon &= \frac{1}{f^2_\omega\tau_\sigma}=\frac{\sqrt{1+\frac{1}{Q^2}}+\frac{1}{Q}}{f_\omega},
+        \end{aligned}
+    \end{eqnarray}
+以及
+    \begin{eqnarray}
+        \tau=\frac{\tau_\epsilon}{\tau_\sigma}-1=\frac{2}{Q}(\frac{1}{Q}+\sqrt{1+\frac{1}{Q^2}}).
+        \label{eq:tq}
+    \end{eqnarray}
+
+在$Q$-RWI中，主要反演背景的$Q$，我们认为衰减对宏观地震波的影响主要发生在波路径上，
+即是一种传播效应不是界面效应，所以不对$Q$进行波数成分的分解。为了描述波路径产生反射波，携带
+衰减信息，我们将体积模量$K$分解为光滑背景$K_0$和高波数扰动$\delta K$：
+\begin{equation}
+	K = K_0 + \delta K.
+\end{equation}
+根据SLS粘声波方程~\ref{eq:viscoacoustic}以及Born近似假设，$Q$-RWI的物理状态方程可
+写为如下矩阵向量乘的形式：
+\begin{equation}
+    \mathbf{L}\mathbf{w} = \mathbf{f},
+    \label{eq:state}
+\end{equation}
+其中
+    \begin{eqnarray*}
+        \mathbf{L}= 
+        \begin{bmatrix}
+            \begin{smallmatrix}
+            \frac{\partial}{\partial t} &-K_0(\tau +1)\frac{\partial}{\partial x}
+            &-K_0(\tau +1)\frac{\partial}{\partial z} &-1 &0 &0 &0 &0\cr
+            -\frac{1}{\rho}\frac{\partial}{\partial x} &\frac{\partial}{\partial t} &0
+            &0 &0 &0 &0 &0\cr
+            -\frac{1}{\rho}\frac{\partial}{\partial z} &0 &\frac{\partial}{\partial t}
+            &0 &0 &0 &0 &0\cr
+            0 & \frac{\tau}{\tau_\sigma}K_0\frac{\partial}{\partial x}
+            &\frac{\tau}{\tau_\sigma}K_0\frac{\partial}{\partial z}
+            &\frac{\partial}{\partial t}+\frac{1}{\tau_\sigma} &0 &0 &0 &0 \cr
+            0 &-\delta K(\tau+1)\frac{\partial}{\partial x} &-\delta
+            K(\tau+1)\frac{\partial}{\partial z} &0 &\frac{\partial}{\partial t}
+            &-K_0(\tau +1)\frac{\partial}{\partial x} &-K_0(\tau
+            +1)\frac{\partial}{\partial z} &-1 \cr
+            0 &0 &0 &0 &-\frac{1}{\rho}\frac{\partial}{\partial x}
+            &\frac{\partial}{\partial t} &0 &0\cr
+            0 &0 &0 &0 &-\frac{1}{\rho}\frac{\partial}{\partial z} &0
+            &\frac{\partial}{\partial t} &0\cr
+            0 &\frac{\tau}{\tau_\sigma}\delta K\frac{\partial}{\partial x}
+            &\frac{\tau}{\tau_\sigma}\delta K\frac{\partial}{\partial z} &0 &0 
+            & \frac{\tau}{\tau_\sigma}K_0\frac{\partial}{\partial x}
+            &\frac{\tau}{\tau_\sigma}K_0\frac{\partial}{\partial z}
+            &\frac{\partial}{\partial t}+\frac{1}{\tau_\sigma}
+            \end{smallmatrix}
+        \end{bmatrix}
+    \end{eqnarray*}
+以及
+    \begin{eqnarray*}
+        \mathbf{w} = 
+        \begin{bmatrix}
+            P \cr v_x \cr v_z \cr r_p \cr\delta P \cr\delta v_x \cr\delta v_z
+            \cr\delta r_p
+        \end{bmatrix},
+        \mathbf{f} = 
+        \begin{bmatrix}
+            f \cr 0\cr 0\cr 0 \cr 0\cr 0 \cr 0\cr 0
+        \end{bmatrix}.
+    \end{eqnarray*}
+$\mathbf{w}$表示状态变量，$\mathbf{L}$表示正演模拟算子。在这种情况下，
+正算子的伴随算子$\mathbf{L}^\ast$有如下表达式：
+    \begin{eqnarray*}
+        \mathbf{L}^\ast =  
+        \begin{bmatrix}
+%            \begin{smallmatrix}
+            -\frac{\partial}{\partial t} &\frac{\partial}{\partial x}\frac{1}{\rho}
+            &\frac{\partial}{\partial z}\frac{1}{\rho} &0 &0 &0 &0 &0\cr
+            \frac{\partial}{\partial x}K_0(\tau +1) &-\frac{\partial}{\partial t} &0 
+            &-\frac{\partial}{\partial x}\frac{\tau}{\tau_\sigma}K_0
+            &\frac{\partial}{\partial x}\delta K(\tau+1) &0 &0
+            &-\frac{\partial}{\partial x}\frac{\tau}{\tau_\sigma}\delta K \cr
+            \frac{\partial}{\partial z}K_0(\tau +1) &0 &-\frac{\partial}{\partial t} 
+            &-\frac{\partial}{\partial z}\frac{\tau}{\tau_\sigma}K_0
+            &\frac{\partial}{\partial z}\delta K(\tau+1) &0 &0
+            &-\frac{\partial}{\partial z}\frac{\tau}{\tau_\sigma}\delta K \cr
+            -1 &0 &0 &-\frac{\partial}{\partial t}+\frac{1}{\tau_\sigma} &0 &0 &0 &0\cr
+            0 &0 &0 &0 &-\frac{\partial}{\partial t} &\frac{\partial}{\partial
+            x}\frac{1}{\rho} &\frac{\partial}{\partial z}\frac{1}{\rho} &0\cr
+            0 &0 &0 &0 &\frac{\partial}{\partial x}K_0(\tau +1)
+            &-\frac{\partial}{\partial t} &0 &-\frac{\partial}{\partial
+            x}\frac{\tau}{\tau_\sigma}K_0 \cr
+            0 &0 &0 &0 &\frac{\partial}{\partial z}K_0(\tau +1) &0
+            &-\frac{\partial}{\partial t} &-\frac{\partial}{\partial
+        z}\frac{\tau}{\tau_\sigma}K_0 \cr
+           0 &0 &0 &0 &-1 &0 &0 &-\frac{\partial}{\partial t}+\frac{1}{\tau_\sigma}
+%            \end{smallmatrix}
+        \end{bmatrix},
+    \end{eqnarray*}
+式中$\ast$表示伴随。对于真实的地质模型，驰豫参数$\tau$比$\tau_\sigma$和$\tau_\epsilon$
+有较宽的数值变化范围。因此我们选择$\tau$作为参数化参数，因为其对$Q$的变化更敏感
+（\citeA{dutta.schuster:2016}）。
+
+
 
 \section{数值实验}
 
