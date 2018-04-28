@@ -660,6 +660,74 @@
   {\newline}% Space after thm head: \newline = linebreak
   {}%         Thm head spec
 
+\newcounter{@plots}
+\setcounter{@plots}{0}
+\DeclareRobustCommand{\fullplot}[4][htbp]{%
+  \begin{figure*}[#1]
+    \centering
+    \includegraphics[#3]{\fig@file{#2}}
+    \caption[]{#4}
+    \label{fig:\@path-#2}
+    \label{fig:#2}
+  \end{figure*}}
+\DeclareRobustCommand{\sideplot}[4][htbp]{%
+  \begin{figure}[#1]
+    \centering
+    \includegraphics[#3]{\fig@file{#2}}
+    \caption[]{#4}
+    \label{fig:\@path-#2}
+    \label{fig:#2}
+  \end{figure}}
+\def\plot{\@ifstar{\fullplot}{\sideplot}}
+\RequirePackage{subfig}
+\def\next@item#1,#2?{#1}
+\def\rest@item#1,#2?{#2}
+\newcounter{sub@fig}
+\newcommand{\sidemultiplot}[5][htbp]{
+  \begin{figure}[#1]
+    \centering
+    \setcounter{sub@fig}{0}
+    \edef\list@i{#3}
+    \loop
+    \edef\item@i{\expandafter\next@item\list@i,\empty?}
+    \edef\list@i{\expandafter\rest@item\list@i,\empty?}
+    \ifx\item@i\empty
+    \else
+    \stepcounter{sub@fig}
+    \subfloat[]{\includegraphics[#4]{\fig@file{\item@i}}%
+      \label{fig:\@path-\item@i}
+      \label{fig:\item@i}}
+    \ifthenelse{\value{sub@fig} = #2}{\\ \setcounter{sub@fig}{0}}{}
+    \repeat
+    \caption{#5}
+    \label{fig:\@path-#3}
+    \label{fig:#3}
+  \end{figure}
+}
+\newcommand{\fullmultiplot}[5][htbp]{
+  \begin{figure*}[#1]
+    \centering
+    \setcounter{sub@fig}{0}
+    \edef\list@i{#3}
+    \loop
+    \edef\item@i{\expandafter\next@item\list@i,\empty?}
+    \edef\list@i{\expandafter\rest@item\list@i,\empty?}
+    \ifx\item@i\empty
+    \else
+    \stepcounter{sub@fig}
+    \subfloat[]{\includegraphics[#4]{\fig@file{\item@i}}%
+      \label{fig:\@path-\item@i}
+      \label{fig:\item@i}}
+    \ifthenelse{\value{sub@fig} = #2}{\\ \setcounter{sub@fig}{0}}{}
+    \repeat
+    \caption{#5}
+    \label{fig:\@path-#3}
+    \label{fig:#3}
+  \end{figure*}
+}
+\def\multiplot{\@ifstar{\fullmultiplot}{\sidemultiplot}}
+
+
 \endinput
 
 %%

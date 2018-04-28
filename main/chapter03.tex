@@ -108,7 +108,10 @@ $Q$-FWI的成功需要低频长偏移距地震数据，但是这种高质量的�
 
 \begin{figure*}[!htbp]
 	\centering
-	\includegraphics[width=1.0\linewidth]{figure/grad}
+	\subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad_fwi_dir}}
+	\subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad_mig}}
+	\subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grads_rwi_one}}
+	\subfigure[]{\includegraphics[width=0.45\linewidth]{figure/gradr_rwi_one}}
 	\fcaption{常规FWI梯度分解。（a）直达波梯度；（b）偏移响应；（c）源端反射波梯度；
 	（d）检波点端反射波梯度。}{The sub-gradients of FWI. (a) direct wave gradient; 
 	(b) migration-ellipse; (c) source side gradient; (d) receiver side gradient.
@@ -173,9 +176,9 @@ $\mathbf{q}_c$的零延迟互相关（图~\ref{fig:grad}c），同样地，第�
 反传波场$\mathbf{q}_b$的零延迟互相关（图~\ref{fig:grad}d）。正如图~\ref{fig:schematic_rwi}所示，模型的高波数
 成分$\mathbf{m}^r$散射源端的正传背景场$\mathbf{p}_b$和检波点端的反传背景场$\mathbf{q}_b$，
 换句话说，$\mathbf{m}^r$中的每一点都可以看成是虚拟震源来产生散射波场$\mathbf{p}_c$和
-$\mathbf{q}_c$。背景模型的梯度$\partial_{\mathbf{m}^s}\mathcal{J}$跟预想的一样，是沿反射波的波路径分部的，
+$\mathbf{q}_c$。背景模型的梯度$\partial_{\mathbf{m}^s}\mathcal{J}$跟预想的一样，是沿反射波的波路径分布的，
 即从震源出发到达地下反射位置然后再返回接收点。这样的梯度携带了地下中深层的参数信息，用以更新中深层的背景
-模型是可靠的。相反，$\partial_{\mathbf{m}^r}\mathcal{J}$类似于RTM成像结果，主要分部在反射
+模型是可靠的。相反，$\partial_{\mathbf{m}^r}\mathcal{J}$类似于RTM成像结果，主要分布在反射
 位置$\mathbf{m}^r$附近，用以产生反射数据。
 
 \newpage
@@ -299,9 +302,91 @@ $\mathbf{w}$表示状态变量，$\mathbf{L}$表示正演模拟算子。在这�
     \end{eqnarray*}
 式中$\ast$表示伴随。对于真实的地质模型，驰豫参数$\tau$比$\tau_\sigma$和$\tau_\epsilon$
 有较宽的数值变化范围。因此我们选择$\tau$作为参数化参数，因为其对$Q$的变化更敏感
-（\citeA{dutta.schuster:2016}）。
+（\citeA{dutta.schuster:2016}）。用伴随状态法可推导出目标函数$\mathcal{J}(\mathbf{m})$
+对驰豫参数$\tau$的梯度为：
+   \begin{equation}
+    \begin{aligned}
+        \frac{\partial \mathcal{J}}{\partial \tau} &= -\langle\frac{\partial \mathbf{L}}{\partial\tau}
+        \mathbf{w},\tilde{\mathbf{w}} \rangle \\
+        &= {K_0(\frac{\partial v_x}{\partial
+        x}+\frac{\partial v_z}{\partial
+    z})(-\delta\tilde{P}+\frac{1}{\tau_\sigma}\delta\tilde{r}_p)} \\
+    &{+K_0(\frac{\partial \delta v_x}{\partial x}+\frac{\partial \delta
+        v_z}{\partial z})(-\tilde{P}+\frac{1}{\tau_\sigma}\tilde{r}_p)} \\
+        &{+\delta K(\frac{\partial v_x}{\partial x}+\frac{\partial v_z}{\partial
+        z})(-\tilde{P}+\frac{1}{\tau_\sigma}\tilde{r}_p)},
+    \end{aligned}
+    \label{eq:gradient}
+    \end{equation}
+式中$\tilde{\mathbf{w}}=\lbrack \delta\tilde{P}, \ \delta \tilde{v}_x, \ \delta \tilde{v}_z, \
+\delta \tilde{r}_p, \ \tilde{P}, \ \tilde{v}_x, \ \tilde{v}_z, \ \tilde{r}_p\rbrack ^T$是
+物理状态变量$\mathbf{w}$的伴随状态变量（$T$表示转置），满足如下伴随方程：
+\begin{equation}
+	\mathbf{L}^\ast\tilde{\mathbf{w}} = \Delta\mathbf{d}.
+\end{equation}
+在实际勘探中，通常只接收到了波场的压力分量，所以地震数据的残差只有一个分量，即：
+\begin{equation}
+    \Delta\mathbf{d} = \lbrack 0, \ 0, \ 0, \ 0, \ \Delta d, \ 0, \ 0, \ 0\rbrack^T.
+\end{equation}
+本章主要是理论的角度来推导$Q$-RWI方法并证明其对反演深层背景衰减模型的有效性，所以我们
+假定介质的背景体积模量$K_0$和扰动$\delta K$都是已知的，并且地震数据是无噪的。在这
+中假设下选取振幅差作为目标函数（方程~\ref{eq:misfit_function}）是可行的，并且伴随方程的
+伴随源有最简单的形式即模拟数据与观测数据的残差。
+
+\begin{figure*}[!htbp]
+    \centering
+    \subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad1}}
+    \subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad2}}
+    \subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad3}}
+    \fcaption{两层介质$Q$-RWI中背景$Q$的子梯度。（a）源端梯度；（b）检波点端梯度；
+	（c）高波数奇异分量。}{Sub-gradients of $Q$-RWI for simple two-layer model: 
+	(a) sourece-side reflection gradient; (b) receiver-side reflection gradient; 
+	and singular component.}[两层介质$Q$-RWI中背景$Q$的子梯度]
+    \label{fig:grad_qrwi}
+\end{figure*}
+
+$Q$-RWI的梯度公式（\ref{eq:gradient}）共包含三项。如图~\ref{fig:grad_qrwi}所示，
+第一二项”兔耳朵“状的梯度，提供了沿反射波路径的低波数的背景$Q$的更新量。第三项对应于
+反射波在成像点的成像结果，对RWI来说是奇异的非光滑的分量。第三项会在反射界面位置更新
+高波数成分从而增加反演的非线性程度。在声波的RWI中，\citeB{wu.alkhalifah:2015}观察到
+第三项在反射界面处的值的符号与第一二项在反射界面处的值相反，但是数值不一样。他们将
+将第三项加入反演中，通过求解一个内部优化问题，用第三项来减弱第一二项在反射界面处
+的影响以降低反演的非线性程度。为了不增加反演的计算量，在$Q$-RWI中我们省略掉第三项，
+同时用Poynting矢量来简单区分上下行波（\citeA{yoon.marfurt:2006}），
+以减弱梯度在反射界面处的奇异性。由图~\ref{fig:grad_poynting}可以看出，无论是单炮单道、
+单炮多道还是多炮多道叠加，用Poynting矢量来进行上下行波分离的预条件都减弱了$Q$-RWI中
+梯度在反射界面处的奇异性，从而增强了反演的稳定性。
+
+\begin{figure*}[!htbp]
+    \centering
+    \subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad_rwi}}
+    \subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad_rwi_poynting}}
+    \subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad_rwi_oneshot}}
+    \subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad_rwi_poynting_oneshot}}
+    \subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad}}
+    \subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad_poynting}}
+    \fcaption{两层介质Poynting矢量预条件梯度对比，左边是没有预条件的梯度，右边是通过
+	Poynting矢量上下行波分离预条件的梯度。（a，b）单炮单道；（c，d）单炮多道；
+	（e，f）多炮多道。}{Comparison the gradients before and after using Poynting vector 
+	for preconditing for simple two-layer model, the left column are before precondition 
+	gradients and the righ column are after precondition results. (a, b) one shot and one 
+	trance; (c, d) one shot and multi-trances; (e, f) multi-shots and multi-trances. 
+	}[两层介质Poynting矢量预条件梯度对比]
+    \label{fig:grad_poynting}
+\end{figure*}
+
+计算出梯度之后，$\tau(\mathbf{x})$可用最速下降法来迭代求解：
+\begin{equation}
+    \tau(\mathbf{x})^{(k+1)}=\tau(\mathbf{x})^k-\alpha \mathbf{P_c}(\mathbf{x})
+    \frac{\partial \mathcal{L}}{\partial \tau(\mathbf{x})},
+\end{equation}
+式中$k$是迭代次数，$\mathbf{P}_c(\mathbf{x})$是预条件算子，步长$\alpha$可通过
+任何反向追踪的线性搜索方法求解（\citeA{nocedal:1999}）。在每一个迭代步内，
+当$\tau(\mathbf{x})$更新之后可用方程~\ref{eq:tq}将其转换为$Q(\mathbf{x})$。
 
 
 
+
+\vspace{0.5cm}
 \section{数值实验}
 
