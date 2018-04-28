@@ -355,7 +355,8 @@ $Q$-RWI的梯度公式（\ref{eq:gradient}）共包含三项。如图~\ref{fig:g
 同时用Poynting矢量来简单区分上下行波（\citeA{yoon.marfurt:2006}），
 以减弱梯度在反射界面处的奇异性。由图~\ref{fig:grad_poynting}可以看出，无论是单炮单道、
 单炮多道还是多炮多道叠加，用Poynting矢量来进行上下行波分离的预条件都减弱了$Q$-RWI中
-梯度在反射界面处的奇异性，从而增强了反演的稳定性。
+梯度在反射界面处的奇异性，从而增强了反演的稳定性。以上的$Q$-RWI梯度是基于SLS粘声方程
+推导的，这套推导方法同样适合于常$Q$粘声方程，其具体推导可参见附录B。
 
 \begin{figure*}[!htbp]
     \centering
@@ -385,8 +386,60 @@ $Q$-RWI的梯度公式（\ref{eq:gradient}）共包含三项。如图~\ref{fig:g
 当$\tau(\mathbf{x})$更新之后可用方程~\ref{eq:tq}将其转换为$Q(\mathbf{x})$。
 
 
-
-
-\vspace{0.5cm}
+\newpage
 \section{数值实验}
+
+\begin{figure*}[!htbp]
+    \centering
+    %{\includegraphics[width=0.85\linewidth]{figure/model}}
+	\subfigure[]{\includegraphics[width=0.82\linewidth]{figure/vel_400x250}}
+	\subfigure[]{\includegraphics[width=0.82\linewidth]{figure/q_400x250}}
+	\subfigure[]{\includegraphics[width=0.82\linewidth]{figure/fq_400x250}}
+	\fcaption{层状模型：（a）速度模型；（b）真实$Q$模型；（c）$Q$-RWI
+	反演结果。}{The layered model:(a) the velocity model,
+	(b) true $Q$ model and (c) inverted $Q$ model using $Q$-RWI.}
+	[层状模型]
+    \label{fig:lens_model}
+\end{figure*}
+
+\begin{figure*}[!htbp]
+    \centering
+	\subfigure[]{\includegraphics[width=0.32\linewidth]{figure/1km}}
+	\subfigure[]{\includegraphics[width=0.32\linewidth]{figure/2km}}
+	\subfigure[]{\includegraphics[width=0.32\linewidth]{figure/3km}}
+	\fcaption{抽线对比：（a）1km处；（b）2km处；（c）3km处。}{Pseudowells comparison at (a) 1km, (b) 2km
+	and (c) 3km.}[抽线对比结果]
+    \label{fig:chouxian}
+\end{figure*}
+
+\begin{figure*}[!htbp]
+    \centering
+    {\includegraphics[width=1.0\linewidth]{figure/misfit}}
+    \fcaption{收敛曲线}{The history of convergence.}[收敛曲线]
+    \label{fig:misfit_model}
+\end{figure*}
+
+\begin{figure*}[!htbp]
+    \centering
+	\subfigure[]{\includegraphics[width=0.47\linewidth]{figure/record}}
+	\subfigure[]{\includegraphics[width=0.47\linewidth]{figure/diff0}}
+	\subfigure[]{\includegraphics[width=0.47\linewidth]{figure/diff30}}
+	\fcaption{数据残差比较：（a）在1km处的单炮记录；（b）跟初始模型正演数据的残差；
+	（c）迭代30次后的数据残差。}{(a) The observed data for the shot
+	at 1km, (b) the residual with the initial $Q$, and (c) the residual with the 
+	$Q$-RWI inverted $Q$.}[数据残差对比结果]
+    \label{fig:record_diff}
+\end{figure*}
+
+\begin{figure*}[!htbp]
+    \centering
+	\subfigure[]{\includegraphics[width=0.72\linewidth]{figure/rtm_no400x250}}
+	\subfigure[]{\includegraphics[width=0.72\linewidth]{figure/rtm_true400x250}}
+	\subfigure[]{\includegraphics[width=0.72\linewidth]{figure/rtm_fq400x250}}
+	\fcaption{$Q$-RTM成像结果：（a）初始$Q$补偿结果；（b）真实$Q$补偿结果；
+	$Q$-RWI反演$Q$补偿结果。}{$Q$-compensated RTM images using initial
+	$Q$ model (a); true $Q$ model (b) and $Q$-RWI inverted $Q$ model (c).}
+	[$Q$-RTM成像结果]
+    \label{fig:rtm_model}
+\end{figure*}
 

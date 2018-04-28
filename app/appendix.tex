@@ -17,9 +17,11 @@
 其中
 \begin{equation}
 	p_1=\tau c^2|\mathbf{k}|^{2\gamma+1},
+	\label{eq:p1}
 \end{equation}
 \begin{equation}
 	p_2=\sqrt{-\tau^2c^4|\mathbf{k}|^{4\gamma+2}-4\eta c^2|\mathbf{k}|^{2\gamma+2}}.
+	\label{eq:p2}
 \end{equation}
 在时间域决定波传播的相移函数可以定义为：
 \begin{equation}
@@ -94,7 +96,8 @@ $Q$-RTM。
 
 以上方程中的混合域算子$e^{i\phi(\mathbf{x},\mathbf{k},\Delta t)}$统一
 用$W(\mathbf{x},\mathbf{k})$来表示，由于
-其涉及空间-波数域的相互变换，导致数值计算非常昂贵。\citeB{fomel.ying:2013}用低秩近似来降低
+其涉及空间-波数域的相互变换，直接计算的计算量是$\mathcal{O}(N^2_X)$，$N_X$是模型大小维度
+，所以直接求解的计算量是不可承受的。\citeB{fomel.ying:2013}用低秩近似来降低
 混合域算子的计算量。其形式可以表示为如下形式：
 \begin{equation}
 	W(\mathbf{x},\mathbf{k})\approx\sum_{m=1}^M\sum_{n=1}^NW(\mathbf{x},\mathbf{k}_m)a_{mn}
@@ -110,3 +113,70 @@ $Q$-RTM。
 
 
 \chapter{DCQ方程反射全波形反演梯度推导}
+\vspace{-3.0cm}
+根据第二章的常$Q$理论以及附录A中的单步低秩延拓方法，衰减介质中的压力波场是复数并且
+满足如下一阶偏微分方程：
+\begin{equation}
+    (\frac{\partial}{\partial t} + i\varphi)P_b(\mathbf{x},t)=f(t;\mathbf{x}_s),
+\end{equation}
+式中$\varphi=\frac{-ip_1+p_2}{2}$是相移符号，并且$p_1$、$p_2$满足~\ref{eq:p1}、\ref{eq:p2}式。
+在Born近似下，扰动波场可由如下方程计算：
+\begin{equation}
+	(\frac{\partial}{\partial t} +
+	i\varphi)P_c(\mathbf{x},t)={\delta cP_b=I(\mathbf{x})P_b},
+\end{equation}
+式中$\delta c$表示速度扰动，在实际计算过程中通常用最小平方偏移的像$I(\mathbf{x})$来代替。
+用波场残差的最小二乘目标函数（方程~\ref{eq:misfit_function}），伴随状态法的增广函数可定义为：
+    \begin{equation}
+        \begin{aligned}
+            \mathcal{L}(\mathbf{p}_b,\mathbf{p}_c,\mathbf{q}_b,\mathbf{q}_c)
+            &=\frac{1}{2}\int d\mathbf{x}_sd\mathbf{x}_rdt\Delta p^2(\mathbf{x}_r,t;\mathbf{x}_s) \\
+            &-\int d\mathbf{x}_sd\mathbf{x}_rdt
+            \mathbf{q}_b\Big((\frac{\partial}{\partial t} + i\varphi)P_c-\delta
+            cP_b\Big) \\
+            &-\int d\mathbf{x}_sd\mathbf{x}_rdt
+            \mathbf{q}_c\Big(\frac{\partial}{\partial t} +
+            i\varphi)P_b-f(t;\mathbf{x}_s)\Big).
+    \end{aligned}
+    \end{equation}
+伴随方程可表示为：
+    \begin{equation}
+        \frac{\partial\mathcal{L}}{\partial P_c} =
+        (\frac{\partial}{\partial t} +i\bar{\varphi})\mathbf{q}_b-\Delta p=0,
+    \end{equation}
+    以及
+    \begin{equation}
+        \frac{\partial\mathcal{L}}{\partial P_b} =
+        (\frac{\partial}{\partial t} +i\bar{\varphi})\mathbf{q}_c+\delta
+        c\mathbf{q}_b=0.
+    \end{equation}
+最终，梯度可以表示为：
+    \begin{equation}
+        \frac{\partial\mathcal{L}}{\partial Q}=-\int
+        d\mathbf{x}_sdt\mathbf{q}_b\frac{i\partial\varphi}{\partial Q}P_c - \int
+        d\mathbf{x}_sdt\mathbf{q}_c\frac{i\partial\varphi}{\partial Q}P_b,
+    \end{equation}
+\vspace{5.0cm}
+其中
+  %  \begin{scriptsize}
+    \begin{equation}
+        \begin{aligned}
+            \frac{\partial \varphi}{\partial Q} &= \frac{1}{2}(\frac{\partial p_1}{\partial
+        Q}+i\frac{\partial p_2}{\partial Q}) \\
+        &= \frac{1}{4}\omega_0^{-4\gamma}c_0^{2\gamma+1}|k|^{2\gamma+1}
+         \Bigg(-2\pi\omega_0^{2\gamma}\cos^2(\pi\gamma/2)\cos(\pi\gamma)\\
+         &-2\omega_0^{2\gamma}(1+\cos(\pi\gamma))\sin(\pi\gamma)\log\frac{c_0|k|}{\omega_0}
+         +\pi\omega_0^{2\gamma}\sin^2(\pi\gamma) \\
+         &-\bigg(2ic_0|k|\Big(2c_0^{2\gamma}|k|^{2\gamma}\cos^5(\pi\gamma/2)\sin(\pi\gamma/2)[-\pi
+       + 2\pi\cos(\pi\gamma)\\
+   &+2\log\frac{c_0|k|}{\omega_0}\sin(\pi\gamma)] -
+       \omega_0^{2\gamma}[\log\frac{c_0|k|}{\omega_0} 
+       (2\cos(\pi\gamma)+\cos(2\pi\gamma))\log\frac{c_0|k|}{\omega_0}\\
+   &-\pi(\sin\pi\gamma)+\sin(2\pi\gamma))]
+       \Big)\bigg)/p_2\Bigg)\frac{-1}{\pi+\pi Q^2}.
+    \end{aligned}
+    \end{equation}
+%\end{scriptsize}
+
+
+

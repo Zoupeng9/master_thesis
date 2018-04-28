@@ -756,11 +756,11 @@ $\mathbf{x}$，通常是非均匀的，这导致用传统方法求解该方程�
 波场的稳定性。
 
 设计一个简单的二维层状模型（图\ref{fig:lens_v}）来展示两种方程的$Q$-RTM效果，模型具有五层结构，中间包含两个斜层，
-在模型的深部有一个强衰减区（图\ref{fig:lens_q}）。用于偏移的合成地震记录是用粘声波方程Born正演产生的，从而去掉
-直达波对成像的影响。图（\ref{fig:rtm_no}）显示了用声波方程偏移的结果，在强衰减区域的下方，由于没考虑衰减的影响
-其成像的能量很弱，并且成像位置轻微偏移正确位置。图（\ref{fig:rtm_sls}）是基于SLS方程的$Q$-RTM结果，强衰减区域
+在模型的深部有一个强衰减区（图\ref{fig:lens_v}b）。用于偏移的合成地震记录是用粘声波方程Born正演产生的，从而去掉
+直达波对成像的影响。图（\ref{fig:qrtm}a）显示了用声波方程偏移的结果，在强衰减区域的下方，由于没考虑衰减的影响
+其成像的能量很弱，并且成像位置轻微偏移正确位置。图（\ref{fig:qrtm}b）是基于SLS方程的$Q$-RTM结果，强衰减区域
 下的成像能量得到了补偿，但由于没有正确处理相位的影响，成像不聚焦并且位置偏离正确位置严重。
-图（\ref{fig:rtm_con}）是基于DCQ方程的$Q$-RTM结果，反传波场能量得到了补偿，因此强衰减区域下方的地层能量得到
+图（\ref{fig:qrtm}c）是基于DCQ方程的$Q$-RTM结果，反传波场能量得到了补偿，因此强衰减区域下方的地层能量得到
 了补偿，由于没有改变方程的速度频散关系，正传和反传波场具有相同的速度，所以成像位置是准确的，像的连续性更好。
 因此，在存在强衰减的区域，为了得到正确的聚焦的成像结果，$Q$补偿偏移成像是必然选择，并且DCQ方程的偏移结果明显优于
 SLS方程。
@@ -770,36 +770,20 @@ SLS方程。
 更新量，无论用SLS方程还是DCQ方程均能得到很好的成像结果。
 \begin{figure*}[!htbp]
 	    \centering
-		\includegraphics[width=1.0\linewidth]{figure/lens_v.pdf}
-		\fcaption{层状速度模型。}{Layered velocity model.   
-		}[层状速度模型]
+		\subfigure[]{\includegraphics[width=0.8\linewidth]{figure/vel_400x250}}
+		\subfigure[]{\includegraphics[width=0.8\linewidth]{figure/q_400x250}}
+		\fcaption{层状模型：（a）速度模型；（b）$Q$模型。}{Layered model: (a) velocity model; 
+		(b) $Q$ model.}[层状模型]
 		\label{fig:lens_v}
 \end{figure*}
 \begin{figure*}[!htbp]
 	    \centering
-		\includegraphics[width=1.0\linewidth]{figure/lens_q.pdf}
-		\fcaption{衰减模型。}{Quality factor model.   
-		}[衰减模型]
-		\label{fig:lens_q}
-\end{figure*}
-\begin{figure*}[!htbp]
-	    \centering
-		\includegraphics[width=1.0\linewidth]{figure/rtm_no.pdf}
-		\fcaption{不考虑$Q$补偿的RTM结果}{RTM without $Q$-compensation   
-		}[不考虑$Q$补偿的RTM结果]
-		\label{fig:rtm_no}
-\end{figure*}
-\begin{figure*}[!htbp]
-	    \centering
-		\includegraphics[width=1.0\linewidth]{figure/rtm_sls}
-		\fcaption{SLS方程$Q$-RTM结果}{$Q$-RTM using SLS equation   
-		}[SLS方程$Q$-RTM结果]
-		\label{fig:rtm_sls}
-\end{figure*}
-\begin{figure*}[!htbp]
-	    \centering
-		\includegraphics[width=1.0\linewidth]{figure/rtm_con.pdf}
-		\fcaption{近似常$Q$方程$Q$-RTM结果}{$Q$-RTM using DCQ equation  
-		}[近似常$Q$方程$Q$-RTM结果]
-		\label{fig:rtm_con}
+		\subfigure[]{\includegraphics[width=0.8\linewidth]{figure/rtm_no400x250}}
+		\subfigure[]{\includegraphics[width=0.8\linewidth]{figure/rtm_sls}}
+		\subfigure[]{\includegraphics[width=0.8\linewidth]{figure/rtm_true400x250}}
+		\fcaption{$Q$-RTM结果：（a）不补偿；（b）SLS模型补偿结果；（c）常$Q$模型补偿结果。}
+		{RTM results with $Q$-compensation: (a) without $Q$-compensation; (b) using SLS 
+		equation; (c) using constant-$Q$ equation.
+		}[$Q$-RTM结果]
+		\label{fig:qrtm}
 \end{figure*}
