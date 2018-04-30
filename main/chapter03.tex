@@ -273,10 +273,10 @@ $\mathbf{q}_c$。背景模型的梯度$\partial_{\mathbf{m}^s}\mathcal{J}$跟预
     \end{eqnarray*}
 $\mathbf{w}$表示状态变量，$\mathbf{L}$表示正演模拟算子。在这种情况下，
 正算子的伴随算子$\mathbf{L}^\ast$有如下表达式：
-    \begin{eqnarray*}
+    \begin{eqnarray}
         \mathbf{L}^\ast =  
         \begin{bmatrix}
-%            \begin{smallmatrix}
+            \begin{smallmatrix}
             -\frac{\partial}{\partial t} &\frac{\partial}{\partial x}\frac{1}{\rho}
             &\frac{\partial}{\partial z}\frac{1}{\rho} &0 &0 &0 &0 &0\cr
             \frac{\partial}{\partial x}K_0(\tau +1) &-\frac{\partial}{\partial t} &0 
@@ -297,9 +297,10 @@ $\mathbf{w}$表示状态变量，$\mathbf{L}$表示正演模拟算子。在这�
             &-\frac{\partial}{\partial t} &-\frac{\partial}{\partial
         z}\frac{\tau}{\tau_\sigma}K_0 \cr
            0 &0 &0 &0 &-1 &0 &0 &-\frac{\partial}{\partial t}+\frac{1}{\tau_\sigma}
-%            \end{smallmatrix}
+            \end{smallmatrix}
         \end{bmatrix},
-    \end{eqnarray*}
+		\label{eq:ad_operator}
+    \end{eqnarray}
 式中$\ast$表示伴随。对于真实的地质模型，驰豫参数$\tau$比$\tau_\sigma$和$\tau_\epsilon$
 有较宽的数值变化范围。因此我们选择$\tau$作为参数化参数，因为其对$Q$的变化更敏感
 （\citeA{dutta.schuster:2016}）。用伴随状态法可推导出目标函数$\mathcal{J}(\mathbf{m})$
