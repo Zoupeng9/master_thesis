@@ -77,9 +77,71 @@ $Q$-RWI基本理论；然后给出提取多震相反射地震数据各个震相�
 最后通过数值实验来证明所提反演方法的可靠性。
 
 
-\vspace{0.5cm}
+\vspace{1.5cm}
 \section{方法原理}
+\vspace{0.5cm}
+基于峰值频率移动目标函数的$Q$-RWI算法步骤跟波动方程走时反演（\citeA{luo.schuster:1991}；
+\citeA{ma.hale:2013}）类似。首先需要定义一个链接函数来连接峰值频率移动残差与声压波场的
+关系；其次需要定义与峰值频率移动相关的目标泛函；最后需要用粘声波方程以及链接函数来推导
+目标函数对$Q$的一阶导数即梯度方向。在这一章的推导中，我们假定地震波传播满足二维时间域
+SLS模型粘声波方程~\ref{eq:state}。
 
+用$\hat{P}_f(\mathbf{x}_s,\mathbf{x}_g,t)$表示给定背景$Q$模型的模拟震相，下标$f$表示
+该震相的峰值频率，峰值频率从震相的振幅谱（图~\ref{fig:q_effect}c~中黑线）中获取。
+类似地，用$P_{f-f_1}(\mathbf{x}_s,\mathbf{x}_g,t)$表示同一震相峰值频率为$f-f_1$的
+观测数据，其震相的振幅谱用图~\ref{fig:q_effect}c~中的蓝线表示。其中，$f_1$表示由于
+$Q$不准引起的模拟数据与观测数据间峰值频率的移动，为了方便表达，这一节我们假设地震数据中
+只含有单一震相，多震相的峰值频率提取方法将在下一节中给出。
+
+给定一个足够准确的背景速度模型，模拟数据与观测数据之间相似性可以定义为：
+\begin{equation}
+	F_{f_1}(\mathbf{x}_s,\mathbf{x}_g,t)=\int dt P_{f-f_1}(\mathbf{x}_s,\mathbf{x}_g,t) 
+	\hat{P}_f(\mathbf{x}_s,\mathbf{x}_g,t).
+	\label{eq:correlation}
+\end{equation}
+在这一章的$Q$-RWI算法中，主要是寻求最小的峰值频率移动。对于准确的背景$Q$模型，
+观测数据和模拟数据具有相同的峰值频率。换句话说，就是寻求一个移动值$f_1=\Delta f$，
+使其最大化方程~\ref{eq:correlation}中的互相关函数。如果$\Delta f=0$，表明我们找到了
+正确的背景$Q$模型。
+
+因为$f_1=\Delta f$最大化了互相关函数~\ref{eq:correlation}，所以$F_{f_1}(\mathbf{x}_s,
+\mathbf{x}_g,t)$对$f_1$的导数在$f_1=\Delta f$处为零，即：
+\begin{equation}
+	\begin{aligned}
+		\dot{F}_{\Delta f}(\Delta f,\tau(\mathbf{x})) &=\left[\frac{\partial F_{f_1}
+	(\mathbf{x}_s,\mathbf{x}_g,t)}{\partial f_1}\right]_{f_1=\Delta f}, \\
+		&= \int dt \dot{P}_{f-\Delta f}(\mathbf{x}_s,\mathbf{x}_g,t)
+	\hat{P}_f(\mathbf{x}_s,\mathbf{x}_g,t)=0,
+	\label{eq:connective}
+	\end{aligned}
+\end{equation}
+式中$\dot{F}_{\Delta f}(\Delta f,\tau(\mathbf{x}))=[\partial P_{f-f_1}(\mathbf{x}_s,
+\mathbf{x}_g,t)/\partial f_1]_{f_1=\Delta f}$。方程~\ref{eq:connective}~即为链接函数，
+链接函数作为一个中间方程来连接基础数据（声压波场）与骨架数据（频率移动残差）。因为波动方程
+不能直接建立起骨架数据与模型参数的关系，所以在推导梯度时链接函数是必需的。
+
+本章中，目标函数的定义如~\ref{eq:freq_misfit_function}~式。其梯度$\gamma(\mathbf{x})$
+表示如下：
+\begin{equation}
+	\gamma(\mathbf{x})=\frac{\partial\mathcal{J}}{\partial \tau(\mathbf{x})}
+	=-\sum_{s,g}\frac{\partial \Delta f}{\partial \tau(\mathbf{x})}
+	\Delta f(\mathbf{x}_s,\mathbf{x}_g,t).
+\end{equation}
+从方程~\ref{eq:connective}~出发，可以得到如下三个方程：
+\begin{equation}
+	\begin{aligned}
+		 &\dot{F}_{\Delta f}(\Delta f,\tau(\mathbf{x}))=0, \\
+		&\Rightarrow \frac{\partial \dot{F}_{\Delta f}}{\partial \Delta f} 
+		\frac{\partial \Delta f}{\partial \tau(\mathbf{x})} + 
+		\frac{\partial \dot{F}_{\Delta f}}{\partial\tau(\mathbf{x})} =0, \\
+		&\Rightarrow \frac{\partial \Delta f}{\partial \tau(\mathbf{x})} =
+		-\frac{\frac{\partial \dot{F}_{\Delta f}}{\partial\tau(\mathbf{x})}}
+		{\frac{\partial \dot{F}_{\Delta f}}{\partial \Delta f}},
+	\end{aligned}
+\end{equation}
+
+
+\vspace{0.5cm}
 \section{多震相反射数据峰值频率提取}
 \section{数值实验}
 
