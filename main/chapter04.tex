@@ -21,6 +21,7 @@
 
 \vspace{0.5cm}
 \section{引言}
+\vspace{0.5cm}
 \begin{figure*}[!htbp]
     \centering
     \subfigure[]{\includegraphics[width=0.92\linewidth]{figure/wavelet}}
@@ -181,6 +182,7 @@ $Q$不准引起的模拟数据与观测数据间峰值频率的移动，为了�
 式中$\langle \mathbf{x},\mathbf{y}\rangle$表示向量$\mathbf{x}$，$\mathbf{y}$之间的标量积。
 $\hat{\mathbf{w}}_f$和$\mathbf{w}_{f-\Delta f}$分别表示同一震相的模拟数据与观测数据。
 目标函数$\mathcal{J}$的梯度满足如下推导：
+\newpage
 \begin{equation}
 	\begin{aligned}
 		\frac{\partial \mathcal{J}}{\partial \tau(\mathbf{x})} &= -\sum_s \sum_g 
@@ -243,7 +245,7 @@ $\mathbf{f}^\ast$为伴随源，满足如下关系式：
  $\mathbf{f}^\ast=\lbrack 0, \ 0, \ 0, \ 0, \
 \Delta P(\mathbf{x}_s,\mathbf{x}_g,t), \ 0, \ 0, \ 0\rbrack ^T$，其中
 $\Delta P(\mathbf{x}_s,\mathbf{x}_g,t)=(1/E_1)\dot{P}(\mathbf{x}_s,\mathbf{x}_g,t)_{obs}
-\Delta f(\mathbf{x}_s,\mathbf{x}_g,t)$表示为残差道，对应于常规波形反演的数据残差伴随源。
+ \\ \Delta f(\mathbf{x}_s,\mathbf{x}_g,t)$表示为残差道，对应于常规波形反演的数据残差伴随源。
 由方程~\ref{eq:ad_algrithm}~可以得到目标函数对模型参数的梯度：
    \begin{equation}
     \begin{aligned}
@@ -274,5 +276,16 @@ $\dot{P}_{f-\Delta f}(\mathbf{x}_s,\mathbf{x}_g,t)$和$\ddot{P}_{f-\Delta f}(\ma
 
 \vspace{0.5cm}
 \section{多震相反射数据峰值频率提取}
+\vspace{0.5cm}
+在实际地震勘探中，接收到的反射数据往往具有多个反射震相，而用常规Fourier变换计算出的振幅谱
+是所有地震相特征的总体体现。用反射数据进行反演时，反射震相的匹配一直是一个研究点。在反射
+波层析中，\citeB{wang.rao:2009}用层剥离的方法来求取各反射层的走时。在波动方程反射走时反演
+中，\citeB{zhang.schuster:2011}用局部相关法，而\citeB{ma.hale:2013}
+用波形动态解缠（dynamic warping）法来提取反射波各震相的走时差。
+本文用短时Fourier变换来提取各震相的频谱。
+
+
+
+\vspace{0.5cm}
 \section{数值实验}
 
