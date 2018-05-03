@@ -15,9 +15,8 @@ RWI是处理FWI的强非线性问题的一种有效解决途径，虽然在背�
 的影响相较于速度对地震波传播的影响既有相似之处，也略有不同。本章将详细介绍
 如何把RWI引入到背景$Q$的反演中。
 
-\vspace{0.5cm}
+\vspace{1.0cm}
 \section{引言}
-\vspace{0.5cm}
 
 用地震波信息来反演地下地层的衰减信息已有很多年的研究历史，其反演方法可大致
 分为射线层析和波形反演两类。射线层析类方法（\citeA{brzostowski.mcmechan:1992}；
@@ -44,17 +43,17 @@ $Q$-FWI的成功需要低频长偏移距地震数据，但是这种高质量的�
 在顺序反演的思路下，先假设已获得准确的速度模型，然后引入RWI框架，用反射波来
 反演背景$Q$模型。
 
-\vspace{0.5cm}
+\vspace{1.0cm}
 \section{方法原理}
-\vspace{0.5cm}
+
 当利用反射波进行反演时，常规FWI对模型的短波长结构更敏感，而地震衰减对地震数据的
 影响是一种沿地震波波路径的累加效应，因而，其长波长的背景模型显得更为重要。RWI通过
 将数据残差投影到反射波波路径来构建模型的长波长成分，更加切合对地震衰减参数反演的
 需求。本节将介绍粘声反射全波形反演（$Q$-RWI）方法原理。
 
-\vspace{0.5cm}
+\vspace{1.0cm}
 \subsection{反射波波形反演基本思路}
-\vspace{0.5cm}
+
 常规的FWI是通过匹配模拟数据和观测数据来推断介质的参数。设$\mathbf{x}_s$和$\mathbf{x}_g$
 分别为炮点和检波点的空间位置，时间域FWI最常用的最小平方目标函数为（\citeA{virieux:2009}）：
 \begin{equation}
@@ -183,8 +182,7 @@ $\mathbf{q}_c$。背景模型的梯度$\partial_{\mathbf{m}^s}\mathcal{J}$跟预
 
 \newpage
 \subsection{基于粘声方程的反射全波形反演}
-\vspace{0.5cm}
-
+\vspace{-1.0cm}
 根据第二章第二节的推导，对于给定的速度以及$Q$模型，压力波场可用如下SLS方程进行计算：
      \begin{eqnarray}
         \begin{aligned}
@@ -336,9 +334,9 @@ $\mathbf{w}$表示状态变量，$\mathbf{L}$表示正演模拟算子。在这�
 
 \begin{figure*}[!htbp]
     \centering
-    \subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad1}}
-    \subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad2}}
-    \subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad3}}
+    \subfigure[]{\includegraphics[width=0.49\linewidth]{figure/grad1}}
+    \subfigure[]{\includegraphics[width=0.49\linewidth]{figure/grad2}}
+    \subfigure[]{\includegraphics[width=0.49\linewidth]{figure/grad3}}
     \fcaption{两层介质$Q$-RWI中背景$Q$的子梯度。（a）源端梯度；（b）检波点端梯度；
 	（c）高波数奇异分量。}{Sub-gradients of $Q$-RWI for simple two-layer model: 
 	(a) sourece-side reflection gradient; (b) receiver-side reflection gradient; 
@@ -359,14 +357,15 @@ $Q$-RWI的梯度公式（\ref{eq:gradient}）共包含三项。如图~\ref{fig:g
 梯度在反射界面处的奇异性，从而增强了反演的稳定性。以上的$Q$-RWI梯度是基于SLS粘声方程
 推导的，这套推导方法同样适合于常$Q$粘声方程，其具体推导可参见附录\ref{chp:dcq}。
 
+\newpage
 \begin{figure*}[!htbp]
     \centering
-    \subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad_rwi}}
-    \subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad_rwi_poynting}}
-    \subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad_rwi_oneshot}}
-    \subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad_rwi_poynting_oneshot}}
-    \subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad}}
-    \subfigure[]{\includegraphics[width=0.45\linewidth]{figure/grad_poynting}}
+    \subfigure[]{\includegraphics[width=0.49\linewidth]{figure/grad_rwi}}
+    \subfigure[]{\includegraphics[width=0.49\linewidth]{figure/grad_rwi_poynting}}
+    \subfigure[]{\includegraphics[width=0.49\linewidth]{figure/grad_rwi_oneshot}}
+    \subfigure[]{\includegraphics[width=0.49\linewidth]{figure/grad_rwi_poynting_oneshot}}
+    \subfigure[]{\includegraphics[width=0.49\linewidth]{figure/grad}}
+    \subfigure[]{\includegraphics[width=0.49\linewidth]{figure/grad_poynting}}
     \fcaption{两层介质Poynting矢量预条件梯度对比，左边是没有预条件的梯度，右边是通过
 	Poynting矢量上下行波分离预条件的梯度。（a，b）单炮单道；（c，d）单炮多道；
 	（e，f）多炮多道。}{Comparison the gradients before and after using Poynting vector 
