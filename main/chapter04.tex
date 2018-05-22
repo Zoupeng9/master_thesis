@@ -41,7 +41,7 @@
 地震波峰值频率的大小基本只与地下介质衰减强度有关。\citeB{quan.harris:1997}
 首次将模拟数据与观测数据间的质心频率差异作为匹配准则，用射线层析方程来更新
 $Q$模型。为了克服射线理论高频近似的局限性，\citeB{dutta.schuster:2016}将峰值
-频率移动目标函数引入到了波动层析当中，通过连接函数首次推导了压力波场对
+频率移动目标函数引入到了波动层析当中，通过链接函数首次推导了压力波场对
 驰豫参数$\tau(\mathbf{x})$的Frechet导数。同时也用伴随状态法推导出了峰值频率移动目标
 函数对模型参数$\tau(\mathbf{x})$的梯度并给出了伴随源。他们的方法在理论合成数据
 和实际数据中都获得了很好的效果，但是\citeB{dutta.schuster:2016}的$Q$层析方法
@@ -69,12 +69,75 @@ f^{peak}_{cal}(\mathbf{x}_s,\mathbf{x}_g,t)$，$f^{peak}_{obs}(\mathbf{x}_s,\mat
 和$f^{peak}_{cal}(\mathbf{x}_s,\mathbf{x}_g,t)$分别是观测数据与模拟数据各震相的峰值
 频率。图~\ref{fig:misfit_com}~展示了两种目标函数随$Q$值变化的形态。从图中可以看出
 峰值频率移动的目标函数比波形残差目标函数具有更宽的收敛盆，更加适合背景$Q$模型的反演。
+
 另外，将峰值频率移动作为匹配准则引入$Q$-RWI中可以降低反演方法对高波数速度模型的依赖。
+图~\ref{fig:smooth_model}将两层速度模型通过平滑获得了平滑半径为16的低波数背景模型以及
+不同平滑尺度的高波数扰动模型。其对应的地震波模拟结果如图~\ref{fig:smooth}所示，其中
+红线是用粘声波方程模拟的结果，其余均为Born正演结果，从图中可以看出Born正演对高波数速度
+的平滑尺度不敏感，同样其振幅谱也不敏感。当固定上层速度为2100m/s，下层速度从1700m/s变化
+到3500m/s时，Born正演（用相同的平滑半径来分解高低波数速度成分）的地震数据
+（图~\ref{fig:contrast}a）虽具有不同的振幅，
+地震数据的极性也可能发生变化，但从归一化的振幅谱
+（图~\ref{fig:contrast}c）中可以看出其地震数据具有相同的峰值频率。
+在Born正演中，峰值频率对高波数速度模型的结构、大小以及极性均不敏感，因此
+用峰值频率移动作为测量准则极大的降低了$Q$-RWI对高波数速度成分的依赖性。
+
 反射波数据不同于直达波数据，通常具有多个震相。如何把反射波数据中各个震相的
 峰值频率提取出来是反演成功的关键。本章先介绍基于峰值频率移动目标函数的
 $Q$-RWI基本理论；然后给出提取多震相反射地震数据各个震相峰值频率的办法；
 最后通过数值实验来证明所提反演方法的可靠性。
 
+\begin{figure*}[!htbp]
+    \centering
+    \subfigure[]{\includegraphics[width=0.32\linewidth]{figure/modelv}}
+    \subfigure[]{\includegraphics[width=0.32\linewidth]{figure/modelv0}}
+    \subfigure[]{\includegraphics[width=0.32\linewidth]{figure/dvel_s4}}
+    \subfigure[]{\includegraphics[width=0.32\linewidth]{figure/dvel_s8}}
+    \subfigure[]{\includegraphics[width=0.32\linewidth]{figure/dvel_s12}}
+    \subfigure[]{\includegraphics[width=0.32\linewidth]{figure/dvel_s16}}
+    \fcaption{Born正演的不同平滑尺度速度模型分解：（a）真实两层速度模型；（b）平滑半径为16
+	的光滑背景速度；（c）平滑半径为4的高波数速度；（d）平滑半径为8的高波数速度；
+	（e）平滑半径为12的高波数速度；（f）平滑半径为16的高波数速度。}{Different smooth scales 
+	decomposition of velocity for Born modeling: (a) the two-layer velocity model; 
+	(b) the background velocity with 12 smooth radius; (c) the perturbation velocity with 
+	4 smooth radius; (d) the perturbation velocity with 8 smooth radius; (e) the perturbation 
+	velocity with 12 smooth radius; (f) the perturbation velocity with 16 smooth radius.}
+    [Born正演的不同平滑尺度速度模型分解]
+    \label{fig:smooth_model}
+\end{figure*}
+
+\begin{figure*}[!htbp]
+    \centering
+    \subfigure[]{\includegraphics[width=0.92\linewidth]{figure/traces}}
+    \subfigure[]{\includegraphics[width=0.92\linewidth]{figure/spectral_4}}
+	\fcaption{不同平滑尺度速度模型分解的Born正演地震响应：（a）对应于\ref{fig:smooth_model}
+	的地震响应，其中红线是用粘声波方程模拟的结果，其余是用不同平滑尺度分解出的高波数速度Born
+	正演的结果；（b）对应地震数据的振幅谱。}{Born modeling results for different velcity 
+	perturbations: (a)　seismic response corresponding Figure~\ref{fig:smooth_model}; 
+	(b) the amplitude spectral for the seismic traces.}
+    [不同平滑尺度速度模型分解的Born正演地震响应]
+    \label{fig:smooth}
+\end{figure*}
+
+\begin{figure*}[!htbp]
+    \centering
+    \subfigure[]{\includegraphics[width=0.92\linewidth]{figure/traces1}}
+    \subfigure[]{\includegraphics[width=0.92\linewidth]{figure/spectral_41}}
+    \subfigure[]{\includegraphics[width=0.92\linewidth]{figure/normalized_spectral1}}
+	\fcaption{两层速度结构，上层速度固定为2100m/s，下层速度从1700m/s变化到3500m/s时的Born
+	正演结果，其中分离高低波数速度结构的平滑半径为8: （a）Born 正演模拟结果；
+	（b）对应的振幅谱；（c）归一化振幅谱。}{Two-layer model with 2100m/s in the top layer and 
+	the velocity of the bottom layer varies from 1700m/s to 3500, the smooth radius is 8 for 
+	decomposition the background and perturbation velocity for the Born modeling: (a) the Born
+	modeling seismic traces; (b) the corresponding amplitude spectral; (c) the normalized 
+	amplitude spectral.}
+    [不同速度差异的层状模型的Born模拟结果]
+    \label{fig:contrast}
+\end{figure*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
 \vspace{1.5cm}
 \section{方法原理}
 
@@ -113,7 +176,7 @@ $Q$不准引起的模拟数据与观测数据间峰值频率的移动，为了�
 	\label{eq:connective}
 	\end{aligned}
 \end{equation}
-式中$\dot{F}_{\Delta f}(\Delta f,\tau(\mathbf{x}))=[\partial P_{f-f_1}(\mathbf{x}_s,
+式中$\dot{P}_{f-\Delta f}(\mathbf{x}_s,\mathbf{x}_g,t)=[\partial P_{f-f_1}(\mathbf{x}_s,
 \mathbf{x}_g,t)/\partial f_1]_{f_1=\Delta f}$。方程~\ref{eq:connective}~即为链接函数，
 链接函数作为一个中间方程来连接基础数据（声压波场）与骨架数据（频率移动残差）。因为波动方程
 不能直接建立起骨架数据与模型参数的关系，所以在推导梯度时链接函数是必需的。
@@ -179,7 +242,6 @@ $Q$不准引起的模拟数据与观测数据间峰值频率的移动，为了�
 式中$\langle \mathbf{x},\mathbf{y}\rangle$表示向量$\mathbf{x}$，$\mathbf{y}$之间的标量积。
 $\hat{\mathbf{w}}_f$和$\mathbf{w}_{f-\Delta f}$分别表示同一震相的模拟数据与观测数据。
 目标函数$\mathcal{J}$的梯度满足如下推导：
-\newpage
 \begin{equation}
 	\begin{aligned}
 		\frac{\partial \mathcal{J}}{\partial \tau(\mathbf{x})} &= -\sum_s \sum_g 
