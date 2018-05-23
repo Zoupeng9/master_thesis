@@ -299,8 +299,8 @@ $\mathbf{w}$表示状态变量，$\mathbf{L}$表示正演模拟算子。在这�
         \end{bmatrix},
 		\label{eq:ad_operator}
     \end{eqnarray}
-式中$\ast$表示伴随。对于真实的地质模型，驰豫参数$\tau$比$\tau_\sigma$和$\tau_\epsilon$
-有较宽的数值变化范围。因此我们选择$\tau$作为参数化参数，因为其对$Q$的变化更敏感
+式中$\ast$表示伴随。在勘探地震尺度，地层的驰豫参数$\tau$比$\tau_\sigma$和$\tau_\epsilon$
+（图~\ref{fig:tq}）有较宽的数值变化范围。因此我们选择$\tau$作为参数化参数，因为其对$Q$的变化更敏感
 （\citeA{dutta.schuster:2016}）。用伴随状态法可推导出目标函数$\mathcal{J}(\mathbf{m})$
 对驰豫参数$\tau$的梯度为：
    \begin{equation}
@@ -323,6 +323,19 @@ $\mathbf{w}$表示状态变量，$\mathbf{L}$表示正演模拟算子。在这�
 \begin{equation}
 	\mathbf{L}^\ast\tilde{\mathbf{w}} = \Delta\mathbf{d}.
 \end{equation}
+
+\begin{figure*}[!htbp]
+    \centering
+	\subfigure[]{\includegraphics[width=0.9\linewidth]{figure/tq}}
+	\subfigure[]{\includegraphics[width=0.9\linewidth]{figure/tcq}}
+	\subfigure[]{\includegraphics[width=0.9\linewidth]{figure/teq}}
+	\fcaption{驰豫参数（a）$\tau$，（b）$\tau_\sigma$，
+	（c）$\tau_\epsilon$随$Q$的变化曲线，参考频率选为30Hz。}{Variation of the parameters 
+	(a)$\tau$, (b)$\tau_\sigma$, and (c)$\tau_\epsilon$ for different values of $Q$.
+	The reference frequency is taken to be 30Hz.}[驰豫参数随$Q$的变化曲线]
+    \label{fig:tq}
+\end{figure*}
+
 在实际勘探中，通常只接收到了波场的压力分量，所以地震数据的残差只有一个分量，即：
 \begin{equation}
     \Delta\mathbf{d} = \lbrack 0, \ 0, \ 0, \ 0, \ \Delta d, \ 0, \ 0, \ 0\rbrack^T.
@@ -345,7 +358,7 @@ $\mathbf{w}$表示状态变量，$\mathbf{L}$表示正演模拟算子。在这�
 \end{figure*}
 
 $Q$-RWI的梯度公式（\ref{eq:gradient}）共包含三项。如图~\ref{fig:grad_qrwi}所示，
-第一二项”兔耳朵“状的梯度，提供了沿反射波路径的低波数的背景$Q$的更新量。第三项对应于
+第一二项“兔耳朵”状的梯度，提供了沿反射波路径的低波数的背景$Q$的更新量。第三项对应于
 反射波在成像点的成像结果，对RWI来说是奇异的非光滑的分量。第三项会在反射界面位置更新
 高波数成分从而增加反演的非线性程度。在声波的RWI中，\citeB{wu.alkhalifah:2015}观察到
 第三项在反射界面处的值的符号与第一二项在反射界面处的值相反，但是数值不一样。他们将
@@ -393,7 +406,9 @@ $Q$-RWI的梯度公式（\ref{eq:gradient}）共包含三项。如图~\ref{fig:g
 的两端，间距为10m且最大偏移距为1km。用峰值频率为30Hz的雷克子波作为爆炸震源。
 在模型的中深部包含一个强的$Q$异常体，最小$Q$值达到30。在反演的过程中认为体积
 模量$K_0$和$\delta K$都是已知的，并且密度为常数。用均匀模型（$Q=200$）作为
-初始模型。
+初始模型。在勘探地震尺度，对地震波有较强吸收作用的$Q$的变化范围为10-100，且
+当$Q>200$时，驰豫参数$\tau$对$Q$值的变化（图~\ref{fig:tq}a）不敏感，因此在
+反演过程中将$Q$值限制在10-200的范围。
 
 如图~\ref{fig:lens_model}c~所示，经过30次迭代之后，$Q$-RWI基本恢复了中深部
 的$Q$异常。图~\ref{fig:chouxian}分别抽取了$x=1$km、2km、3km处的伪井曲线。
