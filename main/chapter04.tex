@@ -418,17 +418,49 @@ $\dot{P}_{f-\Delta f}(\mathbf{x}_s,\mathbf{x}_g,t)$和$\ddot{P}_{f-\Delta f}(\ma
 \vspace{0.5cm}
 \section{数值实验}
 
+为了便于对比，本节继续采用第三章所用的层状模型（图~\ref{fig:lens_model}a）来验证基于峰值频率
+移动目标函数的$Q$-RWI的正确性。模型大小的设置、观测系统的布置、震源子波以及初始模型的选取均
+与第三章数值实验相同。本节所用的观测数据由Born正演产生，Born正演的背景模型由真实速度模型
+平滑16个网格产生，其扰动模型是真实速度模型与背景模型的差。在进行反演时假设背景速度
+模型已知，扰动模型选用真实速度模型与其平滑4个网格的平滑模型的差。
+
+图~\ref{fig:lens_fmodel}c展示了基于峰值频率移动目标函数的$Q$-RWI反演结果，其反演结果与基于
+振幅残差目标函数的$Q$-RWI结果（图~\ref{fig:lens_fmodel}b）基本相同。经过15次迭代之后，中深部的
+$Q$异常基本得到恢复。图~\ref{fig:fchouxian}分别对比了$x=1$km、2km、3km处的伪井曲线。伪井对比
+结果进一步证明了峰值频率移动目标函数在$Q$-RWI反演中的可行性。同时从抽线结果中可以看出只修改
+目标函数并不能改变RWI在浅层因缺少覆盖数据而导致的多解性。多数据融合如反射数据和透射数据相
+结合即可解决这种反问题的多解性。在强衰减处$x=2$km处（图~\ref{fig:fchouxian}b），基于振幅残差
+目标函数的反演结果比基于峰值频率移动目标函数的反演结果分辨率高，这是因为振幅残差考虑了全波信息
+而峰值频率只是地震数据的一个属性，同时这一结果也与目标函数的性态
+（图~\ref{fig:misfit_com}）相吻合。经过15次迭代之后，其目标函数（图~\ref{fig:misfit_fmodel}）
+下降了一个数量级，这也达到了实际需求。最后用$Q$-RTM和$Q$补偿的最小二乘逆时偏移（$Q$-LSRTM）
+来验证反演结果的可靠性。
+从图~\ref{fig:rtm_fmodel}中可以看出基于峰值频率移动目标函数的$Q$-RWI反演结果均能满足
+$Q$-RTM和$Q$-LSRTM的需要，并且$Q$-LSRTM比$Q$-RTM有较高的分辨率。
+
+数值实验（图~\ref{fig:smooth_model}、\ref{fig:smooth}、\ref{fig:contrast}）证明了峰值频率对
+Born正演中的高波数模型的平滑尺度、强度及极性均不敏感。本节实验中产生观测数据的高波数模型
+与反演所用的高波数模型不同也从侧面证实了峰值频率属性对高波数模型依赖弱。
+峰值频率虽对高波数模型的的平滑尺度、强度和极性不敏感，但对其结构有一定的要求，即在Born
+正演中，高波数模型的结构不能改变子波的形状。在Born正演中，本文用两层模型平滑作差的结构
+（图~\ref{fig:smooth_model}d）来近似代表地下的真实反射，从而保证峰值频率不受高波数模型
+的影响。在实际勘探中，
+前期的速度分析、走时层析等处理流程可以为$Q$-RWI提供相对可靠的背景速度。有了背景速度之后，
+通过偏移成像即可得到地下反射界面位置，将反射界面位置替换为图~\ref{fig:smooth_model}d中的
+伪高波数成分即能产生反偏移数据，从而进行基于峰值频率移动的$Q$-RWI反演。
+
 \begin{figure*}[!htbp]
     \centering
-    %{\includegraphics[width=0.85\linewidth]{figure/model}}
     \subfigure[]{\includegraphics[width=0.82\linewidth]{figure/q_400x250}}
     \subfigure[]{\includegraphics[width=0.82\linewidth]{figure/fq_400x250}}
     \subfigure[]{\includegraphics[width=0.82\linewidth]{figure/ffq_400x250}}
-    \fcaption{层状模型：（a）速度模型；（b）真实$Q$模型；（c）$Q$-RWI
-    反演结果。}{The layered model:(a) the velocity model,
-    (b) true $Q$ model and (c) inverted $Q$ model using $Q$-RWI.}
+    \fcaption{层状模型反演结果：（a）真实$Q$模型；（b）基于振幅残差目标函数的
+	$Q$-RWI反演结果；（c）基于峰值频率移动目标函数的$Q$-RWI
+    反演结果。}{The inversion results of layered model: (a) the true $Q$ model,
+    (b) inverted $Q$ model using $Q$-RWI with amplitude difference misfit function
+	and (c) inverted $Q$ model using $Q$-RWI with peak frequency shift misfit function.}
     [层状模型]
-    \label{fig:lens_model}
+    \label{fig:lens_fmodel}
 \end{figure*}
 
 \begin{figure*}[!htbp]
@@ -436,15 +468,33 @@ $\dot{P}_{f-\Delta f}(\mathbf{x}_s,\mathbf{x}_g,t)$和$\ddot{P}_{f-\Delta f}(\ma
     \subfigure[]{\includegraphics[width=0.32\linewidth]{figure/1km_1}}
     \subfigure[]{\includegraphics[width=0.32\linewidth]{figure/2km_1}}
     \subfigure[]{\includegraphics[width=0.32\linewidth]{figure/3km_1}}
-    \fcaption{抽线对比：（a）1km处；（b）2km处；（c）3km处。}{Pseudowells comparison at (a) 1km, (b) 2km
-    and (c) 3km.}[抽线对比结果]
-    \label{fig:chouxian}
+    \fcaption{抽线对比：（a）1km处；（b）2km处；（c）3km处。其中红线是真实
+	$Q$模型，蓝线是基于振幅残差目标函数的反演结果，绿线是基于峰值频率移动目标函数
+	的反演结果}{Pseudowells comparison at (a) 1km, (b) 2km
+    and (c) 3km.　The red, blue, and green curves represent the true $Q$ model,
+	amplitude difference based $Q$-RWI inversion result and peak frequency shift 
+	based $Q$-RWI inversion result, respectively.}[抽线对比结果]
+    \label{fig:fchouxian}
 \end{figure*}
 
 \begin{figure*}[!htbp]
     \centering
     {\includegraphics[width=1.0\linewidth]{figure/fmisfit}}
     \fcaption{收敛曲线}{The history of convergence.}[收敛曲线]
-    \label{fig:misfit_model}
+    \label{fig:misfit_fmodel}
+\end{figure*}
+
+\begin{figure*}[!htbp]
+    \centering
+    \subfigure[]{\includegraphics[width=0.72\linewidth]{figure/rtm_no400x250}}
+    \subfigure[]{\includegraphics[width=0.72\linewidth]{figure/rtm_ffq400x250}}
+    \subfigure[]{\includegraphics[width=0.72\linewidth]{figure/lsrtm_true400x250}}
+    \fcaption{$Q$补偿成像结果：（a）初始$Q$补偿RTM结果；（b）基于峰值频率移动目标函数
+    $Q$-RWI反演$Q$补偿RTM结果；（c）基于峰值频率移动目标函数$Q$-RWI反演$Q$补偿 LSRTM结果。}
+	{$Q$-compensated RTM images using initial
+	$Q$ model (a) and peak frequency shift based $Q$-RWI inverted $Q$ model (b); (c) is 
+	$Q$-LSRTM image using the peak frequency shift based $Q$-RWI inverted $Q$ model.}
+    [$Q$补偿成像结果]
+    \label{fig:rtm_fmodel}
 \end{figure*}
 
