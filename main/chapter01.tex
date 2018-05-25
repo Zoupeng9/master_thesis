@@ -27,7 +27,8 @@
 
 \begin{figure*}[!htbp]
         \centering
-        \includegraphics[width=1.0\linewidth]{figure/record_spectral}
+		\subfigure[]{\includegraphics[width=0.9\linewidth]{figure/wavelet_ch1}}
+		\subfigure[]{\includegraphics[width=0.9\linewidth]{figure/spectrum_ch1}}
         \fcaption{地震波在声介质和粘声介质（$Q=60$）中传播的数值模拟实验：
 	(a)地震波波形图；(b)对应的振幅谱。}{1D example to numerically illustrate the attenuation 
 	impacts on the amplitudes spectra and phase of propagating wave: (a) the 
@@ -45,7 +46,10 @@
 
 \begin{figure*}[!htbp]
         \centering
-        \includegraphics[width=1.0\linewidth]{figure/qrtm1.pdf}
+		\subfigure[]{\includegraphics[width=0.495\linewidth]{figure/modelv_ch1}}
+		\subfigure[]{\includegraphics[width=0.495\linewidth]{figure/modelq_ch1}}
+		\subfigure[]{\includegraphics[width=0.495\linewidth]{figure/mig_q_ch1}}
+		\subfigure[]{\includegraphics[width=0.495\linewidth]{figure/mig_no_ch1}}
 		\fcaption{衰减对成像的影响实验：(a) 速度模型； （b）$Q$模型；（c）$Q$-RTM成像结果；
 		（d）RTM成像结果}{ (a) The velocity model. (b) The $Q$ model.
 		(c) The migrated image with a correct $Q$ compensation. (d) The migrated image without
@@ -53,7 +57,7 @@
         \label{fig:qrtm}
 \end{figure*}
 
-在实际勘探中，气云/包区的成像、储层识别和解释都面临巨大的挑战。气云/包区通常包含极低的
+在实际勘探中，汽云/包区的成像、储层识别和解释都面临巨大的挑战。汽云/包区通常包含极低的
 $Q$值，这种强烈的衰减会吸收深部同相轴的能量，在储层的上方造成成像阴影区，严重影响地震
 解释的准确性。可靠的$Q$模型不仅可以提高成像的质量，而且可以更好解释振幅随偏移距变化
 （AVO）和各向异性这两种依赖于偏移距的效应。正确的AVO和各向异性
@@ -66,8 +70,9 @@ $Q$值，这种强烈的衰减会吸收深部同相轴的能量，在储层的�
 因此，在油气勘探开发过程中，定量地评估衰减效应，构建一个可靠的衰减（$Q$）模型是非常重要的。
 本文主要的工作就是通过反射全波形反演来定量估计地震本征衰减$Q$模型。
 
-\vspace{0.5cm}
+\vspace{1.2cm}
 \section{国内外研究现状}
+\vspace{0.4cm}
 
 国内外学者对$Q$模型估计做了大量的研究工作，其中大部分工作都是在数据域完成。数据域的
 反演方法可大致分为两类：基于高频近似的射线层析类和基于波动方程的波形反演类。
@@ -163,8 +168,9 @@ RWI反演背景速度的目标相矛盾。因此，在反射波波形反演中�
 \citeB{shen.biondi:2018}在成像域建立起了模型扰动与像扰动的关系，通过$Q$偏移分析获取中深层的背景$Q$模型。
 在数据域，目前还没人探讨用地表地震数据恢复中深层背景$Q$模型。本文将研究如何把RWI引入到背景$Q$反演中。
 
-\newpage
+\vspace{0.9cm}
 \section{本文研究内容}
+\vspace{0.5cm}
 
 地震衰减参数$Q$对地震波振幅的影响类似于速度对走时信息的影响，是一种沿地震波路径累积叠加效应，
 并且主要与模型的低波数背景成分有关。在实际应用中，相对准确的低波数背景$Q$模型即可补偿成像中

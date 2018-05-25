@@ -3,7 +3,7 @@
 %% Encoding: UTF-8
 %%==================================================
 
-\chapter{基于频移目标函数的反射全波形反演}
+\chapter{基于峰值频移目标函数的反射全波形反演}
 
 论文第三章提出的$Q$-RWI框架是基于数据残差的最小二乘目标函数来实现的，该目标泛函
 对于理论的合成数据有很理想的效果，那是因为在合成数据实验中我们假设已知了模型
@@ -108,8 +108,8 @@ $Q$-RWI基本理论；然后给出提取多震相反射地震数据各个震相�
 
 \begin{figure*}[!htbp]
     \centering
-    \subfigure[]{\includegraphics[width=0.92\linewidth]{figure/traces}}
-    \subfigure[]{\includegraphics[width=0.92\linewidth]{figure/spectral_4}}
+    \subfigure[]{\includegraphics[width=0.92\linewidth]{figure/traces_ch4}}
+    \subfigure[]{\includegraphics[width=0.92\linewidth]{figure/spectral_ch4}}
 	\fcaption{不同平滑尺度速度模型分解的Born正演地震响应：（a）对应于\ref{fig:smooth_model}
 	的地震响应，其中红线是用粘声波方程模拟的结果，其余是用不同平滑尺度分解出的高波数速度Born
 	正演的结果；（b）对应地震数据的振幅谱。}{Born modeling results for different velcity 
@@ -121,9 +121,9 @@ $Q$-RWI基本理论；然后给出提取多震相反射地震数据各个震相�
 
 \begin{figure*}[!htbp]
     \centering
-    \subfigure[]{\includegraphics[width=0.92\linewidth]{figure/traces1}}
-    \subfigure[]{\includegraphics[width=0.92\linewidth]{figure/spectral_41}}
-    \subfigure[]{\includegraphics[width=0.92\linewidth]{figure/normalized_spectral1}}
+    \subfigure[]{\includegraphics[width=0.92\linewidth]{figure/traces_ch41}}
+    \subfigure[]{\includegraphics[width=0.92\linewidth]{figure/spectral_ch41}}
+    \subfigure[]{\includegraphics[width=0.92\linewidth]{figure/normalized_spectral_ch4}}
 	\fcaption{两层速度结构，上层速度固定为2100m/s，下层速度从1700m/s变化到3500m/s时的Born
 	正演结果，其中分离高低波数速度结构的平滑半径为8: （a）Born 正演模拟结果；
 	（b）对应的振幅谱；（c）归一化振幅谱。}{Two-layer model with 2100m/s in the top layer and 
@@ -369,8 +369,8 @@ $\dot{P}_{f-\Delta f}(\mathbf{x}_s,\mathbf{x}_g,t)$和$\ddot{P}_{f-\Delta f}(\ma
 
 \begin{figure*}[!htbp]
     \centering
-    \subfigure[]{\includegraphics[width=0.99\linewidth]{figure/ricker}}
-    \subfigure[]{\includegraphics[width=0.99\linewidth]{figure/ricker_stft}}
+    \subfigure[]{\includegraphics[width=0.9\linewidth]{figure/ricker}}
+    \subfigure[]{\includegraphics[width=0.9\linewidth]{figure/ricker_stft}}
     \fcaption{短时Fourier变换：（a）分别在0.55s、1.35s处用振幅为4主频
 	为30Hz以及振幅为1主频为10Hz的Ricker子波合成地震道数据；（b）合成地震道对于的
 	短时Fourier谱。}{The effects of STFT: (a) Sythetic seismic trace with Ricker 
@@ -488,7 +488,7 @@ Born正演中的高波数模型的平滑尺度、强度及极性均不敏感。�
     \centering
     \subfigure[]{\includegraphics[width=0.72\linewidth]{figure/rtm_no400x250}}
     \subfigure[]{\includegraphics[width=0.72\linewidth]{figure/rtm_ffq400x250}}
-    \subfigure[]{\includegraphics[width=0.72\linewidth]{figure/lsrtm_true400x250}}
+    \subfigure[]{\includegraphics[width=0.72\linewidth]{figure/lsrtm_ffq400x250}}
     \fcaption{$Q$补偿成像结果：（a）初始$Q$补偿RTM结果；（b）基于峰值频率移动目标函数
     $Q$-RWI反演$Q$补偿RTM结果；（c）基于峰值频率移动目标函数$Q$-RWI反演$Q$补偿 LSRTM结果。}
 	{$Q$-compensated RTM images using initial

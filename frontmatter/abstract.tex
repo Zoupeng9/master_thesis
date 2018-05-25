@@ -34,7 +34,7 @@ $Q$模型估计一直是地震学和勘探地震学领域的研究热点之一�
 模型，在缺乏$Q$信息的情况下，最小平方逆时偏移（LSRTM）没法给出准确的高波数
 速度模型。为了降低$Q$-RWI对速度模型高波数成分的依赖性，论文第4章引入了峰值频率
 移动目标函数来更新中深层$Q$模型。峰值频率是地震数据的一个属性，其大小只与地震子波
-以及地层的衰减有关，只要速度的高频成分不影响地震子波的形状即不会改变峰值频率的大小。
+以及地层的衰减有关，只要速度的高波数成分不影响地震子波的形状即不会改变峰值频率的大小。
 在实际反演中用层状速度平滑差代替高波数速度扰动即可满足要求。
 
 本文针对中深层背景$Q$反演遇到的问题，提出了$Q$-RWI反演方法。通过峰值频率移动
@@ -63,9 +63,9 @@ $Q$模型估计一直是地震学和勘探地震学领域的研究热点之一�
 The real earth model is anelastic, which cause seismic attenuation and the 
 anelastic effects are described by the quality factor $Q$. Strong subsurface attenuation 
 mainly occur at the target area of oil exploration such as gas clouds/pockets. 
-Seismic attenuation will lead amplitude decrease and phase distortion of seismic wave 
+Seismic attenuation will lead amplitude decrease and phase distortion as seismic wave 
 propagating in the earth. It will decrease the reliability of reservoir identification 
-and interpretation if we don't consider the seismic attenuation when process the seismic 
+and interpretation if we don't take into account the seismic attenuation when process the seismic 
 data. The amplitude losses and the dispersion from attenuation are often compensated during 
 seismic migration. However, most migration algorithms with attenuation compensation 
 require an estimate of background $Q$ model.
@@ -81,7 +81,7 @@ methods in building a reliable $Q$ model is a well-known challenge because the l
 of the ray methods compromise the finite frequency nature of seismic wave propagation.
 With the development of high-performance computer and the better quality of broadband, full 
 aperture and high density seismic data, the full waveform inversion (FWI) technique for 
-one single velocity parameter is more and more sophisticated. There are many published 
+one single velocity parameter is more and more sophisticated. There are also many published 
 studies use FWI to update the $Q$ ($Q$-FWI) model. $Q$-FWI use the wave equation to 
 depict the wavepath, which provides a superior way of building high-resolution models, 
 especially under complex geological setting, but often suffers from an objective 
@@ -102,7 +102,7 @@ is one of attributes of the seismic traces and only depends on the seismic wavel
 and seismic attenuation. In Born forward modeling, the peak frequency could not be
 changed as long as the pertubation velocity model couldn't chage the shape of the 
 wavelet. In practice, we use the residual model between layered velocity model and it's 
-snoothing model to replace the high wavenumber velocity perturbation. 
+smoothing model to replace the high wavenumber velocity perturbation. 
 
 In this thesis, we developed a $Q$-RWI method to update the deep part of $Q$ model.
 We decrease the dependency of $Q$-RWI to high wavenuber velocity model through introducing 
