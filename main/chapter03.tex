@@ -42,18 +42,18 @@ $Q$-FWI的成功需要低频长偏移距地震数据，但是这种高质量的�
 在顺序反演的思路下，先假设已获得准确的速度模型，然后利用$Q$-RWI来
 反演背景$Q$模型。
 
-\vspace{0.5cm}
+\vspace{0.7cm}
 \section{宏观$Q$模型反射波形反演}
-\vspace{1.1cm}
+\vspace{0.8cm}
 
 当反射波占主导时，常规FWI对模型的短波长结构更敏感。由于非弹性衰减对地震数据的
 影响是一种沿地震波波路径的累加效应，因此，其长波长的背景模型更为重要。RWI通过
 将波形数据残差投影到反射波波路径来重构模型的长波长成分，更加切合对地震衰减参数反演的
 需求。本节将介绍$Q$-RWI的方法原理。
 
-\vspace{0.5cm}
+\vspace{0.7cm}
 \subsection{波形拟合目标函数及其梯度}
-\vspace{1.1cm}
+\vspace{0.8cm}
 
 常规的FWI是通过匹配模拟数据和观测数据来推断介质的参数。设$\mathbf{x}_s$和$\mathbf{x}_g$
 分别为炮点和检波点的空间位置，时间域FWI最常用的最小平方目标函数为（\citeA{virieux:2009}）：
@@ -214,9 +214,9 @@ $\mathbf{q}_c$。背景模型的梯度$\partial_{\mathbf{m}^s}\mathcal{J}$跟预
 模型是可靠的。相反，$\partial_{\mathbf{m}^r}\mathcal{J}$类似于RTM成像结果，主要分布在反射
 位置$\mathbf{m}^r$附近，用作二次源产生散射（反射）数据。
 
-\newpage
-\subsection{基于粘声方程的反射波形反演}
-\vspace{-1.0cm}
+\vspace{0.9cm}
+\subsection{基于粘声波方程的反射波形反演}
+\vspace{0.9cm}
 根据第二章第2节的推导，对于给定的速度以及SLS表征的$Q$模型，声压波场可用如下一阶波动方程组进行计算：
      \begin{eqnarray}
         \begin{aligned}
@@ -296,16 +296,24 @@ $\mathbf{q}_c$。背景模型的梯度$\partial_{\mathbf{m}^s}\mathcal{J}$跟预
     \begin{eqnarray*}
         \mathbf{w} = 
         \begin{bmatrix}
-            P \cr v_x \cr v_z \cr r_p \cr\delta P \cr\delta v_x \cr\delta v_z
-            \cr\delta r_p
-        \end{bmatrix},
+            P , v_x , v_z , r_p ,\delta P ,\delta v_x ,\delta v_z
+            ,\delta r_p
+        \end{bmatrix}^T,
         \mathbf{f} = 
         \begin{bmatrix}
-            f \cr 0\cr 0\cr 0 \cr 0\cr 0 \cr 0\cr 0
-        \end{bmatrix}.
+            f , 0, 0, 0 , 0, 0 , 0, 0
+        \end{bmatrix}^T.
     \end{eqnarray*}
-$\mathbf{w}$表示状态变量，$\mathbf{L}$表示正演模拟算子。在这种情况下，
+其中$\mathbf{L}$表示正演模拟算子，$\mathbf{w}$表示状态变量，$T$表示转置。
+在勘探地震尺度，地层的驰豫参数$\tau$比$\tau_\sigma$和$\tau_\epsilon$
+（图~\ref{fig:tq}）有较宽的数值变化范围。因此选择$\tau$作为表征衰减的参数，使其对$Q$的变化更敏感
+（\citeA{dutta.schuster:2016}）。
+
+对于反射全波形反演，根据前文已表达出的目标函数（\ref{eq:misfit_function1}）,
+在梯度类优化算法框架下，需要利用目标函数对模型参数的梯度去更新模型。
+如同前一节所讨论，可用伴随状态法推导梯度公式。在Born近似下，SLS粘声介质波动方程
 正算子的伴随算子$\mathbf{L}^\ast$有如下表达式：
+\newpage
     \begin{eqnarray}
         \mathbf{L}^\ast =  
         \begin{bmatrix}
@@ -334,10 +342,9 @@ $\mathbf{w}$表示状态变量，$\mathbf{L}$表示正演模拟算子。在这�
         \end{bmatrix},
 		\label{eq:ad_operator}
     \end{eqnarray}
-式中$\ast$表示伴随。在勘探地震尺度，地层的驰豫参数$\tau$比$\tau_\sigma$和$\tau_\epsilon$
-（图~\ref{fig:tq}）有较宽的数值变化范围。因此我们选择$\tau$作为参数化参数，因为其对$Q$的变化更敏感
-（\citeA{dutta.schuster:2016}）。用伴随状态法可推导出目标函数$\mathcal{J}(\mathbf{m})$
-对驰豫参数$\tau$的梯度为：
+式中$\ast$表示伴随。
+目标函数$\mathcal{J}(\mathbf{m})$
+对驰豫参数$\tau$的梯度表示为：
    \begin{equation}
     \begin{aligned}
         \frac{\partial \mathcal{J}}{\partial \tau} &= -\langle\frac{\partial \mathbf{L}}{\partial\tau}
@@ -354,11 +361,11 @@ $\mathbf{w}$表示状态变量，$\mathbf{L}$表示正演模拟算子。在这�
     \end{equation}
 式中$\tilde{\mathbf{w}}=\lbrack \delta\tilde{P}, \ \delta \tilde{v}_x, \ \delta \tilde{v}_z, \
 \delta \tilde{r}_p, \ \tilde{P}, \ \tilde{v}_x, \ \tilde{v}_z, \ \tilde{r}_p\rbrack ^T$是
-物理状态变量$\mathbf{w}$的伴随状态变量（$T$表示转置），满足如下伴随方程：
+物理状态变量$\mathbf{w}$的伴随状态变量，满足如下伴随方程：
 \begin{equation}
-	\mathbf{L}^\ast\tilde{\mathbf{w}} = \Delta\mathbf{d}.
+	\mathbf{L}^\ast\tilde{\mathbf{w}} = \Delta\mathbf{d},
 \end{equation}
-
+其中$\Delta\mathbf{d}$表示观测反射数据与模拟反射数据的波形残差。
 \begin{figure*}[!htbp]
     \centering
 	\subfigure[]{\includegraphics[width=0.9\linewidth]{figure/tq}}
@@ -370,15 +377,15 @@ $\mathbf{w}$表示状态变量，$\mathbf{L}$表示正演模拟算子。在这�
 	The reference frequency is taken to be 30Hz.}[驰豫参数随$Q$的变化曲线]
     \label{fig:tq}
 \end{figure*}
-
 在实际勘探中，通常只接收到了波场的压力分量，所以地震数据的残差只有一个分量，即：
 \begin{equation}
     \Delta\mathbf{d} = \lbrack 0, \ 0, \ 0, \ 0, \ \Delta d, \ 0, \ 0, \ 0\rbrack^T.
 \end{equation}
-本章主要是理论的角度来推导$Q$-RWI方法并证明其对反演深层背景衰减模型的有效性，所以我们
-假定介质的背景体积模量$K_0$和扰动$\delta K$都是已知的，并且地震数据是无噪的。在这
-中假设下选取振幅差作为目标函数（方程~\ref{eq:misfit_function}）是可行的，并且伴随方程的
-伴随源有最简单的形式即模拟数据与观测数据的残差。
+
+本章主要从理论的角度来推导$Q$-RWI方法，然后证明其对反演深层背景衰减模型的有效性，所以我们
+假定介质的背景体积模量$K_0$和扰动$\delta K$都是已知的。在这
+种假设下选取波形残差的二范数作为目标函数（方程~\ref{eq:misfit_function1}）是可行的，此时伴随方程的
+伴随源有最简单的形式，即模拟反射数据与观测反射数据的残差。
 
 \begin{figure*}[!htbp]
     \centering
@@ -392,18 +399,18 @@ $\mathbf{w}$表示状态变量，$\mathbf{L}$表示正演模拟算子。在这�
     \label{fig:grad_qrwi}
 \end{figure*}
 
-$Q$-RWI的梯度公式（\ref{eq:gradient}）共包含三项。如图~\ref{fig:grad_qrwi}所示，
-第一二项“兔耳朵”状的梯度，提供了沿反射波路径的低波数的背景$Q$的更新量。第三项对应于
-反射波在成像点的成像结果，对RWI来说是奇异的非光滑的分量。第三项会在反射界面位置更新
-高波数成分从而增加反演的非线性程度。在声波的RWI中，\citeB{wu.alkhalifah:2015}观察到
-第三项在反射界面处的值的符号与第一二项在反射界面处的值相反，但是数值不一样。他们将
-将第三项加入反演中，通过求解一个内部优化问题，用第三项来减弱第一二项在反射界面处
-的影响以降低反演的非线性程度。为了不增加反演的计算量，在$Q$-RWI中我们省略掉第三项，
+$Q$-RWI的梯度公式共包含三项。如图~\ref{fig:grad_qrwi}所示，
+前两项“兔耳朵”状的梯度提供了沿反射波路径的背景$Q$的更新方向。第三项对应于
+反射波在界面附近的成像结果，对RWI来说是奇异的非光滑的分量，会在反射界面位置更新
+高波数成分从而影响反演的收敛性。在声波的RWI中，\citeB{wu.alkhalifah:2015}观察到
+第三项在反射界面处的符号与前两项相反，但是数值不一样。他们
+通过求解一个内部优化问题，用第三项来减弱前两项在反射界面处
+的高波数成分以降低反演的非线性程度。为了不增加反演的计算量，我们在$Q$-RWI中略掉第三项，
 同时用Poynting矢量来简单区分上下行波（\citeA{yoon.marfurt:2006}），
 以减弱梯度在反射界面处的奇异性。由图~\ref{fig:grad_poynting}可以看出，无论是单炮单道、
-单炮多道还是多炮多道叠加，用Poynting矢量来进行上下行波分离的预条件都减弱了$Q$-RWI中
-梯度在反射界面处的奇异性，从而增强了反演的稳定性。以上的$Q$-RWI梯度是基于SLS粘声方程
-推导的，这套推导方法同样适合于常$Q$粘声方程，其具体推导可参见附录\ref{chp:dcq}。
+单炮多道还是多炮多道观测条件下，用Poynting矢量进行上、下行波分离的预条件都减弱了$Q$-RWI中
+梯度在反射界面处的奇异性，从而增强了反演的稳定性与收敛性。以上的$Q$-RWI梯度是基于SLS粘声波方程
+推导的，这套推导方法同样适合于常$Q$的粘声波方程，其具体推导参见附录\ref{chp:dcq}。
 
 \newpage
 \begin{figure*}[!htbp]
@@ -414,9 +421,9 @@ $Q$-RWI的梯度公式（\ref{eq:gradient}）共包含三项。如图~\ref{fig:g
     \subfigure[]{\includegraphics[width=0.49\linewidth]{figure/grad_rwi_poynting_oneshot}}
     \subfigure[]{\includegraphics[width=0.49\linewidth]{figure/grad}}
     \subfigure[]{\includegraphics[width=0.49\linewidth]{figure/grad_poynting}}
-    \fcaption{两层介质Poynting矢量预条件梯度对比，左边是没有预条件的梯度，右边是通过
-	Poynting矢量上下行波分离预条件的梯度。（a，b）单炮单道；（c，d）单炮多道；
-	（e，f）多炮多道。}{Comparison the gradients before and after using Poynting vector 
+    \fcaption{两层介质Poynting矢量预条件梯度对比：左边是原始梯度，右边是
+	预条件梯度。第一行是单炮单道实验；第二行是单炮多道实验；
+	第三行是多炮多道实验。}{Comparison the gradients before and after using Poynting vector 
 	for preconditing for simple two-layer model, the left column are before precondition 
 	gradients and the righ column are after precondition results. (a, b) one shot and one 
 	trance; (c, d) one shot and multi-trances; (e, f) multi-shots and multi-trances. 
@@ -424,53 +431,52 @@ $Q$-RWI的梯度公式（\ref{eq:gradient}）共包含三项。如图~\ref{fig:g
     \label{fig:grad_poynting}
 \end{figure*}
 
-计算出梯度之后，$\tau(\mathbf{x})$可用最速下降法来迭代求解：
+计算出目标函数的梯度之后，可用最速下降法来迭更新衰减参数$\tau(\mathbf{x})$：
 \begin{equation}
     \tau(\mathbf{x})^{(k+1)}=\tau(\mathbf{x})^k-\alpha \mathbf{P_c}(\mathbf{x})
-    \frac{\partial \mathcal{L}}{\partial \tau(\mathbf{x})},
+    \frac{\partial \mathcal{J}}{\partial \tau(\mathbf{x})},
 \end{equation}
 式中$k$是迭代次数，$\mathbf{P}_c(\mathbf{x})$是预条件算子，步长$\alpha$可通过
 任何反向追踪的线性搜索方法求解（\citeA{nocedal:1999}）。在每一个迭代步内，
-当$\tau(\mathbf{x})$更新之后可用方程~\ref{eq:tq}将其转换为$Q(\mathbf{x})$。
+当$\tau(\mathbf{x})$更新之后可用方程（\ref{eq:tq}）将其转换为$Q(\mathbf{x})$模型。
 
 
 \newpage
 \section{数值实验}
 本节用一个层状模型（图~\ref{fig:lens_model}）来验证$Q$-RWI的有效性。该模型
 宽4km，深2.5km。在模型的表面均匀分布20炮，炮间距为200m，检波器对称分布于震源
-的两端，间距为10m且最大偏移距为1km。用峰值频率为30Hz的雷克子波作为爆炸震源。
+的两边，间距为10m且最大偏移距为1km。用峰值频率为30Hz的雷克子波作为爆炸震源。
 在模型的中深部包含一个强的$Q$异常体，最小$Q$值达到30。在反演的过程中认为体积
 模量$K_0$和$\delta K$都是已知的，并且密度为常数。用均匀模型（$Q=200$）作为
-初始模型。在勘探地震尺度，对地震波有较强吸收作用的$Q$的变化范围为10-100，且
-当$Q>200$时，驰豫参数$\tau$对$Q$值的变化（图~\ref{fig:tq}a）不敏感，因此在
+初始模型。在勘探地震频段，度对地震波有较强吸收作用的$Q$的变化范围为10-200
+（\citeA{quan.harris:1997}，\citeA{sams:1997}，\citeA{pride:2003}）。
+如图（\ref{fig:tq}a）
+当$Q>200$时，驰豫参数$\tau$对$Q$值的变化不敏感，因此在
 反演过程中将$Q$值限制在10-200的范围。
 
-如图~\ref{fig:lens_model}c~所示，经过30次迭代之后，$Q$-RWI基本恢复了中深部
-的$Q$异常。图~\ref{fig:chouxian}分别抽取了$x=1$km、2km、3km处的伪井曲线。
-抽线的结果进一步证明了$Q$-RWI对中深部异常$Q$的恢复能力。由于反射数据在浅层
-覆盖不够即波路径在近地表处变窄，使得$Q$-RWI在浅层只能得到一个光滑的等效解。
-这也证实了地球物理反问题解的多解性，要处理好这种多解性，在反演时必需加入
+如图（\ref{fig:lens_model}c）所示，经过30次迭代之后，$Q$-RWI基本构建了中深部
+的$Q$模型。图~\ref{fig:chouxian}分别抽取了$x=1$km、2km、3km处的伪井曲线，
+证明$Q$-RWI对中深部异常$Q$的恢复能力。由于反射数据在浅层
+覆盖不够，使得$Q$-RWI在浅层只能得到一个等效解。
+要处理好这种多解性，在反演时必需加入
 先验信息的约束或者多种反演方法相结合，例如$Q$-FWI就能很好的反演浅层$Q$模型。
 在模型的最底部，由于没有接收到反射数据，反射波路径没有穿过该区域，所以没法
-正确反演。图~\ref{fig:misfit_model}展示了迭代过程中的收敛曲线，在这种理想
-的合成数据中，目标泛函下降了七八个数量级，这也有力的证实了$Q$-FWI框架的合理
-性。图~\ref{fig:record_diff}展示了在$x=2$km 处第10炮观测记录；观测数据与初始
-模型模拟数据的残差以及观测记录与30次迭代之后模拟数据的残差。经过30次迭代之后
-模拟数据与观测数据之间的残差基本为零，这也更好的证明了$Q$-RWI的有效性。
+正确反演模型参数。图~\ref{fig:misfit_model}展示了迭代过程中的收敛曲线。在这种理想
+的合成数据中，目标泛函下降了7~8个数量级，这也有力的证实了$Q$-RWI方法的合理
+性。图~\ref{fig:record_diff}展示了在$x=2$km 处第10炮的观测记录
+，发现经过30次迭代之后
+模拟数据与观测数据之间的残差基本为零。
 
-最后，我们用$Q$补偿的RTM来验证反演结果的可靠性。图~\ref{fig:rtm_model}
-分别展示了初始$Q$模型补偿的RTM成像结果、真实$Q$模型补偿的RTM成像结果
-以及反演$Q$模型补偿的RTM成像结果。从成像结果中可以看出，初始$Q$模型补偿的RTM
-（图~\ref{fig:rtm_model}a）在强衰减区域能量损失严重，并且由于速度频散的影响其成像位
-置不对。准确的$Q$模型不仅补偿了强衰减区损失的能量（图~\ref{fig:rtm_model}b），而且也
-保持衰减介质中的速度频散关系，从而保证了成像位置的正确性。用$Q$-RWI反演的$Q$模型
-补偿的RTM结果（图~\ref{fig:rtm_model}c）与用真实$Q$模型补偿的RTM具有相当的成像
-结果。这也从$Q$补偿成像的角度证明了$Q$-RWI反演结果的可靠性。
-
+最后，我们用$Q$-RTM来验证反演结果的可靠性。图~\ref{fig:rtm_model}
+分别展示了初始$Q$模型、真实$Q$模型
+以及反演$Q$模型对应的$Q$-RTM成像结果。可以看出，初始$Q$模型补偿的RTM
+（图~\ref{fig:rtm_model}a）在强衰减区域能量损失严重，并且由于速度频散的影响使得成像位
+置略有偏差。准确的$Q$模型不仅补偿了强衰减区损失的能量（图~\ref{fig:rtm_model}b），而且也
+反映衰减介质中的速度频散关系，从而保证了$Q$-RTM成像的准确性。用$Q$-RWI反演的$Q$模型
+的RTM取得了与真实$Q$模型RTM相当的成像效果，表明重建的背景$Q$模型是可靠的。
 
 \begin{figure*}[!htbp]
     \centering
-    %{\includegraphics[width=0.85\linewidth]{figure/model}}
 	\subfigure[]{\includegraphics[width=0.82\linewidth]{figure/vel_400x250}}
 	\subfigure[]{\includegraphics[width=0.82\linewidth]{figure/q_400x250}}
 	\subfigure[]{\includegraphics[width=0.82\linewidth]{figure/fq_400x250}}
@@ -486,15 +492,16 @@ $Q$-RWI的梯度公式（\ref{eq:gradient}）共包含三项。如图~\ref{fig:g
 	\subfigure[]{\includegraphics[width=0.32\linewidth]{figure/1km}}
 	\subfigure[]{\includegraphics[width=0.32\linewidth]{figure/2km}}
 	\subfigure[]{\includegraphics[width=0.32\linewidth]{figure/3km}}
-	\fcaption{抽线对比：（a）1km处；（b）2km处；（c）3km处。}{Pseudowells comparison at (a) 1km, (b) 2km
-	and (c) 3km.}[抽线对比结果]
+	\fcaption{伪井曲线对比：（a）$x=$1km处；（b）$x=$2km处；（c）$x=$3km处。}
+	{Pseudowells comparison at (a) $x=$1km, (b) $x=$2km
+	and (c) $x=$3km.}[伪井对比结果]
     \label{fig:chouxian}
 \end{figure*}
 
 \begin{figure*}[!htbp]
     \centering
     {\includegraphics[width=1.0\linewidth]{figure/misfit}}
-    \fcaption{收敛曲线}{The history of convergence.}[收敛曲线]
+    \fcaption{$Q$-RWI收敛曲线}{The history of convergence.}[$Q$-RWI收敛曲线]
     \label{fig:misfit_model}
 \end{figure*}
 
@@ -503,10 +510,10 @@ $Q$-RWI的梯度公式（\ref{eq:gradient}）共包含三项。如图~\ref{fig:g
 	\subfigure[]{\includegraphics[width=0.47\linewidth]{figure/record}}
 	\subfigure[]{\includegraphics[width=0.47\linewidth]{figure/diff0}}
 	\subfigure[]{\includegraphics[width=0.47\linewidth]{figure/diff30}}
-	\fcaption{数据残差比较：（a）在1km处的单炮记录；（b）跟初始模型正演数据的残差；
+	\fcaption{某单炮记录反射波数据残差比较：（a）单炮记录；（b）初始模型正演数据对应的残差；
 	（c）迭代30次后的数据残差。}{(a) The observed data for the shot
 	at 1km, (b) the residual with the initial $Q$, and (c) the residual with the 
-	$Q$-RWI inverted $Q$.}[数据残差对比结果]
+	$Q$-RWI inverted $Q$.}[$Q$-RWI某单炮记录反射波数据残差对比结果]
     \label{fig:record_diff}
 \end{figure*}
 
@@ -515,8 +522,8 @@ $Q$-RWI的梯度公式（\ref{eq:gradient}）共包含三项。如图~\ref{fig:g
 	\subfigure[]{\includegraphics[width=0.72\linewidth]{figure/rtm_no400x250}}
 	\subfigure[]{\includegraphics[width=0.72\linewidth]{figure/rtm_true400x250}}
 	\subfigure[]{\includegraphics[width=0.72\linewidth]{figure/rtm_fq400x250}}
-	\fcaption{$Q$-RTM成像结果：（a）初始$Q$补偿结果；（b）真实$Q$补偿结果；
-	$Q$-RWI反演$Q$补偿结果。}{$Q$-compensated RTM images using initial
+	\fcaption{$Q$-RTM成像结果：（a）初始$Q$模型；（b）真实$Q$模型；
+	$Q$-RWI反演$Q$模型。}{$Q$-compensated RTM images using initial
 	$Q$ model (a); true $Q$ model (b) and $Q$-RWI inverted $Q$ model (c).}
 	[$Q$-RTM成像结果]
     \label{fig:rtm_model}
