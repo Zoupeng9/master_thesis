@@ -3,20 +3,19 @@
 %% Encoding: UTF-8
 %%==================================================
 
-\chapter{基于峰值频移目标函数的反射全波形反演}
+\chapter{利用反射波峰值频率反演背景$Q$模型}
 
-论文第三章提出的$Q$-RWI框架是基于数据残差的最小二乘目标函数来实现的，该目标泛函
-对于理论的合成数据有很理想的效果，那是因为在合成数据实验中我们假设已知了模型
+论文第三章提出的$Q$-RWI方法采用波形数据残差的最小二乘目标函数，
+对于理论的合成数据有很好的效果，那是因为在合成数据实验中我们假设已知了模型
 速度的高波数成分和低波数成分，即振幅的残差只由$Q$不准引起。
-在实际勘探地震数据处理中，要获取低波数的速度模型相对可行，高波数的速度
-模型很难精确获取，而高波数的速度成分又是影响地震波振幅的最大因素。此外，
-地震波振幅还受数据采集环境的影响，如环境噪音、检波器与地表耦合情况等。
-引起振幅残差的成因的不确定性给第三章提出的基于数据残差最小的$Q$-RWI法造成了致命
-的影响。
+在实际勘探地震数据处理中，要获取低波数的速度模型相对可行，高波数的扰动速度
+模型很难精确获取，而它们又是影响地震波振幅的主要因素。此外，
+地震波振幅还受数据采集环境的影响，如各种噪音、检波器与地表耦合情况等。
+引起振幅残差的成因的不确定性给第三章提出的基于波形数据残差最小化的$Q$-RWI
+方法的实际应用造成了致命的影响。
 
-如何孤立地将地震衰减对地震数据的影响从数据中提取出来是$Q$-RWI法走向实用的关键。
-本章将从地震数据属性出发，寻找只与$Q$相关的地震数据属性，
-并将其应用到$Q$-RWI中。
+如何孤立地将地震衰减对地震数据的影响隔离出来是$Q$-RWI法走向实用的关键。
+本章将寻找只与$Q$相关的地震数据属性，并将其应用到$Q$-RWI中。
 
 \vspace{1.0cm}
 \section{引言}
@@ -25,27 +24,26 @@
     \subfigure[]{\includegraphics[width=0.92\linewidth]{figure/wavelet}}
     \subfigure[]{\includegraphics[width=0.92\linewidth]{figure/spectrum}}
     \subfigure[]{\includegraphics[width=0.92\linewidth]{figure/normalized_spectrum}}
-    \fcaption{地震衰减效应：（a）不同$Q$值对地震波波形的影响；（b）不同$Q$值对地震波
+    \fcaption{地震波衰减效应：（a）不同$Q$值对地震波波形的影响；（b）不同$Q$值对地震波
 	振幅谱的影响；（c）归一化的振幅谱。}{The effects of seismic attenuation:
     (a) the seismic waveforms propagated in different $Q$ models; (b) the amplitude 
 	spectrum; (c) the nomalized amplitude spectrum.}
-    [地震衰减效应]
+    [地震波衰减效应]
     \label{fig:q_effect}
 \end{figure*}
-地震衰减不仅吸收地震波的振幅而且对地震波的相位有很强的改造作用（图~\ref{fig:q_effect}a）。
-由第二章的线性粘弹理论知道，衰减系数$\alpha$与地震波的频率$f$成线性关系
-（公式~\ref{eq:linear_visco}），即$\alpha\propto f$。
+地层吸收衰减不仅影响地震波的振幅还对其相位有很强的改造作用（图~\ref{fig:q_effect}a）。
+由第二章的线性粘弹波动理论知道，衰减系数$\alpha$与地震波的频率$f$成线性关系
+（公式~\ref{eq:linear_visco}）。
 衰减介质对地震波高频成分的衰减要强于对低频成分的衰减（图~\ref{fig:q_effect}b），
-这就导致了衰减介质中地震波的峰值频率往低频率处移动（图~\ref{fig:q_effect}c）。
-几何扩散、透射损失等地震现象影响地震波的振幅但不影响地震波的峰值频率，
+这就导致了衰减介质中地震波的峰值频率往低频率移动（图~\ref{fig:q_effect}c）。
+几何扩散、透射损失等波现象影响地震波的振幅但不影响峰值频率。
 地震波峰值频率的大小基本只与地下介质衰减强度有关。\citeB{quan.harris:1997}
-首次将模拟数据与观测数据间的质心频率差异作为匹配准则，用射线层析方程来更新
+首次将模拟数据与观测数据间的质心频率差异作为匹配准则，用射线层析方法来更新
 $Q$模型。为了克服射线理论高频近似的局限性，\citeB{dutta.schuster:2016}将峰值
-频率移动目标函数引入到了波动层析当中，通过链接函数首次推导了压力波场对
+频率移动目标函数引入到了波动方程层析中，通过链接函数首次推导了压力波场对
 驰豫参数$\tau(\mathbf{x})$的Frechet导数。同时也用伴随状态法推导出了峰值频率移动目标
 函数对模型参数$\tau(\mathbf{x})$的梯度并给出了伴随源。他们的方法在理论合成数据
-和实际数据中都获得了很好的效果，但是\citeB{dutta.schuster:2016}的$Q$层析方法
-只用了直达波数据。
+和实际数据中都获得了很好的效果，但是他们的$Q$层析方法只用了透射达波数据。
 
 \begin{figure*}[!htbp]
     \centering
@@ -58,7 +56,7 @@ $Q$模型。为了克服射线理论高频近似的局限性，\citeB{dutta.schu
     \label{fig:misfit_com}
 \end{figure*}
 正如第三章所讲，相较于透射波，反射波能提供更深部的介质参数信息。
-相比于振幅匹配的目标函数（公式~\ref{eq:misfit_function}），峰值频率移动的
+相比于波形匹配的目标函数（公式~\ref{eq:misfit_function1}），峰值频率移动的
 目标函数具有如下表达式：
 \begin{equation}
     \mathcal{J}(\mathbf{m})=\frac{1}{2}\sum_{s,g}\int_t\Delta f^2(\mathbf{x}_s,\mathbf{x}_g,t)dt,
@@ -67,13 +65,13 @@ $Q$模型。为了克服射线理论高频近似的局限性，\citeB{dutta.schu
 其中$\Delta f(\mathbf{x}_s,\mathbf{x}_g,t)=f^{peak}_{obs}(\mathbf{x}_s,\mathbf{x}_g,t)-
 f^{peak}_{cal}(\mathbf{x}_s,\mathbf{x}_g,t)$，$f^{peak}_{obs}(\mathbf{x}_s,\mathbf{x}_g,t)$
 和$f^{peak}_{cal}(\mathbf{x}_s,\mathbf{x}_g,t)$分别是观测数据与模拟数据各震相的峰值
-频率。图~\ref{fig:misfit_com}~展示了两种目标函数随$Q$值变化的形态。从图中可以看出
-峰值频率移动的目标函数比波形残差目标函数具有更宽的收敛盆，更加适合背景$Q$模型的反演。
+频率。图~\ref{fig:misfit_com}~展示了两种目标函数随$Q$值变化的形态。可以看出
+峰值频率移动的目标函数比波形残差目标函数具有更宽的收敛区间，更加适合背景$Q$模型的反演。
 
-另外，将峰值频率移动作为匹配准则引入$Q$-RWI中可以降低反演方法对高波数速度模型的依赖。
-图~\ref{fig:smooth_model}将两层速度模型通过平滑获得了平滑半径为16的低波数背景模型以及
+更重要的是，将峰值频率移动作为匹配准则引入$Q$-RWI中可以降低反演方法对高波数速度模型的依赖。
+图~\ref{fig:smooth_model}将两层速度模型通过平滑获得了平滑半径为16个网格的背景模型以及
 不同平滑尺度的高波数扰动模型。其对应的地震波模拟结果如图~\ref{fig:smooth}所示，其中
-红线是用粘声波方程模拟的结果，其余均为Born正演结果，从图中可以看出Born正演对高波数速度
+红线是用粘声波方程模拟的结果，其余均为Born正演结果。从图中可以看出Born正演对高波数速度
 的平滑尺度不敏感，同样其振幅谱也不敏感。当固定上层速度为2100m/s，下层速度从1700m/s变化
 到3500m/s时，Born正演（用相同的平滑半径来分解高低波数速度成分）的地震数据
 （图~\ref{fig:contrast}a）虽具有不同的振幅，
@@ -83,9 +81,9 @@ f^{peak}_{cal}(\mathbf{x}_s,\mathbf{x}_g,t)$，$f^{peak}_{obs}(\mathbf{x}_s,\mat
 用峰值频率移动作为测量准则极大的降低了$Q$-RWI对高波数速度成分的依赖性。
 
 反射波数据不同于直达波数据，通常具有多个震相。如何把反射波数据中各个震相的
-峰值频率提取出来是反演成功的关键。本章先介绍基于峰值频率移动目标函数的
-$Q$-RWI基本理论；然后给出提取多震相反射地震数据各个震相峰值频率的办法；
-最后通过数值实验来证明所提反演方法的可靠性。
+峰值频率提取出来是反演成功的关键。后文先介绍基于峰值频率移动目标函数的
+$Q$-RWI方法；然后给出提取多震相反射地震数据各个震相峰值频率的办法；
+最后通过数值实验来证明该反演方法的可行性。
 
 \begin{figure*}[!htbp]
     \centering
@@ -139,19 +137,21 @@ $Q$-RWI基本理论；然后给出提取多震相反射地震数据各个震相�
 
 \newpage
 \vspace{1.5cm}
-\section{方法原理}
+\section{基于峰值频移的衰减反射波形反演}
 
 基于峰值频率移动目标函数的$Q$-RWI算法步骤跟波动方程走时反演（\citeA{luo.schuster:1991}；
 \citeA{ma.hale:2013}）类似。首先需要定义一个链接函数来连接峰值频率移动残差与声压波场的
 关系；其次需要定义与峰值频率移动相关的目标泛函；最后需要用粘声波方程以及链接函数来推导
 目标函数对$Q$的一阶导数即梯度方向。在这一章的推导中，我们假定地震波传播满足二维时间域
-SLS模型粘声波方程~\ref{eq:state}。
+SLS粘声波方程（\ref{eq:state}）。
 
 用$\hat{P}_f(\mathbf{x}_s,\mathbf{x}_g,t)$表示给定背景$Q$模型的模拟震相，下标$f$表示
 该震相的峰值频率，峰值频率从震相的振幅谱（图~\ref{fig:q_effect}c~中黑线）中获取。
 类似地，用$P_{f-f_1}(\mathbf{x}_s,\mathbf{x}_g,t)$表示同一震相峰值频率为$f-f_1$的
-观测数据，其震相的振幅谱用图~\ref{fig:q_effect}c~中的蓝线表示。其中，$f_1$表示由于
-$Q$不准引起的模拟数据与观测数据间峰值频率的移动，为了方便表达，这一节我们假设地震数据中
+观测数据，其中，$f_1$表示由于 
+$Q$不准引起的模拟数据与观测数据间峰值频率的移动,
+其振幅谱用图（\ref{fig:q_effect}c）中的蓝线表示。
+为了方便表达，这一节我们假设地震数据
 只含有单一震相，多震相的峰值频率提取方法将在下一节中给出。
 
 给定一个足够准确的背景速度模型，模拟数据与观测数据之间相似性可以定义为：
@@ -160,12 +160,12 @@ $Q$不准引起的模拟数据与观测数据间峰值频率的移动，为了�
 	\hat{P}_f(\mathbf{x}_s,\mathbf{x}_g,t).
 	\label{eq:correlation}
 \end{equation}
-在这一章的$Q$-RWI算法中，主要是寻求最小的峰值频率移动。对于准确的背景$Q$模型，
+在这一章的$Q$-RWI算法中，主要是寻求合适的$Q$模型实现最小的峰值频率移动。对于准确的背景$Q$模型，
 观测数据和模拟数据具有相同的峰值频率。换句话说，就是寻求一个移动值$f_1=\Delta f$，
-使其最大化方程~\ref{eq:correlation}中的互相关函数。如果$\Delta f=0$，表明我们找到了
+使其最大化方程（\ref{eq:correlation}）中的互相关函数。如果$\Delta f=0$，表明我们找到了
 正确的背景$Q$模型。
 
-因为$f_1=\Delta f$最大化了互相关函数~\ref{eq:correlation}，所以$F_{f_1}(\mathbf{x}_s,
+因为$f_1=\Delta f$最大化了互相关函数（\ref{eq:correlation}），所以$F_{f_1}(\mathbf{x}_s,
 \mathbf{x}_g,t)$对$f_1$的导数在$f_1=\Delta f$处为零，即：
 \begin{equation}
 	\begin{aligned}
@@ -177,19 +177,19 @@ $Q$不准引起的模拟数据与观测数据间峰值频率的移动，为了�
 	\end{aligned}
 \end{equation}
 式中$\dot{P}_{f-\Delta f}(\mathbf{x}_s,\mathbf{x}_g,t)=[\partial P_{f-f_1}(\mathbf{x}_s,
-\mathbf{x}_g,t)/\partial f_1]_{f_1=\Delta f}$。方程~\ref{eq:connective}~即为链接函数，
-链接函数作为一个中间方程来连接基础数据（声压波场）与骨架数据（频率移动残差）。因为波动方程
-不能直接建立起骨架数据与模型参数的关系，所以在推导梯度时链接函数是必需的。
+\mathbf{x}_g,t)/\partial f_1]_{f_1=\Delta f}$。方程（\ref{eq:connective}）即为链接函数，
+链接函数作为一个中间方程来连接基础数据（声压波场）与骨架数据（峰值频率）。因为波动方程
+不能直接建立起骨架数据与模型参数的关系，所以在推导梯度时链接函数是必需的（\citeA{schuster:2017}）。
 
-本章中，目标函数的定义如~\ref{eq:freq_misfit_function}~式。其梯度$\gamma(\mathbf{x})$
-表示如下：
+在本章中，目标函数的定义如(\ref{eq:freq_misfit_function})式。其梯度$\gamma(\mathbf{x})$
+表示为：
 \begin{equation}
 	\gamma(\mathbf{x})=\frac{\partial\mathcal{J}}{\partial \tau(\mathbf{x})}
 	=-\sum_{s,g}\frac{\partial \Delta f}{\partial \tau(\mathbf{x})}
 	\Delta f(\mathbf{x}_s,\mathbf{x}_g,t).
 	\label{eq:gradient}
 \end{equation}
-从方程~\ref{eq:connective}~出发，可以得到如下三个方程：
+从方程（\ref{eq:connective}）出发，可以得到如下三个方程：
 \begin{equation}
 	\begin{aligned}
 		 &\dot{F}_{\Delta f}(\Delta f,\tau(\mathbf{x}))=0, \\
@@ -212,34 +212,35 @@ $Q$不准引起的模拟数据与观测数据间峰值频率的移动，为了�
 	\dot{P}_{f-\Delta f}(\mathbf{x}_s,\mathbf{x}_g,t) 
 	\frac{\partial \hat{P}_f(\mathbf{x}_s,\mathbf{x}_g,t)}{\partial \tau(\mathbf{x})}
 \end{equation}
-利用方程~\ref{eq:partial_f}~可以把方程~\ref{eq:gradient}~的梯度可以表示为：
+利用方程（\ref{eq:partial_f}）可以把方程（\ref{eq:gradient}）的梯度表示为：
 \begin{equation}
 	\gamma(\mathbf{x})=\sum_{s,g}\frac{\frac{\partial \dot{F}_{\Delta f}}{\partial\tau(\mathbf{x})}}
 	{\frac{\partial \dot{F}_{\Delta f}}{\partial \Delta f}}\Delta f(\mathbf{x}_s,\mathbf{x}_g,t).
 \end{equation}
-\citeB{dutta.schuster:2016}显示地推导出了Frechet导数$[\partial \hat{P}_f(\mathbf{x}_s,
-\mathbf{x}_g,t)/\partial \tau(\mathbf{x})]$，其推导过程略微麻烦。本节用伴随状态法来
-推导梯度$\gamma(\mathbf{x})$，两种方法推导的结果一致。
+\citeB{dutta.schuster:2016}在$Q$FWI中显式地推导出了Frechet导数$[\partial \hat{P}_f(\mathbf{x}_s,
+\mathbf{x}_g,t)/\partial \tau(\mathbf{x})]$，其推导过程比较繁琐。
 
+值得注意的是，本节将用伴随状态法来
+推导$Q$-RWI的梯度$\gamma(\mathbf{x})$。
 基于峰值频率移动目标函数的$Q$-RWI满足的物理状态方法跟第三章所用的物理方程
 （方程~\ref{eq:state}）一致，即$\mathbf{L(m)}\mathbf{w(m)}=\mathbf{f}$。
 物理状态变量$\mathbf{w}$与模型参数$\mathbf{m}$的偏导数有如下关系：
 \begin{equation}
-	\begin{aligned}
-		&\mathbf{L(m)}\mathbf{w(m)}=\mathbf{f} \\
-		&\Rightarrow \frac{\partial \mathbf{L(m)}}{\partial\mathbf{m}}\mathbf{w(m)}+
-		\mathbf{L(m)}\frac{\partial\mathbf{w(m)}}{\partial\mathbf{m}}=0 \\
-		&\Rightarrow \frac{\partial\mathbf{w(m)}}{\partial\mathbf{m}}=
+%	\begin{aligned}
+%		&\mathbf{L(m)}\mathbf{w(m)}=\mathbf{f} \\
+%		&\Rightarrow \frac{\partial \mathbf{L(m)}}{\partial\mathbf{m}}\mathbf{w(m)}+
+%		\mathbf{L(m)}\frac{\partial\mathbf{w(m)}}{\partial\mathbf{m}}=0 \\
+		\frac{\partial\mathbf{w(m)}}{\partial\mathbf{m}}=
 		-\mathbf{L^{-1}(m)}\frac{\partial \mathbf{L(m)}}{\partial\mathbf{m}}\mathbf{w(m)}.
-	\end{aligned}
+%	\end{aligned}
 	\label{eq:ad_state}
 \end{equation}
-链接函数\ref{eq:connective}可以重新写成如下表达式：
+链接函数（\ref{eq:connective}）可以重新写成如下表达式：
 \begin{equation}
 	\dot{F}_{\Delta f}=\left\langle \hat{\mathbf{w}}_f(\mathbf{x}_s,\mathbf{x}_g,t),
 	\dot{\mathbf{w}}_{f-\Delta f}(\mathbf{x}_s,\mathbf{x}_g,t) \right\rangle,
 \end{equation}
-式中$\langle \mathbf{x},\mathbf{y}\rangle$表示向量$\mathbf{x}$，$\mathbf{y}$之间的标量积。
+式中$\langle \mathbf{x},\mathbf{y}\rangle$表示向量$\mathbf{x}$，$\mathbf{y}$之间的内积。
 $\hat{\mathbf{w}}_f$和$\mathbf{w}_{f-\Delta f}$分别表示同一震相的模拟数据与观测数据。
 目标函数$\mathcal{J}$的梯度满足如下推导：
 \begin{equation}
@@ -269,7 +270,7 @@ $\hat{\mathbf{w}}_f$和$\mathbf{w}_{f-\Delta f}$分别表示同一震相的模�
 	\end{aligned}
 	\label{eq:ad_algrithm}
 \end{equation}
-上式中
+其中
 \begin{equation}
 	\mathbf{E}=\begin{bmatrix} E_1 \cr E_2 \cr E_3 \cr E_4 \end{bmatrix}
 		=\begin{bmatrix} \int dt \ddot{P}(\mathbf{x}_s,\mathbf{x}_g,t)_{obs}
@@ -286,7 +287,7 @@ $\mathbf{w}=\lbrack P, \ v_x, \ v_z, \ r_p, \ \delta P, \ \delta v_x, \ \delta v
 \begin{equation}
 	\mathbf{L}^\ast\mathbf{w}^\ast=\mathbf{f}^\ast,
 \end{equation}
-式中$\mathbf{L}^\ast$是粘声波方程正传算子$\mathbf{L}$的伴随算子且满足~\ref{eq:ad_operator}~式；
+式中$\mathbf{L}^\ast$是粘声波方程正传算子$\mathbf{L}$的伴随算子且满足（\ref{eq:ad_operator}）式；
 $\mathbf{f}^\ast$为伴随源，满足如下关系式：
 \begin{equation}
 	\mathbf{f}^\ast=\begin{bmatrix} 0 \cr 0\cr 0\cr 0\cr
@@ -300,12 +301,12 @@ $\mathbf{f}^\ast$为伴随源，满足如下关系式：
 		\Delta f(\mathbf{x}_s,\mathbf{x}_g,t)\frac{1}{E_4}\right) 
 	\end{bmatrix}.
 \end{equation}
-在实际勘探中，假设我们只接收到压力波场，伴随源简化为\\
+在实际地震勘探中，假设我们只接收到压力波场，伴随源简化为\\
  $\mathbf{f}^\ast=\lbrack 0, \ 0, \ 0, \ 0, \
 \Delta P(\mathbf{x}_s,\mathbf{x}_g,t), \ 0, \ 0, \ 0\rbrack ^T$，其中
 $\Delta P(\mathbf{x}_s,\mathbf{x}_g,t)=(1/E_1)\dot{P}(\mathbf{x}_s,\mathbf{x}_g,t)_{obs}
- \\ \Delta f(\mathbf{x}_s,\mathbf{x}_g,t)$表示为残差道，对应于常规波形反演的数据残差伴随源。
-由方程~\ref{eq:ad_algrithm}~可以得到目标函数对模型参数的梯度：
+ \\ \Delta f(\mathbf{x}_s,\mathbf{x}_g,t)$表示残差道，对应于常规反射波形反演的波形数据残差伴随源。
+由方程（\ref{eq:ad_algrithm}）可以得到目标函数对模型参数的梯度：
    \begin{equation}
     \begin{aligned}
         \frac{\partial \mathcal{J}}{\partial \tau} &= -\langle\frac{\partial \mathbf{L}}{\partial\tau}
@@ -321,36 +322,37 @@ $\Delta P(\mathbf{x}_s,\mathbf{x}_g,t)=(1/E_1)\dot{P}(\mathbf{x}_s,\mathbf{x}_g,
     \label{eq:gradient1}
     \end{equation}
 
-基于振幅匹配的$Q$-RWI梯度（\ref{eq:gradient}式）与基于峰值频率移动目标函数的$Q$-RWI的梯度
-有相同的表达式。而且伴随方程的形式也相同，只是伴随源不同，前者为波形数据的残差，后者为峰值
-频率残差与观测数据对频率导数的加权。由于没有显示的表达式来求取观测数据对频率的导数
+容易发现，基于峰值频率移动目标函数的$Q$-RWI的梯度与基于波形匹配的$Q$-RWI梯度（\ref{eq:gradient}式）
+有相同的表达式，而且伴随方程的形式也相同，只是伴随源不同，前者为峰值
+频率残差与观测数据对频率导数的加权，后者为波形数据的残差。由于没有显式的表达式来求取观测数据对频率的导数
 $\dot{P}_{f-\Delta f}(\mathbf{x}_s,\mathbf{x}_g,t)$和$\ddot{P}_{f-\Delta f}(\mathbf{x}_s,
-\mathbf{x}_g,t)$，在伴随方程的实际求解过程中，\citeB{dutta.schuster:2016}用峰值频率移动残差
-加权观测数据作为伴随源，从而忽略了$\dot{P}_{f-\Delta f}$以及除数因子$E_1$。
-理论数据和实际数据实验都证实了上述近似的合理性（\citeA{dutta.schuster:2016}），本文也将
-采样上述近似来处理伴随源。
-
-计算出梯度之后，用第三章的迭代流程即可更新背景$Q$模型。
+\mathbf{x}_g,t)$，在伴随方程的实际求解过程时，\citeB{dutta.schuster:2016}
+在透射波层析中用峰值频率移动残差
+加权观测数据作为伴随源，从而忽略了$\dot{P}_{f-\Delta f}$以及除数因子$E_1$，
+其理论数据和实际数据实验都证实了上述近似的合理性。本文也将
+采用类似的近似来处理$Q$-RWI涉及的伴随源。
+计算出梯度之后，采用第三章的迭代流程更新背景$Q$模型。
 
 
 \vspace{0.5cm}
 \section{多震相反射数据峰值频率提取}
 \vspace{0.5cm}
-在实际地震勘探中，接收到的反射数据往往具有多个反射震相，而用常规Fourier变换计算出的振幅谱
-是所有地震相特征的总体体现。用反射数据进行反演时，反射震相的匹配一直是一个研究点。在反射
-波层析中，\citeB{wang.rao:2009}用层剥离的方法来求取各反射层的走时。在波动方程反射走时反演
+实际地面接收到的反射数据往往具有许多反射震相，用常规Fourier变换计算出的振幅谱
+是所有震相特征的总体体现。用反射数据进行反演时，反射震相的匹配一直是一个难点，
+因为这很容易受到震相之间的相互干扰。在反射
+波走时层析中，\citeB{wang.rao:2009}用层剥离的方法来求取各反射同相轴的走时。在波动方程反射走时反演
 中，\citeB{zhang.schuster:2011}用局部相关法，而\citeB{ma.hale:2013}
-用波形动态解缠（dynamic warping）法来提取反射波各震相的走时差。
-多震相反射数据峰值频率的提取首先需要知道沿时间方向的局部频率信息即时频谱。
+用波形动态解缠（dynamic warping）法来提取反射波各震相的走时残差。
 
-时频谱的求取方法有很多大致可分为两类，一类基于瞬时频率求取，另一类是通过各频率分量分解
-来获取时频谱。基于瞬时频率的方法是将一维时间序列的地震道变为一维频率序列数据，而频率分量分解
-法是把一维时间序列地震道变换到二维的时间－频率域中。\citeB{taner:1979}首次用Hilbert变换
+多震相反射数据峰值频率的提取首先需要知道沿时间方向的局部频率信息。
+时频信息的求取方法可大致可分为两类：一类是基于瞬时频率求取，另一类是通过
+时频谱分析。基于瞬时频率的方法是将地震道的一维时间序列变为一维频率序列数据，而时频谱
+分析是把地震道一维时间序列变换到二维的时间－频率域中。\citeB{taner:1979}首次用Hilbert变换
 来求取瞬时频率，\citeB{poggiagliolmi.vesnaver:2014}同样基于Hilbert变换提出了不依赖
 人为定义参数的瞬时频率求取方法。另外，\citeB{fomel:2007}在正则化反演的框架下定义了
 局部频率。
 
-地震道频率分量分解法在时频分析中被广泛应用，其中最简单、被广泛应用的方法就是短时Fourier
+地震道时频谱分析在地震数据处理中被广泛应用，其中最简单的方法就是短时Fourier
 变换（STFT）。然而STFT产生的时频谱在整个时间频率空间的分辨率是固定的（\citeA{cohen:1995}）。
 为了获得可变的分辨率，\citeB{pinnegar.mansinha:2003}用任意的可变形状的窗函数进行S变换来处理地震数据。
 除了Fourier基函数，连续小波变换（CWT）用小波基函数来分析地震数据的时频信息
@@ -362,9 +364,9 @@ $\dot{P}_{f-\Delta f}(\mathbf{x}_s,\mathbf{x}_g,t)$和$\ddot{P}_{f-\Delta f}(\ma
 提出了一种用Fourier基函数来匹配目标信号的频率分量分解方法。其分解方法是可逆的，且
 比传统的S变换更灵活，在地震数据面波去燥方面有很好的运用效果。
 
-本文提取的是各震相的峰值频率，对时间-频率的分辨率要求不是很高。用简单的滑动时窗Fourier
+本文i$Q$-RWI需要提取的是各震相的峰值频率，对时间-频率的分辨率要求不是很高。用简单的滑动时窗Fourier
 变换即短时Fourier变换（\citeA{allen:1977}）即可满足要求。时窗的选取需要四个参数：
-时窗长度、每一段重叠样本数、做Fourier变换的长度以及窗函数。时窗长度、样本重叠数和窗函数
+时窗长度、每一段重叠样本数、Fourier变换的长度以及窗函数。时窗长度、样本重叠数和窗函数
 是对完整地震道震相截取参数，Fourier变换长度决定了频谱的分辨率。
 
 \begin{figure*}[!htbp]
@@ -379,22 +381,22 @@ $\dot{P}_{f-\Delta f}(\mathbf{x}_s,\mathbf{x}_g,t)$和$\ddot{P}_{f-\Delta f}(\ma
     [短时Fourier变换]
     \label{fig:stft_effect}
 \end{figure*}
-图~\ref{fig:stft_effect}a 是分别用振幅为4主频为30Hz以及振幅为1主频为10Hz的Ricker子
-波在0.55s和1.35s处合成的地震记录。图~\ref{fig:stft_effect}b 展示了其对应的STFT谱，
-从图中可以看出STFT很好的刻画了地震道的时频信息，而且从谱中可以很容易的拾取出两地震
-相的峰值频率。
+图（\ref{fig:stft_effect}a）是分别用振幅为4主频为30Hz以及振幅为1主频为10Hz的Ricker子
+波在0.55s和1.35s处合成的地震记录。图（\ref{fig:stft_effect}b）展示了其对应的STFT谱，
+可以看出当震相容易区分时，STFT很好的刻画了地震道的时频信息，
+而且从谱中可以很容易的拾取出两震相的峰值频率。
 
-图~\ref{fig:peak_frequency}是用第三章所用的层状模型
-（图~\ref{fig:lens_model}）所做的单炮实验。其中图~\ref{fig:peak_frequency}a是用
-真实$Q$模型计算出的观测炮记录，图~\ref{fig:peak_frequency}b是用背景$Q$模型计算
+图~\ref{fig:peak_frequency}是用第三章的层状模型
+（图~\ref{fig:lens_model}）所做的单炮实验，其中图（\ref{fig:peak_frequency}）是用
+真实$Q$模型计算出的观测炮记录，图（\ref{fig:peak_frequency}b）是用均匀衰减模型（$Q$=200）计算
 的模拟炮记录。由于深部强衰减的影响，观测炮记录第四个同相轴的能量明显弱于对应
-的模拟数据，同时观测数据的峰值频率（图~\ref{fig:peak_frequency}c）相较于
+的模拟数据。同时，观测数据的峰值频率（图~\ref{fig:peak_frequency}c）相较于
 模拟数据的峰值频率（图~\ref{fig:peak_frequency}d）有明显的下移。
 图~\ref{fig:peak_frequency}e展示了模拟数据与观测数据的峰值频率残差，
 图~\ref{fig:peak_frequency}f展示了其基于峰值频率移动目标函数的伴随源。
 在该实验中，速度的低波数成分是准确的，而高波数成分是由拾取成像剖面获取的。
 因此只保证了高波数速度位置的准确性，而其扰动量的大小以及分布形状是不准确的。
-从伴随源的形状和能量分布以及残差道信息可以看出用STFT提取峰值频率是可行的，
+从伴随源的形状和能量分布以及残差道信息可以看出，用STFT提取峰值频率是可行的，
 且峰值频率目标函数确实可以降低$Q$-RWI对速度高波数成分的依赖性。
 
 \begin{figure*}[!htbp]
