@@ -29,13 +29,13 @@ $Q$模型估计一直是地震学领域的研究热点之一。早期用衰减�
 情况，但其利用的主要是透射波信息。当缺乏低频、长
 偏移距数据时，透射波对地下的穿透深度有限，$Q$-FWI只能反演得到浅层的模型参数。
 为了获得中深部的$Q$模型，有学者近年来提出了
-成像域中的偏移$Q$分析方法。现有的研究结果表明成像域方法反演结果的分辨率一般比数据域方法低。
+成像域偏移$Q$分析方法。现有的研究结果表明成像域方法反演结果的分辨率一般比数据域方法低。
 
-本文第2章系统总结了地震衰减的基本理论，并着重讨论了衰减介质$Q$补偿的逆时偏移（$Q$-RTM）方法。
+本文第2章系统总结了地震衰减的基本理论，并着重讨论了衰减介质$Q$补偿逆时偏移（$Q$-RTM）方法。
 为了获取$Q$-RTM所需的中深层宏观$Q$模型，论文
-第3章首次将$Q$反演纳入反射波形反演（$Q$-RWI）框架。当观测地震数据缺少大孔径的
+第3章首次在反射波形反演（$Q$-RWI）框架下反演宏观$Q$模型。当观测地震数据缺少大孔径的
 透射波信息时，$Q$-RWI利用反射波数据更新中深层$Q$模型。$Q$-RWI强烈依赖速度
-模型，包括宏观背景速度和高波数速度扰动。在实际勘探中背景速度相对容易获取，
+模型，包括宏观背景速度和高波数速度扰动。在实际勘探中光滑的背景速度相对容易获取，
 在缺乏$Q$信息的情况下，即使背景速度模型足够准确，最小平方逆时偏移（LSRTM）也很难
 反演出准确的高波数速度模型。
 为了降低$Q$-RWI对速度模型高波数成分的依赖性，论文第4章引入了峰值频率
@@ -99,12 +99,17 @@ in seismograms. In order to gain the deep part backgroud $Q$ model, the wave-equ
 migration $Q$ analysis method was proposed in the image domain. However, the inversion 
 results from image domain has lower resolution than data domain.
 
+In the chapter 2, we systematically summarized the theory of the seismic attenuation,
+and represented the methods of $Q$ compensation reverse time migration ($Q$-RTM).
 In the chapter 3, we developed a visco-acoustic wave equation reflection waveform 
 inversion ($Q$-RWI) method to update the deep part of background $Q$ model when 
 miss the long-offsets and low frequencies seismgrams. However, the $Q$-RWI strongly 
-rely on the high wavenumber component of the velocity model. What's more, 
+rely on the velocity model including smooth background velocity and 
+high wavenumber component of the perturbation model.
+In seismic data processing, the smooth background velocity is easier to get, but, 
 the least square reverse time migration (LSRTM) can't obtain a reliable perturbation 
-velocity model when the $Q$ model is unkonwn. In the chapter 4, we use peak frequency 
+velocity model when the $Q$ model is unkonwn even the background 
+velocity model is known. In the chapter 4, we use peak frequency 
 shifts between the the predicted and the observed traces as the misfit function 
 to descrease the dependency of the perturbation velocity model. The peak frequency 
 is one of attributes of the seismic traces and only depends on the seismic wavelet 
