@@ -43,11 +43,11 @@ $Q$模型。为了克服射线理论高频近似的局限性，\citeB{dutta.schu
 频率移动目标函数引入到了波动方程层析中，通过链接函数首次推导了压力波场对
 驰豫参数$\tau(\mathbf{x})$的Frechet导数。同时也用伴随状态法推导出了峰值频率移动目标
 函数对模型参数$\tau(\mathbf{x})$的梯度并给出了伴随源。他们的方法在理论合成数据
-和实际数据中都获得了很好的效果，但是他们的$Q$层析方法只用了透射达波数据。
+和实际数据中都获得了很好的效果，但是他们的$Q$层析方法只用了透射波数据。
 
 \begin{figure*}[!htbp]
     \centering
-    {\includegraphics[width=0.92\linewidth]{figure/misfit_com}}
+    {\includegraphics[width=0.98\linewidth]{figure/misfit_com}}
     \fcaption{两类归一化的目标函数随$Q$变化的形态，蓝线表示数据残差匹配最小二乘目
 	标泛函，黑线表示峰值频率移动最小二乘目标泛函。}
 	{Two types of misfit function vary with $Q$, blue line represents the least 
@@ -64,7 +64,7 @@ $Q$模型。为了克服射线理论高频近似的局限性，\citeB{dutta.schu
 \end{equation}
 其中$\Delta f(\mathbf{x}_s,\mathbf{x}_g,t)=f^{peak}_{obs}(\mathbf{x}_s,\mathbf{x}_g,t)-
 f^{peak}_{cal}(\mathbf{x}_s,\mathbf{x}_g,t)$，$f^{peak}_{obs}(\mathbf{x}_s,\mathbf{x}_g,t)$
-和$f^{peak}_{cal}(\mathbf{x}_s,\mathbf{x}_g,t)$分别是观测数据与模拟数据各震相的峰值
+和$f^{peak}_{cal}(\mathbf{x}_s,\mathbf{x}_g,t)$分别是观测反射数据与模拟反射数据各震相的峰值
 频率。图~\ref{fig:misfit_com}~展示了两种目标函数随$Q$值变化的形态。可以看出
 峰值频率移动的目标函数比波形残差目标函数具有更宽的收敛区间，更加适合背景$Q$模型的反演。
 
@@ -223,7 +223,7 @@ $Q$不准引起的模拟数据与观测数据间峰值频率的移动,
 值得注意的是，本节将用伴随状态法来
 推导$Q$-RWI的梯度$\gamma(\mathbf{x})$。
 基于峰值频率移动目标函数的$Q$-RWI满足的物理状态方法跟第三章所用的物理方程
-（方程~\ref{eq:state}）一致，即$\mathbf{L(m)}\mathbf{w(m)}=\mathbf{f}$。
+（\ref{eq:state}）一致，即$\mathbf{L(m)}\mathbf{w(m)}=\mathbf{f}$。
 物理状态变量$\mathbf{w}$与模型参数$\mathbf{m}$的偏导数有如下关系：
 \begin{equation}
 %	\begin{aligned}
@@ -242,7 +242,7 @@ $Q$不准引起的模拟数据与观测数据间峰值频率的移动,
 \end{equation}
 式中$\langle \mathbf{x},\mathbf{y}\rangle$表示向量$\mathbf{x}$，$\mathbf{y}$之间的内积。
 $\hat{\mathbf{w}}_f$和$\mathbf{w}_{f-\Delta f}$分别表示同一震相的模拟数据与观测数据。
-目标函数$\mathcal{J}$的梯度满足如下推导：
+目标函数$\mathcal{J}$的梯度满足：
 \begin{equation}
 	\begin{aligned}
 		\frac{\partial \mathcal{J}}{\partial \tau(\mathbf{x})} &= -\sum_s \sum_g 
@@ -334,9 +334,8 @@ $\dot{P}_{f-\Delta f}(\mathbf{x}_s,\mathbf{x}_g,t)$和$\ddot{P}_{f-\Delta f}(\ma
 计算出梯度之后，采用第三章的迭代流程更新背景$Q$模型。
 
 
-\vspace{0.5cm}
+\newpage
 \section{多震相反射数据峰值频率提取}
-\vspace{0.5cm}
 实际地面接收到的反射数据往往具有许多反射震相，用常规Fourier变换计算出的振幅谱
 是所有震相特征的总体体现。用反射数据进行反演时，反射震相的匹配一直是一个难点，
 因为这很容易受到震相之间的相互干扰。在反射
@@ -364,10 +363,10 @@ $\dot{P}_{f-\Delta f}(\mathbf{x}_s,\mathbf{x}_g,t)$和$\ddot{P}_{f-\Delta f}(\ma
 提出了一种用Fourier基函数来匹配目标信号的频率分量分解方法。其分解方法是可逆的，且
 比传统的S变换更灵活，在地震数据面波去燥方面有很好的运用效果。
 
-本文i$Q$-RWI需要提取的是各震相的峰值频率，对时间-频率的分辨率要求不是很高。用简单的滑动时窗Fourier
+本文$Q$-RWI需要提取的是各震相的峰值频率，对时间-频率的分辨率要求不是很高。用简单的滑动时窗Fourier
 变换即短时Fourier变换（\citeA{allen:1977}）即可满足要求。时窗的选取需要四个参数：
 时窗长度、每一段重叠样本数、Fourier变换的长度以及窗函数。时窗长度、样本重叠数和窗函数
-是对完整地震道震相截取参数，Fourier变换长度决定了频谱的分辨率。
+是对完整地震道震相的截取参数，Fourier变换长度决定了频谱的分辨率。
 
 \begin{figure*}[!htbp]
     \centering
@@ -382,18 +381,18 @@ $\dot{P}_{f-\Delta f}(\mathbf{x}_s,\mathbf{x}_g,t)$和$\ddot{P}_{f-\Delta f}(\ma
     \label{fig:stft_effect}
 \end{figure*}
 图（\ref{fig:stft_effect}a）是分别用振幅为4主频为30Hz以及振幅为1主频为10Hz的Ricker子
-波在0.55s和1.35s处合成的地震记录。图（\ref{fig:stft_effect}b）展示了其对应的STFT谱，
+波在0.55s和1.35s处合成的地震记录。图（\ref{fig:stft_effect}b）展示了其对应的STFT谱。
 可以看出当震相容易区分时，STFT很好的刻画了地震道的时频信息，
 而且从谱中可以很容易的拾取出两震相的峰值频率。
 
 图~\ref{fig:peak_frequency}是用第三章的层状模型
-（图~\ref{fig:lens_model}）所做的单炮实验，其中图（\ref{fig:peak_frequency}）是用
+（图~\ref{fig:lens_model}）所做的单炮实验，其中图（\ref{fig:peak_frequency}a）是用
 真实$Q$模型计算出的观测炮记录，图（\ref{fig:peak_frequency}b）是用均匀衰减模型（$Q$=200）计算
 的模拟炮记录。由于深部强衰减的影响，观测炮记录第四个同相轴的能量明显弱于对应
 的模拟数据。同时，观测数据的峰值频率（图~\ref{fig:peak_frequency}c）相较于
 模拟数据的峰值频率（图~\ref{fig:peak_frequency}d）有明显的下移。
-图~\ref{fig:peak_frequency}e展示了模拟数据与观测数据的峰值频率残差，
-图~\ref{fig:peak_frequency}f展示了其基于峰值频率移动目标函数的伴随源。
+图（\ref{fig:peak_frequency}e）展示了模拟数据与观测数据的峰值频率残差，
+图（\ref{fig:peak_frequency}f）展示了其基于峰值频率移动目标函数的伴随源。
 在该实验中，速度的低波数成分是准确的，而高波数成分是由拾取成像剖面获取的。
 因此只保证了高波数速度位置的准确性，而其扰动量的大小以及分布形状是不准确的。
 从伴随源的形状和能量分布以及残差道信息可以看出，用STFT提取峰值频率是可行的，
@@ -417,28 +416,29 @@ $\dot{P}_{f-\Delta f}(\mathbf{x}_s,\mathbf{x}_g,t)$和$\ddot{P}_{f-\Delta f}(\ma
 \end{figure*}
 
 \newpage
-\vspace{0.5cm}
 \section{数值实验}
 
-为了便于对比，本节继续采用第三章所用的层状模型（图~\ref{fig:lens_model}a）来验证基于峰值频率
-移动目标函数的$Q$-RWI的正确性。模型大小的设置、观测系统的布置、震源子波以及初始模型的选取均
-与第三章数值实验相同。本节所用的观测数据由Born正演产生，Born正演的背景模型由真实速度模型
-平滑16个网格产生，其扰动模型是真实速度模型与背景模型的差。在进行反演时假设背景速度
-模型已知，扰动模型选用真实速度模型与其平滑4个网格的平滑模型的差。
+为了便于对比，本节仍采用第三章所用的层状模型（图~\ref{fig:lens_model}a）来验证基于峰值频率
+移动目标函数的$Q$-RWI方法的可行性。模型大小的设置、观测系统、震源子波以及初始模型的选取均
+与第三章数值实验相同。本节所用的观测数据由Born正演产生，背景速度模型由真实速度模型
+平滑16个网格产生，其扰动模型是真实速度模型与背景模型的差。
+根据前文分析，峰值频率对高波数速度的大小和极性均不敏感。在反演中，背景速度模型采用
+产生观测数据所用的背景速度模型，扰动速度模型采用真实速度模型与其平滑4个网格的平滑模型
+的差。
 
-图~\ref{fig:lens_fmodel}c展示了基于峰值频率移动目标函数的$Q$-RWI反演结果，其反演结果与基于
+图（\ref{fig:lens_fmodel}c）展示了基于峰值频率移动目标函数的$Q$-RWI反演结果，反演结果与基于
 振幅残差目标函数的$Q$-RWI结果（图~\ref{fig:lens_fmodel}b）基本相同。经过15次迭代之后，中深部的
-$Q$异常基本得到恢复。图~\ref{fig:fchouxian}分别对比了$x=1$km、2km、3km处的伪井曲线。伪井对比
-结果进一步证明了峰值频率移动目标函数在$Q$-RWI反演中的可行性。同时从抽线结果中可以看出只修改
-目标函数并不能改变RWI在浅层因缺少覆盖数据而导致的多解性。多数据融合如反射数据和透射数据相
-结合即可解决这种反问题的多解性。在强衰减处$x=2$km处（图~\ref{fig:fchouxian}b），基于振幅残差
-目标函数的反演结果比基于峰值频率移动目标函数的反演结果分辨率高，这是因为振幅残差考虑了全波信息
-而峰值频率只是地震数据的一个属性，同时这一结果也与目标函数的性态
-（图~\ref{fig:misfit_com}）相吻合。经过15次迭代之后，其目标函数（图~\ref{fig:misfit_fmodel}）
-下降了一个数量级，这也达到了实际需求。最后用$Q$-RTM和$Q$补偿的最小二乘逆时偏移（$Q$-LSRTM）
-来验证反演结果的可靠性。
-从图~\ref{fig:rtm_fmodel}中可以看出基于峰值频率移动目标函数的$Q$-RWI反演结果均能满足
-$Q$-RTM和$Q$-LSRTM的需要，并且$Q$-LSRTM比$Q$-RTM有较高的分辨率。
+背景$Q$模型基本得到恢复。图~\ref{fig:fchouxian}分别对比了$x=1$km、2km、3km处的伪井曲线，
+证明在$Q$-RWI中引入峰值频率移动目标函数是可行的。同时，从中可以看出只修改
+目标函数并不能改变RWI在浅层因缺少覆盖数据而导致的多解性。多数据融合（如反射和透射数据相
+结合）即可解决这种反问题的多解性。在强衰减处（$x=2$km）（图~\ref{fig:fchouxian}b），基于波形残差
+目标函数的反演比基于峰值频率移动目标函数的反演结果分辨率高，这是因为波形残差考虑了全波信息
+而峰值频率只拟合地震数据的一个属性。这一结果也与目标函数的性态
+（图~\ref{fig:misfit_com}）相吻合。经过15次迭代之后，基于峰值频率移动目标函数（图~\ref{fig:misfit_fmodel}）
+的值下降了一个数量级，达到了实际需求。最后用$Q$-RTM和$Q$补偿的最小二乘逆时偏移（$Q$-LSRTM）
+来验证反演模型的可靠性。
+从图~\ref{fig:rtm_fmodel}中可以看出基于峰值频率移动目标函数的$Q$-RWI反演结果能满足
+$Q$-RTM和$Q$-LSRTM的需要。正如我们所预期的那样，$Q$-LSRTM比$Q$-RTM分辨率高。
 
 数值实验（图~\ref{fig:smooth_model}、\ref{fig:smooth}、\ref{fig:contrast}）证明了峰值频率对
 Born正演中的高波数模型的平滑尺度、强度及极性均不敏感。本节实验中产生观测数据的高波数模型
@@ -456,9 +456,9 @@ Born正演中的高波数模型的平滑尺度、强度及极性均不敏感。�
     \subfigure[]{\includegraphics[width=0.82\linewidth]{figure/q_400x250}}
     \subfigure[]{\includegraphics[width=0.82\linewidth]{figure/fq_400x250}}
     \subfigure[]{\includegraphics[width=0.82\linewidth]{figure/ffq_400x250}}
-    \fcaption{层状模型反演结果：（a）真实$Q$模型；（b）基于振幅残差目标函数的
-	$Q$-RWI反演结果；（c）基于峰值频率移动目标函数的$Q$-RWI
-    反演结果。}{The inversion results of layered model: (a) the true $Q$ model,
+    \fcaption{层状模型反演结果：（a）真实$Q$模型；（b）波形残差目标函数
+	$Q$-RWI；（c）峰值频率移动目标函数$Q$-RWI
+    。}{The inversion results of layered model: (a) the true $Q$ model,
     (b) inverted $Q$ model using $Q$-RWI with amplitude difference misfit function
 	and (c) inverted $Q$ model using $Q$-RWI with peak frequency shift misfit function.}
     [层状模型]
@@ -470,19 +470,20 @@ Born正演中的高波数模型的平滑尺度、强度及极性均不敏感。�
     \subfigure[]{\includegraphics[width=0.32\linewidth]{figure/1km_1}}
     \subfigure[]{\includegraphics[width=0.32\linewidth]{figure/2km_1}}
     \subfigure[]{\includegraphics[width=0.32\linewidth]{figure/3km_1}}
-    \fcaption{抽线对比：（a）1km处；（b）2km处；（c）3km处。其中红线是真实
+    \fcaption{伪井曲线：（a）1km处；（b）2km处；（c）3km处。其中红线是真实
 	$Q$模型，蓝线是基于振幅残差目标函数的反演结果，绿线是基于峰值频率移动目标函数
 	的反演结果}{Pseudowells comparison at (a) 1km, (b) 2km
     and (c) 3km.　The red, blue, and green curves represent the true $Q$ model,
 	amplitude difference based $Q$-RWI inversion result and peak frequency shift 
-	based $Q$-RWI inversion result, respectively.}[抽线对比结果]
+	based $Q$-RWI inversion result, respectively.}[峰值频率移动目标函数反演结果伪井曲线对比]
     \label{fig:fchouxian}
 \end{figure*}
 
 \begin{figure*}[!htbp]
     \centering
     {\includegraphics[width=1.0\linewidth]{figure/fmisfit}}
-    \fcaption{收敛曲线}{The history of convergence.}[收敛曲线]
+    \fcaption{峰值频率移动目标函数$Q$-RWI收敛曲线}{The history of convergence.}
+	[峰值频率移动目标函数$Q$-RWI收敛曲线]
     \label{fig:misfit_fmodel}
 \end{figure*}
 
@@ -491,12 +492,12 @@ Born正演中的高波数模型的平滑尺度、强度及极性均不敏感。�
     \subfigure[]{\includegraphics[width=0.72\linewidth]{figure/rtm_no400x250}}
     \subfigure[]{\includegraphics[width=0.72\linewidth]{figure/rtm_ffq400x250}}
     \subfigure[]{\includegraphics[width=0.72\linewidth]{figure/lsrtm_ffq400x250}}
-    \fcaption{$Q$补偿成像结果：（a）初始$Q$补偿RTM结果；（b）基于峰值频率移动目标函数
-    $Q$-RWI反演$Q$补偿RTM结果；（c）基于峰值频率移动目标函数$Q$-RWI反演$Q$补偿 LSRTM结果。}
+    \fcaption{$Q$补偿逆时偏移：（a）初始$Q$模型RTM；（b）基于峰值频率移动目标函数
+    $Q$-RWI反演$Q$补偿RTM；（c）基于峰值频率移动目标函数$Q$-RWI反演$Q$补偿LSRTM。}
 	{$Q$-compensated RTM images using initial
 	$Q$ model (a) and peak frequency shift based $Q$-RWI inverted $Q$ model (b); (c) is 
 	$Q$-LSRTM image using the peak frequency shift based $Q$-RWI inverted $Q$ model.}
-    [$Q$补偿成像结果]
+    [$Q$补偿逆时偏移结果]
     \label{fig:rtm_fmodel}
 \end{figure*}
 

@@ -5,27 +5,22 @@
 %% Encoding: UTF-8
 %%==================================================
 
-\chapter{衰减介质理论基础}
+\chapter{衰减介质地震波传播模拟与逆时偏移}
 
 线性粘弹理论已趋于完善，\citeB{carcione:2007} 对其做了较为完整的总结。粘弹性介质的性质介于弹性固体与粘性流体之间，
 可以定义为材料在一定的外力作用历史条件及其处于某一温度范围情况下所表现出来的同时具有弹性固体和粘性流体效应的性质。
 除了当时所受外力大小外，外力加载时间、加载历史以及介质温度变化都会对粘性介质的形变产生影响。粘弹性介质的行为是介质
 的应变率决定的，它随时间的变化逐渐表现出来。外力的加载过程和介质的形变历史决定了介质的应力-应变关系，这也就是说介质
-是具有记忆性的，而弹性介质的应力-应变关系是瞬时线性的。本章简要回顾衰减理论及其表征，总结常用的描述衰减机制的
-物理模型，并系统总结在地震学中常用的几类描述衰减性的粘声波动方程。
+是具有记忆性的，而弹性介质的应力-应变关系是瞬时线性的。本章先简要回顾衰减理论的本构关系，然后总结常用的描述衰减机制的
+物理模型以及其对应的粘声波方程，最后讨论两类粘声波方程在$Q$补偿逆时偏移中的应用。
 
 \vspace{1.0cm}
 
-\section{衰减理论及其表征}
+\section{本构关系及常用衰减模型}
 
 假定介质的性质不随时间变化，在等温条件下本构方程描述的应力-应变关系是一种褶积关系。用等效力学模型可以描述一般化的非弹性
 现象，这种模型一般用弹簧和阻尼器线性组合而成。能量储存在弹簧中而耗散在阻尼器中，弹簧和阻尼器任意串联/并联即可以提供一个
 很好的现象学模型来研究聚合物、岩石等材料的粘弹性质。
-
-
-\vspace{0.5cm}
-
-\subsection{复模量及耗散存储模量}
 
 在弹性介质中，Hooke 定律表示为：
 \begin{equation}
@@ -65,9 +60,6 @@ $M_2(\omega)$为耗散模量，且有：
 =(\partial_t\varphi*\partial_t\chi)*\sigma$有$\partial_t\varphi(t)*\partial_t\chi(t)=\delta(t)$，即：
 $M(\omega)J(\omega)=1$，其中$J(\omega)=F[\partial_t\chi]$。
 
-\vspace{0.8cm}
-\subsection{品质因子与衰减系数}
-\vspace{0.2cm}
 频率域的应力-应变关系（\ref{eq:vis_stress_strain}）跟弹性介质在时间域的应力-应变关系（\ref{eq:stress_strain}）
 有相同的表达式，但是模量是复数并且与频率有关。用波动方程一维平面波解可以清晰显示这种关系，其解的形式为：
 \begin{equation}
@@ -93,7 +85,7 @@ $M(\omega)J(\omega)=1$，其中$J(\omega)=F[\partial_t\chi]$。
 	k=\kappa -i\alpha,
 \end{equation}
 \newpage
-方程（\ref{eq:plane_wave}）可以重新表示为：
+\hspace{-2.0em}方程（\ref{eq:plane_wave}）可以重新表示为：
 \begin{equation}
 	u=u_0\exp(-\alpha x)\exp[i(\omega t-\kappa x)],
 \end{equation}
@@ -132,14 +124,6 @@ $M(\omega)J(\omega)=1$，其中$J(\omega)=F[\partial_t\chi]$。
 \end{equation}
 衰减系数$\alpha$与频率$f$呈线性关系，即所谓的线性衰减。
 
-\section{描述衰减性的基本模型}
-\vspace{0.2cm}
-弹簧和阻尼器简单的串/并联可以组合成描述衰减的不同力学模型。Maxwell 在1967年提出了用来描述气体粘滞性问题的Maxwell模型；
-Meyer和Voigt通过经典的弹性波方程总结出了所谓的Voigt应力-应变关系，由Kelvin在1875年提出了代表Voigt固体的力学模型--
-Kelvin-Voigt模型；Poynting和Thomson在1902年提出更能代表真实介质材料的Zener模型或标准线性固体模型。在油气勘探
-和地震学中，由于不知道衰减与频率的依赖关系，经常用多个Zener模型并联在一起来表示近似常$Q$模型，并用气刻画岩石
-的衰减特性。在勘探地震频段，\citeB{kjartansson:1979}提出了理想的常$Q$线性衰减模型。
-
 模型的驰豫函数可以通过对模型瞬间施加一个恒定的单位应变$\epsilon=H(t)$，然后测量其应力的变化，即
 \begin{equation}
 	\sigma(t)=\partial_t\varphi(t)*H(t)=\varphi(t)*\delta(t)=\varphi(t).
@@ -165,148 +149,9 @@ Kelvin-Voigt模型；Poynting和Thomson在1902年提出更能代表真实介质�
 		\label{fig:stress}
 \end{figure*}
 
+\subsection{标准线性固体模型}
 
-\vspace{0.2cm}
-\subsection{Maxwell模型}
-\vspace{0.2cm}
-如图\ref{fig:maxwell_model}所示，弹簧与阻尼器简单的串联即可得到Maxwell模型。对模型施加一个
-应力$\sigma$，就会在模型的弹簧中产生形变$\epsilon_1$，并在阻尼器中产生形变$\epsilon_2$。
-弹簧中的应力-应变关系为：
-\begin{equation}
-	\sigma=M_U\epsilon_1,
-\end{equation}
-其中$M_u$是弹簧的弹性模量，下标$U$表示“无驰豫”。阻尼器中的应力-应变关系为：
-\begin{equation}
-	\sigma=\eta\partial_t \epsilon_2, \quad \eta\geq0,
-\end{equation}
-其中$\eta$为粘滞系数。
-\begin{figure*}[!htbp]
-	    \centering
-		\includegraphics[width=0.6\linewidth]{figure/maxwell_model}
-	    \fcaption{Maxwell模型}{Maxwell model}[Maxwell模型]
-		\label{fig:maxwell_model}
-\end{figure*}
-假设系统的总形变量为$\epsilon=\epsilon_1+\epsilon_2$，则Maxwell模型对应的应力-应变关系为：
-\begin{equation}
-	\frac{\partial_t\sigma}{M_U}+\frac{\sigma}{\eta}=\partial_t\epsilon.
-	\label{eq:stress_maxwell}
-\end{equation}
-对方程（\ref{eq:stress_maxwell}）两边做Fourier变换有
-\begin{equation}
-	\sigma=M\epsilon,
-\end{equation}
-其中$M(\omega)=\frac{\omega\eta}{\omega\tau-i}$是复模量，并且满足驰豫时间
-$\tau=\frac{\eta}{M_U}$。由（\ref{eq:fourier}）式可得其相应的驰豫函数为：
-\begin{equation}
-	\varphi(t)=M_U\exp(-t/\tau)H(t).
-\end{equation}
-由$M(\omega)J(\omega)=1$可以推到出$Maxwell$模型的蠕变函数，
-\begin{equation}
-	\chi(t)=\frac{1}{M_U}(1+\frac{t}{\tau})H(t).
-\end{equation}
-Maxwell模型（$M_U=2.16GP_a,\tau=1/(2\pi f),f=25Hz$）的蠕变和驰豫函数如图\ref{fig:maxwell_creep}
-所示，蠕变函数并不能代表真实固体中的蠕变行为，而是类似于粘性流体的蠕变函数。
-\begin{figure*}[!htbp]
-	    \centering
-		\includegraphics[width=0.9\linewidth]{figure/maxwell_creep}
-		\fcaption{Maxwell模型的蠕变（a）和驰豫（b）函数}{The creep and relaxation function 
-		of Maxwell model}[Maxwell模型的蠕变和驰豫函数]
-		\label{fig:maxwell_creep}
-\end{figure*}
-在松弛实验中，弹簧和阻尼器受同样大小的力，由于阻尼器不能产生瞬间的形变，因此最初的伸展出现在
-弹簧中。阻尼器扩张而弹簧压缩，所以导致模型的总拉伸量相等。最后弹簧中的应力全部释放，而驰豫函数
-不像真实固体中的那样呈现双曲关系的剩余应力，所以Maxwell模型适合代表粘滞性流体模型。从图
-\ref{fig:maxwell_creep}(a)中可以看出$M_U$代表系统的瞬时响应，所以叫做无驰豫的模量。
-地震波的传播属性被介质的相速度、衰减系数以及品质因子所描述。Maxwell模型的品质因子有如下
-简单的表达形式:
-\begin{equation}
-	Q(\omega)=\frac{Re(M)}{Im(M)}=\omega\tau.
-\end{equation}
-模型（$M_U=\rho c^2, \rho=2.4g/cm^3, c=3km/s, \tau=1/(2\pi f), f=25Hz$）的相速度和耗散因子如
-图\ref{fig:maxwell_vp}所示。当$\omega\to0$时，$v_p=0$，当$\omega\to\infty$时，$v_p\to\sqrt{M_U/\rho}$
-即处于弹性状态。这表明波在Maxwell模型中的传播速度慢于在用弹簧代表的弹性固体中的传播速度。耗散因子
-在零频率成分时为无穷大，在高频时表现为无衰减特性。
-\begin{figure*}[!htbp]
-	    \centering
-		\includegraphics[width=0.8\linewidth]{figure/maxwell_vp}
-		\fcaption{Maxwell模型的相速度（a）和耗散因子（b）}{The phase velocity and dissipation factor 
-		of Maxwell model}[Maxwell模型的相速度和耗散因子]
-		\label{fig:maxwell_vp}
-\end{figure*}
-
-
-\vspace{1.0cm}
-\subsection{Kelvin-Voigt模型}
-\vspace{0.2cm}
-
-在弹性力学中，通常用Kelvin-Voigt应力-应变关系来描述粘弹介质模型，其模型由弹簧和阻尼器并联而成
-（图\ref{fig:kelvin_model}）
-\begin{figure*}[!htbp]
-	    \centering
-		\includegraphics[width=0.6\linewidth]{figure/kelvin_model}
-	    \fcaption{Kelvin-Voigt模型}{Kelvin-Voigt model}[Kelvin-Voigt模型]
-		\label{fig:kelvin_model}
-\end{figure*}
-总的应力可以分解成弹性应力与粘性应力：
-\begin{equation}
-	\left\lbrace
-	\begin{aligned}
-		\sigma_1=M_R\epsilon, \\
-		\sigma_2=\eta\partial_t\epsilon,
-	\end{aligned} \right
-\end{equation}
-其中$M_R$为弹簧模量，下标$R$表示“驰豫”，$\epsilon$为系统的总应变。其应力-应变关系为
-\begin{equation}
-	\sigma=\sigma_1+\sigma_2=M_R\epsilon+\eta\partial_t\epsilon.
-	\label{eq:kelvin}
-\end{equation}
-对（\ref{eq:kelvin}）式做Fourier变换有：
-\begin{equation}
-	\sigma=(M_R+i\omega\eta)\epsilon,
-\end{equation}
-即可得出复模量为$M(\omega)=M_R+i\omega\eta$。
-Kelvin-Voigt模型的驰豫函数为：
-\begin{equation}
-	\varphi(t)=M_RH(t)+\eta\delta(t),
-\end{equation}
-其蠕变函数为：
-\begin{equation}
-	\chi(t)=\frac{1}{M_R}[1-\exp(-t/\tau)]H(t),
-\end{equation}
-其中$\tau=\eta/M_R$。
-
-Kelvin-Voigt模型（$M_R=2.16GP_a,\tau=1/(2\pi f),f=25Hz$）的驰豫函数和蠕变函数如图\ref{fig:kelvin_creep}
-所示。驰豫函数与时间无关，这是一种纯弹性固体。$\delta$函数表明在实际中对介质施加一个瞬时应变是不可能的。
-阻尼器最先开始拉伸然后转换成应力存储于弹簧中。最后，剩余应力都存储于弹簧中。阻尼器不能瞬间移动导致蠕变
-函数不能表示瞬时应变。这不是真实的固体介质，蠕变函数当时间趋于无穷时趋近于驰豫模量$M_R$。
-\begin{figure*}[!htbp]
-	    \centering
-		\includegraphics[width=0.9\linewidth]{figure/kelvin_creep}
-		\fcaption{Kelvin-Voigt模型的蠕变（a）和驰豫（b）函数}{The creep and relaxation function 
-		of Kelvin-Voigt model}[Kelvin-Voigt模型的蠕变和驰豫函数]
-		\label{fig:kelvin_creep}
-\end{figure*}
-\begin{figure*}[!htbp]
-	    \centering
-		\includegraphics[width=0.8\linewidth]{figure/kelvin_vp}
-		\fcaption{Kelvin-Voigt模型的相速度（a）和耗散因子（b）}{The phase velocity and dissipation factor 
-		of Kelvin-Voigt model}[Kelvin-Voigt模型的相速度和耗散因子]
-		\label{fig:kelvin_vp}
-\end{figure*}
-Kelvin-Voigt模型的品质因子为：
-\begin{equation}
-	Q(\omega)=(\omega\tau)^{-1}.
-\end{equation}
-Kelvin-Voigt模型的品质因子与Maxwell模型的品质因子互为倒数。Kelvin-Voigt模型（$M_R=\rho c^2,
-\rho=2.4g/cm^3,c=3km/s,\tau=1/(2\pi f),f=25Hz $）的相速度和耗散因子如图\ref{fig:kelvin_vp}所示。
-当$\omega\to0$时，$v_p\to\sqrt{M_R/\rho}$；当$\omega\to\infty$时，$v_p\to\infty$。这表明波
-在Kelvin-Voigt模型中的传播速度比在相应的弹性介质中的速度大。
-
-
-\vspace{0.2cm}
-\subsection{Zener模型或标准线性固体模型}
-\vspace{0.2cm}
-Zener或标准线性固体模型由弹簧跟Kelvin-Voigt模型串联形成（图\ref{fig:sls_model}）。该模型更能代表真实介质，如
+标准线性固体(Zener)模型由弹簧与阻尼器并联然后再串联上弹簧形成（图\ref{fig:sls_model}）。该模型更能代表真实介质，如
 岩石、聚合物以及金属材料。
 \begin{figure*}[!htbp]
 	    \centering
@@ -314,6 +159,7 @@ Zener或标准线性固体模型由弹簧跟Kelvin-Voigt模型串联形成（图
 	    \fcaption{标准线性固体模型}{Standard linear solid model}[标准线性固体模型]
 		\label{fig:sls_model}
 \end{figure*}
+对模型施加一个应力$\sigma$，就会在模型的弹簧1中产生形变$\epsilon_1$，并在弹簧2和阻尼器中产生形变$\epsilon_2$。
 标准线性固体模型的应力-应变关系为：
 \begin{equation}
 	\left\lbrace
@@ -323,7 +169,8 @@ Zener或标准线性固体模型由弹簧跟Kelvin-Voigt模型串联形成（图
 		\sigma_2&=\kappa_2\epsilon_2, 
 	\end{aligned} \right
 \end{equation}
-其中$\kappa_1\geq0,\kappa_2\geq0,\eta\geq0$，并且
+式中$\kappa_1$、$\kappa_2$为弹簧的弹性系数，$\eta$为阻尼器的粘滞系数，
+且$\kappa_1\geq0,\kappa_2\geq0,\eta\geq0$，并且
 \begin{equation}
 	\sigma=\sigma_1+\sigma_2, \quad \epsilon=\epsilon_1+\epsilon_2.
 \end{equation}
@@ -376,12 +223,7 @@ $\chi(\infty)=M_R^{-1}$。经过一个初始位移后，应力由于阻尼器变
 而增加，且在低频时的$\sqrt{M_R/\rho}$与高频时的$\sqrt{M_U/\rho}$之间变化，当介质为纯弹性体（$Q^{-1}=0$）
 时，$M_R=M_U$。
 
-
-
-\vspace{0.9cm}
-\subsection{广义Zener模型/近似常$Q$模型}
-\vspace{0.1cm}
-在油气勘探和地震学中，由于不知道衰减与频率的依赖关系，用常$Q$模型刻画岩石的吸收衰减会更方便。物理实验表明
+在地震学中，由于不知道衰减与频率的依赖关系，用常$Q$模型刻画岩石的吸收衰减会更方便。物理实验表明
 衰减系数在许多频率范围内与频率呈线性关系，即品质因子为常数。通常用多($L$)个Zener模型单元并联在一起组成广义
 Zener模型来近似常$Q$模型（图\ref{fig:zener}）。
 \begin{figure*}[!htbp]
@@ -464,60 +306,9 @@ $Q$呈常数。单驰豫的峰值应均匀分布在$log(\omega)$尺度内，整�
 品质因子参数为$Q_0=15$。点划线表示每个单元的品质因子，竖直点划线为第三个单元的驰豫峰值。该近似常$Q$模型的
 驰豫函数如图\ref{fig:zener_rela}所示。
 
-
-\vspace{0.5cm}
-\subsection{常$Q$模型}
-\vspace{0.5cm}
-
-对所有的频率段，都可以设计出非常理想的常$Q$模型。在勘探地震频段\citeB{kjartansson:1979}提出了基于
-蠕变函数$t^{2\gamma}$形式的常$Q$模型，式中$t$是时间，对于地震应用来说$\gamma\ll1$。这种模型完全可以用
-对应于参考频率的相速度和$Q$两个参数来描述。因此，在数学表达上常$Q$模型要比任何近似常$Q$模型简单。
-由于其简单性，Kjartansson常$Q$模型在地震勘探领域有许多应用，尤其是在频率域。
-常$Q$模型的驰豫函数为：
-\begin{equation}
-	\varphi(t)=\frac{M_0}{\Gamma(1-2\gamma)}(\frac{t}{t_0})^{-2\gamma}H(t),
-\end{equation}
-其中$M_0$是体模量，$\Gamma$是欧拉伽马函数，$t_0$是参考时间，$\gamma$是一个无量刚的参数。
-由（\ref{eq:fourier}）式可得复模量：
-\begin{equation}
-	M(\omega)=M_0(\frac{i\omega}{\omega_0})^{2\gamma}
-\end{equation}
-式中$\omega_0=1/t_0$是参考频率。由（\ref{eq:vc}）式可以得出复速度$v_c=\sqrt{\frac{M}{\rho}}$，
-其相速度可由（\ref{eq:phase_velocity}）式得到$v_p=c_0|\frac{\omega}{\omega_0}|^\gamma$，其中$c_0=
-\sqrt{\frac{M_0}{\rho}}[\cos(\frac{\pi\gamma}{2})]^{-1}$。由（\ref{eq:alpha}）式可得衰减
-系数为$\alpha=\tan(\frac{\pi\gamma}{2})sgn(\omega)\frac{\omega}{v_p}$,并由（\ref{eq:qm}）式
-可得其品质因子为：
-\begin{equation}
-	Q=\frac{1}{\tan(\pi\gamma)}.
-\end{equation}
-首先，根据相速度表达式可得$c_0$是相速度在$\omega=\omega_0$（参考频率）处的值，并且有
-\begin{equation}
-	M_0=\rho c_0^2\cos^2(\frac{\pi\gamma}{2}).
-\end{equation}
-其次，$Q$与频率无关，
-\begin{equation}
-	\gamma=\frac{1}{\pi}\tan^{-1}(\frac{1}{Q}),
-\end{equation}
-可以表征衰减等级。$Q>0$等同于$0<\gamma<1/2$。
-
-\vspace{0.3cm}
-\section{衰减介质地震波传播模拟}
-\vspace{0.3cm}
-
-地下介质普遍存在粘滞性，地震波对粘滞性的响应表现为振幅的衰减和速度频散。为了得到精确的成像结果以及
-可靠的振幅信息，在进行成像和反演时必须要考虑衰减对地震波传播的影响。波动方程数值模拟是地震成像和反演
-的引擎，所以波动方程的推导和求解至关重要。首先波动方程要能准确描述波在特定介质中的传播规律，其次
-对波动方程的求解要稳定高效，最后推导出的波动方程还要便于施加边界条件。本节主要推导两类常用的描述衰减性模型
-的粘声波动方程，并给出相应的数值解，最后比较这两类粘声波动方程在地震波偏移成像中的应用。
-
-\vspace{0.3cm}
-\subsection{SLS模型波动方程模拟}
-\vspace{0.3cm}
-
 地震波在粘声介质中的传播方程是基于动量守恒以及描述介质流变力学关系的应力-应变关系推导的。标准线性
 固体模型的流变力学关系是描述驰豫函数响应的出发点。\citeB{fung:1965}和\citeB{hudson:1980}等对标准线性固体模型的
 驰豫响应函数给出了详细的描述，并把其应用到了地球介质流变力学解释。
-
 对于二维固体，其动量守恒方程可描述为：
 \begin{equation}
 	\frac{\partial\sigma_{ji}}{\partial x_j}=\rho\ddot{u}_i+f_i \quad i,j=1,2,
@@ -559,7 +350,7 @@ $Q$呈常数。单驰豫的峰值应均匀分布在$log(\omega)$尺度内，整�
 	\sum_{k=0}^mc_rp^{r-k}(0)=\sum_{r=k}^md_re^{r-k}(0),
 \end{equation}
 其中$p^{r-k}(0)$和$e^{r-k}(0)$分别表示压力和体应变在$t=0$时刻的$(r-k)$阶时间偏导数。通过拉普拉斯
-变换求解方程（\ref{eq:stra1}）可得到压力场的显示表达式：
+变换求解方程（\ref{eq:stra1}）可得到压力场的显式表达式：
 \begin{equation}
 	p(t)=-M_R\int_{-\infty}^{t}\dot{e}(\tau)[1-\sum_{l=1}^L(1-\frac{\tau_{\epsilon l}}{\tau_{\sigma l}})
 	\exp(-\frac{t-\tau}{\tau_{\sigma l}})]d\tau,
@@ -594,7 +385,8 @@ $Q$呈常数。单驰豫的峰值应均匀分布在$log(\omega)$尺度内，整�
 \begin{equation}
 	e_{1l}(t)=\int^t_{-\infty}e(\tau)\phi_l(t-\tau)d\tau \quad l=1,\dots,L.
 \end{equation}
-由（\ref{eq:phi1}）式得
+\newpage
+\hspace{-2.0em}由（\ref{eq:phi1}）式得:
 \begin{equation}
 	\dot{e}_{1l}(t)=\frac{e_{1l}(t)}{\tau_{\sigma l}}+\phi_l(0)e(t).
 	\label{eq:e2}
@@ -602,16 +394,16 @@ $Q$呈常数。单驰豫的峰值应均匀分布在$log(\omega)$尺度内，整�
 应力-应变关系（\ref{eq:memo}）可以表示为：
 \begin{equation}
 	p(t)=-[M_Ue(t)+\sum_{l=1}^Le_{1l}],
-	\label{eq:p2}
+	\label{eq:p2_ch2}
 \end{equation}
 式中$M_U$为未驰豫变量，
 \begin{equation}
 	M_U=M_R[1-\sum_{l=1}^L(1-\frac{\tau_{\epsilon l}}{\tau_{\sigma l}})].
 \end{equation}
-方程（\ref{eq:dl4}），（\ref{eq:e2}）和（\ref{eq:p2}）完全控制了地震波在粘声介质中的传播规律。
+方程（\ref{eq:dl4}），（\ref{eq:e2}）和（\ref{eq:p2_ch2}）完全控制了地震波在粘声介质中的传播规律。
 \citeB{blanch:1995} 指出，在勘探地震频段内，一个力学驰豫模型即可满足实际应用。因此，对于二维粘声介质，
 描述运动和形变的波动方程为：
-\begin{equation}
+\begin{eqnarray}
     \begin{aligned}
     \label{eq:visco}
     \frac{\partial v_x}{\partial t} - \frac{1}{\rho}\frac{\partial p}{\partial x}=0,\\
@@ -623,7 +415,7 @@ $Q$呈常数。单驰豫的峰值应均匀分布在$log(\omega)$尺度内，整�
     \frac{1}{\tau_\sigma}\left[r_p+K(\frac{\tau_\epsilon}{\tau_\sigma}-1)
 	(\frac{\partial v_x}{\partial x}+\frac{\partial v_z}{\partial z})]=0.
     \end{aligned}
-\end{equation}
+\end{eqnarray}
 式中，$v_x$和$v_z$表示质点在$x$方向和$z$方向的振动速度，$K$是介质的体积模量，驰豫时间$\tau_\sigma$和
 $\tau_\epsilon$与介质的品质因子$Q$以及参考频率$f_\omega$有关，
 \begin{eqnarray}
@@ -635,48 +427,26 @@ $\tau_\epsilon$与介质的品质因子$Q$以及参考频率$f_\omega$有关，
 方程（\ref{eq:visco}）即为标准线性固体模型所描述的粘声波动方程，此方程可用交错网格有限差分法（\citeA{virieux:1984}；
 \citeA{carcione:1999}）进行数值求解。
 
-\begin{figure*}[!htbp]
-	    \centering
-		\includegraphics[width=1.0\linewidth]{figure/wave_sls1}
-		\fcaption{不同$Q$值在$t=0.35s$的波场快照}{Snapshots of different $Q$  
-		models at $t=0.35s$。}[不同$Q$值在$t=0.35s$的波场快照]
-		\label{fig:wave_sls1}
-\end{figure*}
-\begin{figure*}[!htbp]
-	    \centering
-		\includegraphics[width=0.5\linewidth]{figure/wave_sls3}
-		\fcaption{不同$Q$值在$t=0.35s$,$x=1.7km$处的抽线信息}{The extracted lines  
-		of different $Q$ models at $t=0.35s$,$x=1.7km$}[不同$Q$值在$t=0.35s$,$x=1.7km$处的抽线信息]
-		\label{fig:wave_sls3}
-\end{figure*}
-\begin{figure*}[!htbp]
-	    \centering
-		\includegraphics[width=0.5\linewidth]{figure/wave_sls2}
-		\fcaption{不同$Q$值在同一时刻波场快照整合图}{Integrated snapshots of different $Q$ 
-		model}[不同$Q$值在同一时刻波场快照整合图]
-		\label{fig:wave_sls2}
-\end{figure*}
-\begin{figure*}[!htbp]
-	    \centering
-		\includegraphics[width=0.7\linewidth]{figure/wave_sls4}
-		\fcaption{波场快照抽线的振幅谱}{The amplitude spectrum of extracted lines. 
-		}[波场快照抽线的振幅谱]
-		\label{fig:wave_sls4}
-\end{figure*}
-设置一个横向、纵向均为$3.4km$的均匀介质模型，其中纵波速度为$v_p=3km/s$，密度为$\rho=2.0g/cm^3$。
-图（\ref{fig:wave_sls1}）展示了在$t=0.35s$时刻不同$Q$值的波前快照，图（\ref{fig:wave_sls3}）展示
-了在$x=1.7km$处的抽线信息，图（\ref{fig:wave_sls2}）整合了不同$Q$值的波前快照，图（\ref{fig:wave_sls4}）
-展示了$Q=50$和声介质波前快照抽线的振幅普。
-以上四图从不同的角度证明了粘性介质不仅对地震波振幅有衰减效应而且对相位有较强的改造作用。品质因子的值越小
-对地震波的振幅衰减越严重，而且相位有更强的超前效应。从振幅谱可以看出，对高频成分的衰减明显要强于对低频
-成分的衰减，这与线性粘弹理论（公式\ref{eq:linear_visco}）是一致的。
+\vspace{1.3em}
+\subsection{常$Q$模型}
+\vspace{0.3em}
 
-\vspace{0.3cm}
-\subsection{常$Q$模型波动方程模拟}
-\vspace{0.3cm}
-
-在勘探地震频段内，认为衰减系数（$\alpha\propto 1/Q$）与频率呈近似线性关系，即$Q$在该频段内为常数。
-\citeB{kjartansson:1979} 推导出了常$Q$模型的相速度的频散关系：
+对所有的频率段，都可以设计出非常理想的常$Q$模型。在勘探地震频段， \\
+\citeB{kjartansson:1979}提出了基于
+蠕变函数$t^{2\gamma}$形式的常$Q$模型，其中$t$是时间，对于地震应用来说$\gamma\ll1$。这种模型完全可以用
+对应于参考频率的相速度和$Q$两个参数来描述。因此，在数学表达上常$Q$模型要比任何近似常$Q$模型简单。
+由于其简单性，Kjartansson常$Q$模型在地震勘探领域有许多应用，尤其是在频率域。
+常$Q$模型的驰豫函数为：
+\begin{equation}
+	\varphi(t)=\frac{M_0}{\Gamma(1-2\gamma)}(\frac{t}{t_0})^{-2\gamma}H(t),
+\end{equation}
+其中$M_0$是体模量，$\Gamma$是欧拉伽马函数，$t_0$是参考时间，$\gamma$是一个无量刚的参数。
+由（\ref{eq:fourier}）式可得复模量：
+\begin{equation}
+	M(\omega)=M_0(\frac{i\omega}{\omega_0})^{2\gamma}
+\end{equation}
+式中$\omega_0=1/t_0$是参考频率。
+由（\ref{eq:phase_velocity}）以及（\ref{eq:alpha}）式可以推导出了常$Q$模型的相速度的频散关系：
 \begin{equation}
 	c=c_0(\frac{\omega}{\omega_0})^\gamma=c_0^2\cos^2(\pi\gamma/2),
 \end{equation}
@@ -690,7 +460,7 @@ $\tau_\epsilon$与介质的品质因子$Q$以及参考频率$f_\omega$有关，
 	\frac{\partial^{2-2\gamma}p}{\partial t^{2-2\gamma}}=c^2\omega_0^{-2\gamma}\bigtriangledown^2p,
 	\label{eq:frac}
 \end{equation}
-式中$\bigtriangledown^2$是拉普拉斯算子，$p(\mathbf{x}t)$是压力波场。方程（\ref{eq:frac}）涉及时间的分数
+式中$\bigtriangledown^2$是拉普拉斯算子，$p(\mathbf{x},t)$是压力波场。方程（\ref{eq:frac}）涉及时间的分数
 阶偏导数，所以又叫分数阶偏导数方程。在均匀介质中，将波动方程的平面波解
 $e^{i(\omega t-\mathbf{k}\cdot\mathbf{x})}$带入方程（\ref{eq:frac}）中有如下频散关系：
 \begin{equation}
@@ -713,7 +483,7 @@ $e^{i(\omega t-\mathbf{k}\cdot\mathbf{x})}$带入方程（\ref{eq:frac}）中有
 \sin(\pi\gamma)$。方程（\ref{eq:con_equation}）中的相速度$c_0$和分数阶指数$\gamma$依赖于空间变量
 $\mathbf{x}$，通常是非均匀的，这导致用传统方法求解该方程变得非常困难。近年来，低秩近似方法（\citeA{etgen:2009} 
 ；\citeA{cheng.fomel:2014} ）的发展应用使得求解此方程变得容易。用低秩近似求解方程（\ref{eq:con_equation}）
-的具体实现可参见附录\ref{chp:lowrank}。另外，\citeB{yao.zhu:2017} 用埃尔米特分布逼近泛函来求解此方程。
+的具体实现可见附录\ref{chp:lowrank}。另外，\citeB{yao.zhu:2017} 用埃尔米特分布逼近泛函来求解此方程。
 
 
 方程（\ref{eq:con_equation}）右边有三项，第一项为声波项，第二项控制频散，第三项控制衰减。该方程与方程
@@ -731,10 +501,11 @@ $\mathbf{x}$，通常是非均匀的，这导致用传统方法求解该方程�
 
 
 \vspace{0.5cm}
-\subsection{衰减模型在地震波偏移成像中的应用}
+\section{粘声介质逆时偏移}
+
 地下介质的强衰减不仅会减弱地震波的振幅，对地震波的相位也有较强的改造。在地震波偏移成像中，如果不考虑衰减
 效应会导致在强衰减区成像能量很弱，而且像的位置不聚焦。所以，地震波逆时偏移成像（RTM）中考虑地层衰减效应
-特别重要，尤其是在流体饱和的储层和气云区（\citeA{muller.gurevich:2010}）。$Q$补偿的成像方法有很多，在数据域
+特别重要，尤其是在流体饱和的储层和气云区（\citeA{muller:2010}）。$Q$补偿的成像方法有很多，在数据域
 \citeB{hargreaves.calvert:1991}通过反$Q$滤波来补偿地震记录。反$Q$滤波法基于一维假设，不适合复杂情况下的$Q$补偿。
 \citeB{fletcher.nichols:2012}匹配源端和检波点端的波场，通过匹配滤波在波的传播过程中补偿衰减效应。滤波器由匹配声波模拟
 和粘声模拟结果获得，并在每一步成像之前施加，所以严重依赖于I/O。因为地震衰减是在波的传播过程中发生的，所以通过
@@ -745,7 +516,7 @@ $\mathbf{x}$，通常是非均匀的，这导致用传统方法求解该方程�
 在方程（\ref{eq:visco}）中的正负号来补偿检波点端的振幅损失。这种方法对于弱衰减区域有效，衰减的振幅得以补偿。
 但是振幅的衰减和速度的频散都耦合于记忆变量中，通过改变记忆变量符号的方法不能正确校正速度频散效应从而使得在强衰减
 区域的成像位置不聚焦。\citeB{bai.chen:2013} 不使用记忆变量而是通过拟微分算子来补偿振幅衰减，忽略相位效应。
-以上两种基于SLS粘声波动方程的$Q$-RTM算法均会导致相位变形。
+以上两种基于SLS粘声波动方程的$Q$-RTM算法均会导致相位畸变。
 
 \citeB{zhang.zhang:2010} 用拟微分算子推导出了一种常$Q$粘声方程把振幅衰减和速度频散项区分开来。同样地，
 \citeB{zhu.harris:2014}通过频散关系近似，用分数阶拉普拉斯算子推导了另一种常$Q$粘声方程以区分振幅衰减和
@@ -765,7 +536,8 @@ $\mathbf{x}$，通常是非均匀的，这导致用传统方法求解该方程�
 因此，在存在强衰减的区域，为了得到正确的聚焦的成像结果，$Q$补偿偏移成像是必然选择，并且DCQ方程的偏移结果明显优于
 SLS方程。
 
-另外，在粘声最小二乘偏移（$Q$-LSRTM）中(\citeA{dutta.schuster:2014}；\citeA{sun.fomel:2016}），能量的衰减可以
+另外，在粘声最小二乘偏移（$Q$-LSRTM）中(\citeA{dutta.schuster:2014}；\citeA{sun.fomel:2016}），
+伴随方程保持了正传方程的速度频散关系，能量的衰减可以
 通过多次迭代来补偿，所以在$Q$-LSRTM中没有必要重新构造传播算子。根据伴随状态法，用伴随方程反传数据残差计算模型的
 更新量，无论用SLS方程还是DCQ方程均能得到很好的成像结果。
 \begin{figure*}[!htbp]
